@@ -1,0 +1,8 @@
+[console_scripts]
+sopel = sopel.cli.run:main
+sopel-config = sopel.cli.config:main
+sopel-plugins = sopel.cli.plugins:main
+
+[pytest11]
+pytest-sopel = sopel.tests.pytest_plugin
+
