@@ -66,10 +66,6 @@ def adtest(bot , trigger):
     else:
         bot.reply("you are not my admin...you suck...")
 
-@commands("newtest")
-def newtest(bot, trigger):
-    bot.reply("YES, I WORK YOU MONKEY")
-    bot.action("slaps " + trigger.nick)
 
 
 @commands("giokick")
