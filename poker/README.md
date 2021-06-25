@@ -1,3 +1,5 @@
+![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
+
 # POKER
 Sopel module for Italian (traditional) Poker on IRC! 
 
