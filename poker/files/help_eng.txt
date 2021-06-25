@@ -1,0 +1,21 @@
+POKER HELP!!
+================================================
+Commands:
+
+1)  .poker = starts the match. If started, joins you to the match.
+2)  .join  = join you to the match.
+3)  .deal  = starts the game.
+4)  .change = change 1 or more cards.
+5)  .bet = bet a certain amount of fiches.
+6)  .fiches = show the amount of fiches you own.
+7)  .value = shows the combination in your hand.
+8)  .leave = leave the match.
+9)  .stay = decided not to bet OR not to change cards.
+10) .cards = shows the cards in your hand.
+11) .rules = shows Poker rules.
+
+================================================
+### Syntax Hints ###
+
+CHANGE :  .change ac 10s jh    --> changes "AC , 10S, JH" with other 3 cards. The cards go all in the SAME line. Between the cards, a space is needed
+BET : .bet 50    --> bets 50 fiches.
