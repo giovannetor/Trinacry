@@ -31,8 +31,8 @@ Sopel bot created to host a match of BRISCOLA (typical Italian card game) on IRC
 - [X] Create a DB that keeps track of user's score. Probably using SQlite.
 - [ ] The DB uses user's nicknames instead of usernames. Want to use usernames.
 - [X] Add the Idle time. After some amount of time, an idle player gets kicked and the other team wins.
-- [ ] Add more and more detailed logs to report.
+- [X] Add more and more detailed logs to report.
 - [X] Fix 4 players matches (suspect there are a few bugs unresolved, lack of test dummy...)
 
-![alt text](https://github.com/giovannetor/Trinacry/main/perlogo_new.png?raw=true)
+![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_new.png)
 
