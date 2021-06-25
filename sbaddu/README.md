@@ -35,3 +35,7 @@ Trinacry's playground, contains the following modules:
 ## Ping
 
 1.`ping_echo` (**rule**): Repeats every ping of the owner in log chan.
+
+## Announce
+
+1. `ann` (**cmd**): Announces a message in all the chans the bot is in.
