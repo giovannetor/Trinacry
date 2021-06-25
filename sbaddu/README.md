@@ -40,4 +40,4 @@ Trinacry's playground, contains the following modules:
 
 ## Announce
 
-1. `ann` (**cmd**): Announces a message in all the chans the bot is in.
+1. `ann` (**cmd**): Announces a message in all the chans the bot is in. 
