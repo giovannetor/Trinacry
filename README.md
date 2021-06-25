@@ -1,3 +1,5 @@
+![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
+
 # Trinacry
 IRC Sopel Bot.
 This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)／
