@@ -1,5 +1,6 @@
-# BrisBot2    ![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
+![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
 
+# BrisBot2    
 Sopel bot created to host a match of BRISCOLA (typical Italian card game) on IRC
 
 ### [Game Rules](https://en.wikipedia.org/wiki/Briscola)
