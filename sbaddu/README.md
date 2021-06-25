@@ -1,3 +1,5 @@
+![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
+
 # SBADDU
 
 Trinacry's playground, contains the following modules:
