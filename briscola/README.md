@@ -34,5 +34,5 @@ Sopel bot created to host a match of BRISCOLA (typical Italian card game) on IRC
 - [X] Add more and more detailed logs to report.
 - [X] Fix 4 players matches (suspect there are a few bugs unresolved, lack of test dummy...)
 
-![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_new.png)
+![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
 
