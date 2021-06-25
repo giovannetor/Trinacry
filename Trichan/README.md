@@ -1,3 +1,5 @@
+![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
+
 # trichan
 
 Hi. This is a lil module i made to have fun with Trinacry. 
