@@ -6,6 +6,8 @@ This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)
 1. `Sbaddu` : miscellaneous folder, contains the following:
     - *supertest* : basically a play ground.
     - *food* : every true Italian has a module for foods.
+    - *ping_echo* : reports all the owner pings in log chan  
+    - *announce* : Contains a custom announce module (Sopel's one was broken, too lazy to fix it...)
     
 1. `Trichan` : Trinacry's channel management module. Adds some cool stuff to Sopel standard.
 
@@ -15,4 +17,4 @@ This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)
 
 1. `Pasqua` : Contains the modules used for Easter. 
 
-1. `Announce` : Contains a custom announce module (Sopel's one was broken, too lazy to fix it...)
+
