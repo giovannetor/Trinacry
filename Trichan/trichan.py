@@ -68,6 +68,11 @@ def autop(bot , trigger):
     if trigger.account in listauser_V and trigger.sender in listachan:
         bot.write(["MODE", trigger.sender , "+V " , trigger.nick] )
 
+@commands("hvoice")
+@require_admin("You're not an admin")
+def hvoice(bot , trigger):
+    bot.write(["MODE" , trigger.sender , "+V" , trigger.group(3)])
+
 @commands("do")
 @require_admin("You're not an admin")
 def do(bot , trigger):
