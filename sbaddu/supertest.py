@@ -1,7 +1,7 @@
 from random import randint
 
 from sopel import formatting
-from sopel.module import (event, commands, example, priority, OP, HALFOP, require_privilege, require_chanmsg)
+from sopel.module import (event, commands, example, priority, OP, HALFOP, require_privilege, require_chanmsg , require_privmsg)
 from sopel.tools import Identifier
 logs = "#trinacry-logs"
 
@@ -11,6 +11,17 @@ def giohelp(bot, trigger):
     bot.say("Don't worry " + trigger.nick + ", you'll be contacted ASAP.")
     bot.say("SUPERTEST :" + trigger.nick + " ha richiesto il tuo aiuto in " + trigger.sender+ ": " + trigger.group(2) , logs)
 
+@commands("boop")
+@require_privmsg()
+def boop(bot , trigger):
+    if not trigger.group(3) or not trigger.group(4):
+        bot.reply("Correct syntax: .boop <chan> <user>")
+        return
+    if trigger.group(3) not in bot.channels:
+        bot.reply("I'm NOT in the chan " + trigger.group(3) + ". Correct syntax: .boop <chan> <user>" )
+        return
+    bot.reply(trigger.group(4) + " will be boooooped :P")
+    bot.action("boops " + trigger.group(4) +" with a pillow. Wonder who asked this...", trigger.group(3))
 
 #@event("JOIN")
 #def join(bot, trigger):
