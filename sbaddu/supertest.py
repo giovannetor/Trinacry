@@ -17,8 +17,12 @@ def boop(bot , trigger):
     if not trigger.group(3) or not trigger.group(4):
         bot.reply("Correct syntax: .boop <chan> <user>")
         return
+    if trigger.group(3) == "pm" :
+        bot.reply(trigger.group(4) + " will be boooooped in PM :P")
+        bot.action("boops " + trigger.group(4) +" with a pillow. Wonder who asked this...", trigger.group(4))
+        return
     if trigger.group(3) not in bot.channels:
-        bot.reply("I'm NOT in the chan " + trigger.group(3) + ". Correct syntax: .boop <chan> <user>" )
+        bot.reply("I'm NOT in the chan " + trigger.group(3) + ". Correct syntax: .boop <chan|pm> <user> ..." )
         return
     bot.reply(trigger.group(4) + " will be boooooped :P")
     bot.action("boops " + trigger.group(4) +" with a pillow. Wonder who asked this...", trigger.group(3))
