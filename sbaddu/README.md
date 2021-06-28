@@ -34,6 +34,9 @@ Trinacry's playground, contains the following modules:
 
 10.`grouptest` (**cmd**): used to test "group()" working.
 
+11. `boop` (**cmd**): boops a user by hiding in the shadows. Scary
+
+
 ## Ping
 
 1.`ping_echo` (**rule**): Repeats every ping of the owner in log chan.
