@@ -81,7 +81,7 @@ strings_eng = {"nuovo_player": " %s has joined the match of " + poker + " as pla
 
                }   # STRINGS IN ENGLISH
 string_help_ita = ""
-string_help_eng = "https://usercontent.twoopy.nl/98f740f235e74bbd/paste.txt"
+string_help_eng = "https://webchat.duckie.chat/uploads/70cff387909b997b/paste.txt"
 
 """
 Here i defined all the value given to cards and combinations. Also added a value for seeds, i think it'll be 
