@@ -1,8 +1,10 @@
-from sopel.module import rule , require_admin , commands , OP , require_owner , event , require_privmsg
+from sopel.plugin import rule , require_admin , commands , OP , require_owner , event , require_privmsg, nickname_commands
 from sopel.tools.target import Channel
 from random import randint , shuffle
 from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NORMAL
 
+
+log_chan = "#trinacry-logs"
 @rule(".*BANG.*")
 def bang(bot , trigger):
     if trigger.sender == "#general":
@@ -37,7 +39,7 @@ def mask(bot , trigger):
 
 @commands("destroy")
 @require_owner()
-def execute(bot , trigger):
+def destroy(bot , trigger):
     if not trigger.group(2):
         return
     try:
@@ -50,7 +52,7 @@ def execute(bot , trigger):
 @require_privmsg()
 def echo(bot , trigger):
     if not trigger.owner:
-        bot.say(CONTROL_BOLD + CONTROL_COLOR + colors.LIGHT_BLUE +"[PM] "+ CONTROL_NORMAL + trigger.nick + ": "+ trigger , "#trinacry-logs")
+        bot.say(CONTROL_BOLD + CONTROL_COLOR + colors.LIGHT_BLUE +"[PM] "+ CONTROL_NORMAL + trigger.nick + ": "+ trigger , log_chan)
 
 @commands("resurrect")
 @require_admin()
@@ -67,6 +69,19 @@ def autop(bot , trigger):
     listachan = ["#general","#test" ]
     if trigger.account in listauser_V and trigger.sender in listachan:
         bot.write(["MODE", trigger.sender , "+V " , trigger.nick] )
+
+@nickname_commands("hv" , "hvoice" , "halfvoice")
+def manop(bot , trigger):
+    if trigger.group(3) != "please":
+        bot.say("Say please...")
+        return
+    listauser_V = ["yorick","Marco_Polo","Alie-Pie","Kimmie","giovannetor"]
+    listachan = ["#general","#test" ]
+    if trigger.account in listauser_V and trigger.sender in listachan:
+        bot.write(["MODE", trigger.sender , "+V " , trigger.nick] )
+        bot.say("Here's your hat darling :)")
+    else:
+        bot.say("FUCK DIDN'T WORK")
 
 @commands("hvoice")
 @require_admin("You're not an admin")
