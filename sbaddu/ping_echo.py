@@ -1,5 +1,4 @@
-import sopel.module as module
-import sopel.tools as tools
+import sopel.plugin as module
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL, CONTROL_HEX_COLOR , CONTROL_ITALIC
 
 log_chan = "#trinacry-logs"

@@ -1,4 +1,4 @@
-from sopel.module import rule , commands , event
+from sopel.plugin import rule , commands , event
 from random import randint
 from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NORMAL
 

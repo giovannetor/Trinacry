@@ -1,8 +1,6 @@
 from random import randint
 
-from sopel import formatting
-from sopel.module import (event, commands, example, priority, OP, HALFOP, require_privilege, require_chanmsg , require_privmsg)
-from sopel.tools import Identifier
+from sopel.plugin import (event, commands, example, priority, OP, HALFOP, require_privilege, require_chanmsg , require_privmsg)
 logs = "#trinacry-logs"
 
 @commands("giohelp")
