@@ -17,36 +17,32 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 # Version 4.1
 
-import sopel.plugin as module
-import sopel.tools as tools
-from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
-
-
-import random
-
-import threading
-from datetime import datetime
-
 import os
+import random
+import threading
 import time
+from datetime import datetime
 from enum import Enum
 from io import StringIO
 from pathlib import Path
 
+import sopel.plugin as module
+import sopel.tools as tools
+from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
+from sqlalchemy import Column, Integer, String
 from sqlalchemy import create_engine
+from sqlalchemy import engine as create
 from sqlalchemy.exc import OperationalError
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import desc
-from sqlalchemy.ext.declarative import declarative_base
-
-from sqlalchemy import engine as create
-from sqlalchemy import Column, Integer, String
 
 Base = declarative_base()
-bris = CONTROL_BOLD + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + " B"  + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE +  "R"  + CONTROL_COLOR + colors.RED + "," + colors.WHITE +  "I"  + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE +  "S"  + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE +  "C"  + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE +  "O"+ CONTROL_COLOR + colors.RED + "," + colors.WHITE +  "L" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE +  "A " + CONTROL_NORMAL
+bris = CONTROL_BOLD + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + " B" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "R" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "I" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "S" + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + "C" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "O" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "L" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "A " + CONTROL_NORMAL
 
 log_chan = "#trinacry-logs"
 game_chan = ["#briscola"]
+
 
 # Classe giocatore
 class Scores(Base):
@@ -508,7 +504,7 @@ strings_eng = {"nuovo_player": " %s joins the match as player: %s .",
                "impos_unirsi": "I'm sorry %s , the max number of players is 4. Wait until next match :)",
                "gia_dentro": " %s you are already inside the match of " + bris + " O.o",
                "pronti": "Enough players, ready to deeeeal.",
-               "player_quit": " %s abandoned the match of " +bris + " .",
+               "player_quit": " %s abandoned the match of " + bris + " .",
                "non_abbastanza": "Can't play alone, wait for someone else...",
                "iniziato": "Match already started.",
                "cant_play": "You are not inside the match, please do not disturb the other players :)",
@@ -517,7 +513,7 @@ strings_eng = {"nuovo_player": " %s joins the match as player: %s .",
                "tue_carte": "Your cards: %s",
                "mano_win": CONTROL_BOLD + " %s  wins the hand!",
                "prossimo": CONTROL_BOLD + "ON TURN: ",
-               "game_started": bris+ " started. use .join to join .",
+               "game_started": bris + " started. use .join to join .",
                "not_started": "Match not started yet.",
                "game_stopped": CONTROL_BOLD + "GAME OVER.",
                "admin_stop": CONTROL_BOLD + "AN ADMIN TERMINATED THE MATCH FROM REMOTE.",
@@ -544,14 +540,15 @@ strings_eng = {"nuovo_player": " %s joins the match as player: %s .",
                "quit_ok": "The player %s left the match. Match has to be started again.",
                "change_time": CONTROL_BOLD + "TIME TO SWAP!! You have 10 seconds to see the cards of your  mate.",
                "change_cards": "Your mate's cards: %s",
-               "team_earn": "TEAM %s earns  | %s |  points!" ,
+               "team_earn": "TEAM %s earns  | %s |  points!",
                "player_list": "TEAM 1 : %s    TEAM 2 : %s",
                "local_stop": CONTROL_BOLD + "AN ADMIN STOPPED THE MATCH",
                "quit_warn": "If you leave the match, the opposite team will win. Use .quit to confirm. ",
-               "idle_kick" : "Player %s had been IDLE for 1 MINUTE. Going to be kicked from the match.",
-               "idle_warn1" : " %s your turn! Idle for: 15s",
-               "idle_warn2" : " %s your turn. Being Idle for more than 60 seconds will result in a kick. Idle for : 30s",
-               "idle_warn3" : " %s you here??? Do something or you'll be kicked in 15 secondi! Idle for: 45s",          "idle_end" : "Match terminated for inactivity."
+               "idle_kick": "Player %s had been IDLE for 1 MINUTE. Going to be kicked from the match.",
+               "idle_warn1": " %s your turn! Idle for: 15s",
+               "idle_warn2": " %s your turn. Being Idle for more than 60 seconds will result in a kick. Idle for : 30s",
+               "idle_warn3": " %s you here??? Do something or you'll be kicked in 15 secondi! Idle for: 45s",
+               "idle_end": "Match terminated for inactivity."
                }
 strings_ita = {"nuovo_player": " %s si unisce alla partita di " + bris + "  come giocatore: %s .",
                "impos_unirsi": "Mi spiace %s , il numero massimo di giocatori è 4. Aspetta l'inizio della prossima partita :)",
@@ -591,18 +588,18 @@ strings_ita = {"nuovo_player": " %s si unisce alla partita di " + bris + "  come
                "last_turn": "ULTIMO TURNO!! Gioca con saggezza le tue ultime 3 carte!!",
                "quit_win": "Il giocatore %s ha lasciato la partita. VINCITORE: %s .",
                "quit_ok": "Il giocatore %s ha lasciato la partita. La partita deve essere avviata di nuovo.",
-               "change_time": CONTROL_BOLD +  "ULTIMO TURNO!!! Hai 10 secondi di tempo per vedere le carte del compagno.",
+               "change_time": CONTROL_BOLD + "ULTIMO TURNO!!! Hai 10 secondi di tempo per vedere le carte del compagno.",
                "change_cards": "Carte del tuo compagno: %s",
-               "team_earn": "Il TEAM %s guadagna  | %s |  punti!" ,
+               "team_earn": "Il TEAM %s guadagna  | %s |  punti!",
                "player_list": "TEAM 1 : %s    TEAM 2 : %s",
                "local_stop": CONTROL_BOLD + "UN ADMIN HA FERMATO LA PARTITA",
                "quit_warn": "Se abbandoni, il team avversatio vincerà. Usa .quit per confermare.",
-               "idle_kick" : "Il giocatore %s è stato IDLE per 1 MINUTO. Verrà rimosso dalla partita.",
-               "idle_warn1" : " %s è il tuo turno! Idle da: 15s",
-               "idle_warn2" : " %s è il tuo turno. Restare idle per più di 60 secondi causerà un kick. Idle da : 30s",
-               "idle_warn3" : " %s ci sei??? Fai qualcosa o sarai buttato fuori tra 15 secondi! Idle da: 45s",          "idle_end" : "Partita terminata per inattività."
+               "idle_kick": "Il giocatore %s è stato IDLE per 1 MINUTO. Verrà rimosso dalla partita.",
+               "idle_warn1": " %s è il tuo turno! Idle da: 15s",
+               "idle_warn2": " %s è il tuo turno. Restare idle per più di 60 secondi causerà un kick. Idle da : 30s",
+               "idle_warn3": " %s ci sei??? Fai qualcosa o sarai buttato fuori tra 15 secondi! Idle da: 45s",
+               "idle_end": "Partita terminata per inattività."
                }
-
 
 strings = strings_eng
 rules = rules_eng
@@ -634,7 +631,7 @@ class BrisGame:
         self.starter = trigger.nick
         self.channel = trigger.sender
         self.deck = []
-        self.players = {self.starter: {"cards" : [] , "idletime" : 0}}  # player's dict. each player will have a card list
+        self.players = {self.starter: {"cards": [], "idletime": 0}}  # player's dict. each player will have a card list
         self.playerOrder = [self.starter]  # player order. it will mostly be used paired with self.currentPlayer
         self.currentPlayer = 0
         self.previousPlayer = None
@@ -654,29 +651,28 @@ class BrisGame:
         self.bris_ontable = []
         self.changecount = 0
 
-    def idlefunc(self , bot , game):
+    def idlefunc(self, bot, game):
         for player in self.players:
             if player == self.playerOrder[self.currentPlayer]:
                 self.players[player]["idletime"] += 1
-        self.idlepenalty(bot , game)
+        self.idlepenalty(bot, game)
 
-    def idlepenalty(self , bot , game):
+    def idlepenalty(self, bot, game):
         for player in self.players:
             if self.players[player]["idletime"] == 15:
-                bot.say(self.strings["idle_warn1"] % player , game)
+                bot.say(self.strings["idle_warn1"] % player, game)
             if self.players[player]["idletime"] == 30:
-                bot.say(self.strings["idle_warn2"] % player , game)
+                bot.say(self.strings["idle_warn2"] % player, game)
             if self.players[player]["idletime"] == 45:
-                bot.say(self.strings["idle_warn3"] % player , game)
+                bot.say(self.strings["idle_warn3"] % player, game)
             if self.players[player]["idletime"] == 60:
-                bot.say(self.strings["idle_kick"] % player , game)
-                #self.quit(bot , player , idle = True)
+                bot.say(self.strings["idle_kick"] % player, game)
+                # self.quit(bot , player , idle = True)
                 if player in self.team1:
                     self.team2.append("WIN")
                 else:
                     self.team1.append("WIN")
                 return WIN
-
 
     def join(self, bot, trigger):
         if self.startcont == 0:
@@ -692,7 +688,7 @@ class BrisGame:
                     bot.say(self.strings["cant_play"])
                     return
                 bot.write(['MODE', trigger.sender, '+v', trigger.nick])
-                self.players[trigger.nick] = {"cards" : [] , "idletime" : 0}  # add player to players dict
+                self.players[trigger.nick] = {"cards": [], "idletime": 0}  # add player to players dict
                 self.playerOrder.append(trigger.nick)  # add player to players order list
 
                 if len(self.team2) < len(
@@ -723,7 +719,8 @@ class BrisGame:
             else:
                 bot.say(self.strings["gia_dentro"] % trigger.nick)  # player already in
 
-    def quit(self, bot, trigger , idle = False):  # remove the player from the team. the other team wins. (need to add: if game not dealt, no one loses)
+    def quit(self, bot, trigger,
+             idle=False):  # remove the player from the team. the other team wins. (need to add: if game not dealt, no one loses)
         if not idle:
             player = trigger.nick
             if player not in self.players:
@@ -732,7 +729,7 @@ class BrisGame:
                 bot.say(strings['player_quit'] % player)
                 return self.remove_player(bot, player)
         elif idle:
-            return self.remove_player(bot , trigger)
+            return self.remove_player(bot, trigger)
 
     def deal(self, bot, trigger):  # deal the game. everyone in the game can do it, owner not required.
         if trigger.nick not in self.players:
@@ -838,7 +835,8 @@ class BrisGame:
                 self.ontable)):  # analyzes the cards in the .ontable one by one. if one of the same seed has number > carcom, it becomes the new carcom
             card_sfid = self.ontable[c]  # c is just an index
             if card_sfid[1] == carcom[1]:
-                if valori_tavolo[card_sfid[0]] > valori_tavolo[carcom[0]]:  # valore = value (translate tip)   valori_tavolo is a dict, shows the value of cards on the table
+                if valori_tavolo[card_sfid[0]] > valori_tavolo[carcom[
+                    0]]:  # valore = value (translate tip)   valori_tavolo is a dict, shows the value of cards on the table
                     carcom = card_sfid  # important! cards on the table have different value than when counted as points. ***
             elif card_sfid[1] == self.briscola[0][1]:  # if he finds a briscola, he adds it in the bris_ontable list
                 self.bris_ontable.append(card_sfid)
@@ -906,7 +904,8 @@ class BrisGame:
 
                 # trova le carte nel dizionario, renderizzate sotto V
             bot.notice("=========================================", trigger)
-            bot.notice(self.strings['tue_carte'] % (str(self._render_colored_cards(self.players[trigger]["cards"]))), trigger)
+            bot.notice(self.strings['tue_carte'] % (str(self._render_colored_cards(self.players[trigger]["cards"]))),
+                       trigger)
             bot.notice(self.strings["briscola"] % (str(self._render_colored_cards(self.briscola))), trigger)
             bot.notice("=========================================", trigger)
             # importante! le info personali vanno mandate come notifica, non con .say
@@ -970,13 +969,17 @@ class BrisGame:
 
                     if self.lastturn and self.changecount == 0:
                         bot.say(strings["change_time"])
-                        bot.notice(strings["change_cards"] % (self._render_colored_cards(self.players[self.team1[0]]["cards"])),
+                        bot.notice(strings["change_cards"] % (
+                            self._render_colored_cards(self.players[self.team1[0]]["cards"])),
                                    self.team1[1])
-                        bot.notice(strings["change_cards"] % (self._render_colored_cards(self.players[self.team1[1]]["cards"])),
+                        bot.notice(strings["change_cards"] % (
+                            self._render_colored_cards(self.players[self.team1[1]]["cards"])),
                                    self.team1[0])
-                        bot.notice(strings["change_cards"] % (self._render_colored_cards(self.players[self.team2[0]]["cards"])),
+                        bot.notice(strings["change_cards"] % (
+                            self._render_colored_cards(self.players[self.team2[0]]["cards"])),
                                    self.team2[1])
-                        bot.notice(strings["change_cards"] % (self._render_colored_cards(self.players[self.team2[1]]["cards"])),
+                        bot.notice(strings["change_cards"] % (
+                            self._render_colored_cards(self.players[self.team2[1]]["cards"])),
                                    self.team2[0])
                         time.sleep(15)
                         self.changecount += 1
@@ -999,8 +1002,8 @@ class BrisGame:
                 if self.currentPlayer >= len(self.players):
                     self.currentPlayer = 0
         self.players[self.playerOrder[self.currentPlayer]]["idletime"] = 0
-            # if self.currentPlayer < 0:
-            #    self.currentPlayer = len(self.players) - 1
+        # if self.currentPlayer < 0:
+        #    self.currentPlayer = len(self.players) - 1
 
     def get_player(self):
         if "WIN" in self.team1 or "WIN" in self.team2 or "DRAW" in self.team1:
@@ -1143,12 +1146,12 @@ class BrisGame:
         return new_deck
 
     def teams(self, bot, trigger):
-        bot.notice(self.strings["player_list"] % (str(self.team1[-1]), str(self.team2[-1])) , trigger.nick)
+        bot.notice(self.strings["player_list"] % (str(self.team1[-1]), str(self.team2[-1])), trigger.nick)
 
 
 class BrisBot:
     def __init__(self):  # ,scorefile
-        #self.afkcounter = 0
+        # self.afkcounter = 0
         self.contatore = 0
         self.games = {}
         self.win = False
@@ -1156,20 +1159,16 @@ class BrisBot:
         self.strings = strings_eng
 
         # self.scoreFile = scorefile
-    def checkidle(self , bot):
+
+    def checkidle(self, bot):
 
         for game in self.games:
             if self.games[game].get_player():
-                self.play(bot , game ,  stop = True , idle = True)
+                self.play(bot, game, stop=True, idle=True)
 
-
-
-    def afktime(self , bot):
+    def afktime(self, bot):
         for game in self.games:
-            self.games[game].idlefunc(bot , game)
-
-
-
+            self.games[game].idlefunc(bot, game)
 
     def language(self, bot, trigger):
         try:
@@ -1204,13 +1203,11 @@ class BrisBot:
             self.games[trigger.sender] = BrisGame(trigger)
             bot.say(self.strings['game_started'])
 
-
     def join(self, bot, trigger):
         if trigger.sender in self.games:
             self.games[trigger.sender].join(bot, trigger)
         else:
             bot.say(self.strings['not_started'])
-
 
     def stop(self, bot, trigger, forced=False):
         chan = trigger.sender
@@ -1266,7 +1263,7 @@ class BrisBot:
             return
         self.games[trigger.sender].deal(bot, trigger)
 
-    def play(self, bot, trigger, stop=False , idle = False):
+    def play(self, bot, trigger, stop=False, idle=False):
         self.contatore = 0
         if stop == False:
             if trigger.sender not in self.games:
@@ -1281,7 +1278,7 @@ class BrisBot:
         if stop == False:
             game.play(bot, trigger)
         if game.get_player():
-            print(game.team1 , game.team2)
+            print(game.team1, game.team2)
             try:
                 if "WIN" in game.team1:
                     if len(game.team1) == 3:
@@ -1307,7 +1304,7 @@ class BrisBot:
                 elif "DRAW" in game.team1:
                     self.draw = True
             except:
-                self.game_ended(bot , trigger)
+                self.game_ended(bot, trigger)
                 print("AFK NOT STARTED OK")
                 bot.say(self.strings["idle_end"])
                 return
@@ -1318,14 +1315,14 @@ class BrisBot:
             minutes, seconds = divmod(remainder, 60)
             game_duration = '%.2d:%.2d:%.2d' % (hours, minutes, seconds)
             if self.win:
-                bot.say(self.strings['win'] % (winner, game_duration) , trigger or trigger.sender)
+                bot.say(self.strings['win'] % (winner, game_duration), trigger or trigger.sender)
                 for playerwin in winner.split():
                     db_manager.update_players([playerwin], win=True, punteggio=punteggiowin, minutes=minutes,
                                               seconds=seconds)
                 for playerlose in loser.split():
                     db_manager.update_players([playerlose], win=False, punteggio=punteggiolose, minutes=minutes,
                                               seconds=seconds)
-                bot.say("[" + bris + "] : partita finita in WIN per " + winner + " in TEST " + place,log_chan)
+                bot.say("[" + bris + "] : partita finita in WIN per " + winner + " in TEST " + place, log_chan)
             if self.draw:
                 bot.say("NO ONE WINS")
                 for totplayer in game.players:
@@ -1410,7 +1407,7 @@ def delplayer(bot, trigger):
         db_manager.delete_player(trigger.group(3))
         bot.say("CANCELLAMENTO AVVENUTO CON SUCCESSO")
         bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha cancellato " + trigger.group(3) + " dal database",
-               log_chan)
+                log_chan)
     except:
         bot.say("OH NO!! ABBIAMO UN PROBLEMA COL DB!!")
         bot.say("[" + bris + "] : ERRORE DI CANCELLAZIONE DB causato da " + trigger.nick, log_chan)
@@ -1423,24 +1420,24 @@ def delplayer(bot, trigger):
 def brisdbad(bot, trigger):
     if trigger.group(3) == "player":
         bot.say(db_manager.show_stats_admin(stat=AdminStats.PLAYER, username=trigger.group(4)))
-        bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha richiesto le stats di " + trigger.group(4), log_chan)
+        bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha richiesto le stats di " + trigger.group(4),
+                log_chan)
     else:
         stat_map = {
-        "time": AdminStats.TIME,
-        "win": AdminStats.WIN,
-        "tot": AdminStats.TOT,
-        "score": AdminStats.SCORE,
-      }
+            "time": AdminStats.TIME,
+            "win": AdminStats.WIN,
+            "tot": AdminStats.TOT,
+            "score": AdminStats.SCORE,
+        }
         bot.say(db_manager.show_stats_admin(stat=stat_map[trigger.group(3)]))
         bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha richiesto " + trigger.group(3), log_chan)
-
 
 
 @module.commands("rank")
 @module.example(".rank")
 def rank(bot, trigger):
     try:
-        bot.notice(db_manager.show_stats(username=trigger.nick) , trigger.nick)
+        bot.notice(db_manager.show_stats(username=trigger.nick), trigger.nick)
         bot.say("[" + bris + "] : " + trigger.nick + " ha ottenuto il suo RANK. ", log_chan)
     except:
         bot.say("You are not in the db. Contact an admin if you feel this is an error.")
@@ -1486,7 +1483,7 @@ def brisstop(bot, trigger):
 @module.require_chanmsg
 def brisjoin(bot, trigger):
     if trigger.sender in game_chan:
-         brisbot.join(bot, trigger)
+        brisbot.join(bot, trigger)
 
 
 @module.commands('quit', "qu")
@@ -1494,7 +1491,7 @@ def brisjoin(bot, trigger):
 @module.require_chanmsg
 def brisquit(bot, trigger):
     if trigger.sender in game_chan:
-         brisbot.quit(bot, trigger)
+        brisbot.quit(bot, trigger)
 
 
 @module.commands("rules", "ru")
@@ -1584,6 +1581,7 @@ def brisgames(bot, trigger):
     bot.reply(
         bris + " is pending deal in %d %s and in progress in %d %s: %s. "
         % (pending, g_pending, active, g_active, chanlist))
+
 
 @module.interval(1)
 def afktime(bot):

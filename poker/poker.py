@@ -3,20 +3,21 @@ various imports. Depends on Sopel. in the future, would like to add a DB for
 fiches and stats like the BRISCOLa one
 (might need to ask yorick or bruand for this eheh, i'd love a SQlite db)
 """
-import sopel.plugin as module
-import sopel.tools as tools
-from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL , CONTROL_HEX_COLOR
-import time
 import random
 import threading
+import time
 from datetime import datetime
 
-lock = threading.RLock()   # initialise lock
+import sopel.plugin as module
+import sopel.tools as tools
+from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL, CONTROL_HEX_COLOR
+
+lock = threading.RLock()  # initialise lock
 
 max_player = 10
 game_chan = ["#poker"]
 log_chan = "#trinacry-logs"
-poker = CONTROL_BOLD + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + " P"  + CONTROL_COLOR + colors.RED + "," + colors.WHITE +  "O"  + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE +  "K"  + CONTROL_COLOR + colors.RED + "," + colors.WHITE +  "E"  + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE +  "R"  + CONTROL_COLOR + colors.RED + "," + colors.WHITE +  "! " + CONTROL_NORMAL
+poker = CONTROL_BOLD + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + " P" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "O" + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + "K" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "E" + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + "R" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "! " + CONTROL_NORMAL
 """
 Here are defined all the strings used in the game.
 We have: RULES , GAME STRINGS and HELP.
@@ -30,13 +31,13 @@ strings_eng = {"nuovo_player": " %s has joined the match of " + poker + " as pla
                "gia_dentro": " %s you are already inside the match of " + poker + " :P ",
                "pronti": "Enough players, are you reeeady to plaaay? XD (.deal = FUCK YEAH!)",
                "player_quit": " %s abandoned the match of " + poker + " (wasn't good enough :P) ",
-               "cant_stay" : "%s you cannot stay now!",
-               "not_change" : "%s you have to change before betting!",
-               "empty" : "%s you need to specify a number of fiches to bet :p",
-               "no_fiches" : "%s you don't have enough fiches to bed that amount! You only have [%s].",
-               "need_more" : "%s you'll need to bet [%s] fiches more!",
+               "cant_stay": "%s you cannot stay now!",
+               "not_change": "%s you have to change before betting!",
+               "empty": "%s you need to specify a number of fiches to bet :p",
+               "no_fiches": "%s you don't have enough fiches to bed that amount! You only have [%s].",
+               "need_more": "%s you'll need to bet [%s] fiches more!",
                "non_abbastanza": "Can't play alone, wait for someone else...",
-               "relaunched" : "%s has relaunched to [%s] !! Reach the new amount, or leave.",
+               "relaunched": "%s has relaunched to [%s] !! Reach the new amount, or leave.",
                "iniziato": "Match already started.",
                "cant_play": "You are not inside the match, wait for next one :p ",
                "turno": CONTROL_BOLD + " %s 's turn.",
@@ -47,9 +48,9 @@ strings_eng = {"nuovo_player": " %s has joined the match of " + poker + " as pla
                "not_started": "Match not started yet.",
                "game_stopped": CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER.",
                "admin_stop": CONTROL_BOLD + CONTROL_COLOR + colors.RED + "AN ADMIN TERMINATED THE " + poker + " MATCH FROM REMOTE.",
-               "on_table" : "%s 's turn to CHANGE.",
-               'SB_PLAYER': "%s (%d %s)"   ,
-               "cant_move": "Only an admin can move the match of " + poker  +" . ",
+               "on_table": "%s 's turn to CHANGE.",
+               'SB_PLAYER': "%s (%d %s)",
+               "cant_move": "Only an admin can move the match of " + poker + " . ",
                'NEED_CHANNEL': "I need a channel name to move to.",
                'NOT_IN_CHANNEL': "I'm not in %s, so I can't move the " + poker + " game there.",
                'CHANNEL_IN_USE': "Channel %s already has a " + poker + " game in progress.",
@@ -60,26 +61,25 @@ strings_eng = {"nuovo_player": " %s has joined the match of " + poker + " as pla
                "wrong_seed": "Suits can be Spades(s) , Clubs(c) , Hearts(h) or Diamonds(d), not %s .",
                "wrong_value": "values go from A to J (+ some random numbers :p). %s is not ok.",
                "quit_ok": "The player %s left the " + poker + " match. Match has to be started again.",
-               "fiches" : "%s you have [%s] fiches.",
-               "bet_done" : "You can't do this now %s...",
-               "bets_done" : "Bets ended. On table:  ( %s )!!",
-               "stay" : "%s chose to stay!",
-               "winner" : CONTROL_BOLD + CONTROL_COLOR + colors.LIGHT_BLUE +"The winner is %s with a wonderful" + CONTROL_COLOR + colors.LIME + " %s !",
-               "send_value" : "%s here's what you have: <%s>",
-               "extra_fiches" : "%s has 0 fiches left. He'll be given 10 fiches to continue playing :p",
-               "careful" : "Careful. If you quit now, you'll lose what you bet before. Use .leave to confirm.",
-               "leave" : "%s decided to leave this turn.",
-               "bet_time" : CONTROL_BOLD + CONTROL_HEX_COLOR + "D9DF01" + "IT'S BET TIME!",
-               "change_time" : CONTROL_BOLD + CONTROL_HEX_COLOR + "1EF004" +"IT'S CHANGE TIME!",
-               "game_ended" : "No players left! Match is ended.",
-               "new_turn" : CONTROL_BOLD + "A new turn is starting!!",
-               "fiches_table" : "Currently there are [%s] fiches on table.",
-               "sus_1" : "Turn done. The winner is...",
-               "sus_2" : "...a bit of suspense...",
-               "left" : "%s you left, wait until next turn."
+               "fiches": "%s you have [%s] fiches.",
+               "bet_done": "You can't do this now %s...",
+               "bets_done": "Bets ended. On table:  ( %s )!!",
+               "stay": "%s chose to stay!",
+               "winner": CONTROL_BOLD + CONTROL_COLOR + colors.LIGHT_BLUE + "The winner is %s with a wonderful" + CONTROL_COLOR + colors.LIME + " %s !",
+               "send_value": "%s here's what you have: <%s>",
+               "extra_fiches": "%s has 0 fiches left. He'll be given 10 fiches to continue playing :p",
+               "careful": "Careful. If you quit now, you'll lose what you bet before. Use .leave to confirm.",
+               "leave": "%s decided to leave this turn.",
+               "bet_time": CONTROL_BOLD + CONTROL_HEX_COLOR + "D9DF01" + "IT'S BET TIME!",
+               "change_time": CONTROL_BOLD + CONTROL_HEX_COLOR + "1EF004" + "IT'S CHANGE TIME!",
+               "game_ended": "No players left! Match is ended.",
+               "new_turn": CONTROL_BOLD + "A new turn is starting!!",
+               "fiches_table": "Currently there are [%s] fiches on table.",
+               "sus_1": "Turn done. The winner is...",
+               "sus_2": "...a bit of suspense...",
+               "left": "%s you left, wait until next turn."
 
-
-               }   # STRINGS IN ENGLISH
+               }  # STRINGS IN ENGLISH
 string_help_ita = ""
 string_help_eng = "https://webchat.duckie.chat/uploads/70cff387909b997b/paste.txt"
 
@@ -91,9 +91,10 @@ useful in order to decide who wins in case of draws.
 
 suits_value = {"S": 0, "C": 1, "D": 2, "H": 3}
 suits_render = {"S": " ♤ ", "C": " ♧ ", "D": " ♦ ", "H": " ♥ "}
-hand_value = {"High Card" : [0 , 100] , "Pair" : [100 , 200] , "Two Pair" : [200 , 300] , "Three of a kind" : [300 , 400] , "Straight" : [400 , 500],
-              "Flush" : [500 , 600] , "Full house" : [600 , 700] , "Poker" : [700 , 800] , "Straight flush" : [800 , 900] ,
-              "Royal flush" : [900 , 1000]
+hand_value = {"High Card": [0, 100], "Pair": [100, 200], "Two Pair": [200, 300], "Three of a kind": [300, 400],
+              "Straight": [400, 500],
+              "Flush": [500, 600], "Full house": [600, 700], "Poker": [700, 800], "Straight flush": [800, 900],
+              "Royal flush": [900, 1000]
               }
 
 values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -108,11 +109,13 @@ class PokerGame:
     def __init__(self, trigger):
         self.strings = strings_eng
         self.string_help = string_help_eng  # TO IMPLEMENT
-        self.rules = rules_eng             # TO IMPLEMENT
+        self.rules = rules_eng  # TO IMPLEMENT
         self.starter = trigger.nick
         self.channel = trigger.sender
         self.deck = []
-        self.players = {self.starter: {"cards": [], "hasdone": False, "change": False, "bet": False, "fiches": 1000 , "allin" : False , "left" : False}}
+        self.players = {
+            self.starter: {"cards": [], "hasdone": False, "change": False, "bet": False, "fiches": 1000, "allin": False,
+                           "left": False}}
         self.playerOrder = [self.starter]
         self.currentPlayer = 0
         self.previousPlayer = None
@@ -124,7 +127,7 @@ class PokerGame:
         self.changecounter = 0
         self.betcounter = 0
         self.maxbet = 0
-        self.betsdone = {self.starter : 0}
+        self.betsdone = {self.starter: 0}
         self.ontable = 0
         self.idkcounter = 0
         self.secondcounter = 0
@@ -133,10 +136,10 @@ class PokerGame:
         self.removecard = []
         self.bohcounter = 0
 
-    def send_ontable(self , bot , trigger):
+    def send_ontable(self, bot, trigger):
         bot.say(self.strings["fiches_table"] % str(self.ontable))
 
-    def join(self, bot, trigger): # joins to the match
+    def join(self, bot, trigger):  # joins to the match
         if self.startcont == 0:
             bot.write(['MODE', trigger.sender, '+v', self.starter])  # to let the starter join too
             self.startcont += 1
@@ -146,12 +149,13 @@ class PokerGame:
                     bot.say(self.strings["impos_unirsi"] % trigger.nick)  # match full
                     return
                 if self.dealt:
-                    bot.notice(self.strings["cant_play"] , trigger.nick)
-                    print("problema in JOIN")   # if game already dealt, cannot join
+                    bot.notice(self.strings["cant_play"], trigger.nick)
+                    print("problema in JOIN")  # if game already dealt, cannot join
                     return
-                bot.write(['MODE', trigger.sender, '+v', trigger.nick])  #playing players will be voiced
+                bot.write(['MODE', trigger.sender, '+v', trigger.nick])  # playing players will be voiced
                 self.players[trigger.nick] = {"cards": [], "hasdone": False, "change": False, "bet": False,
-                                              "fiches": 1000 , "allin" : False , "left" : False}   # initiates the dict, same for each player ("hasdone" is useless iirc)
+                                              "fiches": 1000, "allin": False,
+                                              "left": False}  # initiates the dict, same for each player ("hasdone" is useless iirc)
                 self.betsdone[trigger.nick] = 0  # add player to bets dict
                 self.playerOrder.append(trigger.nick)  # add player to players order list (maybe to remove?)
 
@@ -163,8 +167,8 @@ class PokerGame:
             else:
                 bot.say(self.strings["gia_dentro"] % trigger.nick)  # player already in
 
-    def leave(self , bot , trigger):
-        with lock:# this function will allow a player to leave but still being in game TO DOOOOO!!!!
+    def leave(self, bot, trigger):
+        with lock:  # this function will allow a player to leave but still being in game TO DOOOOO!!!!
             player = trigger.nick
             if player not in self.players:
                 return
@@ -175,12 +179,12 @@ class PokerGame:
             bot.say(self.strings["leave"] % player)
             self.players[player]["left"] = True
 
-            if  self.players[trigger.nick]["change"] == True:   # stay during CHANGE
+            if self.players[trigger.nick]["change"] == True:  # stay during CHANGE
                 self.players[trigger.nick]["change"] = False
                 self.inc_player()
 
-                if trigger.nick != self.playerOrder[-1]:   # increase the player.
-                    self.show_on_turn(bot)   # shows who's the turn now
+                if trigger.nick != self.playerOrder[-1]:  # increase the player.
+                    self.show_on_turn(bot)  # shows who's the turn now
                 self.idkcounter += 1
                 print("il idkcounter è stato aggiornato a " + str(self.idkcounter))
                 if self.idkcounter >= len(self.players):
@@ -192,30 +196,26 @@ class PokerGame:
 
             if self.players[trigger.nick]["bet"] == False:  # stay during BETS
                 self.players[trigger.nick]["bet"] = True
-                for i in self.players:   # when this for will return true, self.betsdone can have place.
+                for i in self.players:  # when this for will return true, self.betsdone can have place.
                     if self.players[i]["bet"] == False:
                         self.bohcounter += 1
                 if self.bohcounter == 0:
-                    self.betdone(bot , trigger)   # check the function
+                    self.betdone(bot, trigger)  # check the function
 
         self.bohcounter = 0
-        self.temp_remove_player(bot , trigger)
+        self.temp_remove_player(bot, trigger)
 
-
-    def temp_remove_player(self , bot , trigger):
+    def temp_remove_player(self, bot, trigger):
         player = trigger.nick
         with lock:
-            player1 , value = player , self.players[player]
+            player1, value = player, self.players[player]
             self.listout[player1] = value
             self.currentPlayer -= 1
             self.players.pop(player)
             self.playerOrder.remove(player)
 
-
-
-
-
-    def quit(self, bot, trigger, partquit = False):  # remove the player from the match. If there's only one player left, the match is ended.
+    def quit(self, bot, trigger,
+             partquit=False):  # remove the player from the match. If there's only one player left, the match is ended.
         player = trigger.nick
         if player not in self.players:
             return
@@ -232,22 +232,21 @@ class PokerGame:
             if len(self.players) == 1:
                 if not self.dealt:
                     bot.say(self.strings["game_ended"])
-                    pokerbot.game_ended(bot , trigger)
+                    pokerbot.game_ended(bot, trigger)
                 else:
                     if len(self.players) <= 1:
-                        self.decidewin(bot , trigger, forced = True)  # if a player leaves during a match, and there's only one player left,
-                                                              # the points are given to the only one left. then the game ends.
+                        self.decidewin(bot, trigger,
+                                       forced=True)  # if a player leaves during a match, and there's only one player left,
+                        # the points are given to the only one left. then the game ends.
 
-
-    def remove_player(self , bot , player): # guess by the name :p
+    def remove_player(self, bot, player):  # guess by the name :p
         with lock:
             self.players.pop(player)
             self.playerOrder.remove(player)
 
-
     def deal(self, bot, trigger):  # deal the game. everyone in the game can do it, owner not required.
         if trigger.nick not in self.players:
-            bot.notice(self.strings["cant_play"] , trigger.nick)
+            bot.notice(self.strings["cant_play"], trigger.nick)
             print("problema in DEAL")
             return
         if len(self.players) < 2:
@@ -265,13 +264,12 @@ class PokerGame:
                     self.players[player]["cards"].append(self.get_card(bot))  # gives each player 5 cards.
             self.dealt = True
             self.currentPlayer = 0  # 1st player is chosen randomly
-            #self.show_on_turn(bot)   # shows who's on turn (NEEDS CORRECTIONS!)
+            # self.show_on_turn(bot)   # shows who's on turn (NEEDS CORRECTIONS!)
             for player in self.players:
-                self.send_cards(bot , player)   # shows to each player the cards at the beginning of the match.
+                self.send_cards(bot, player)  # shows to each player the cards at the beginning of the match.
             bot.say(self.strings["bet_time"])
 
-
-    def stay(self , bot , trigger):  # decides if to stay during a bet or a change phase
+    def stay(self, bot, trigger):  # decides if to stay during a bet or a change phase
         canstay = True
         giocatore = trigger.nick
         if trigger.nick not in self.players:
@@ -281,24 +279,24 @@ class PokerGame:
             bot.say(self.strings["left"] % giocatore)
             return
 
-        if  self.players[trigger.nick]["change"] == True:   # stay during CHANGE
-                self.players[trigger.nick]["change"] = False
-                self.inc_player()
+        if self.players[trigger.nick]["change"] == True:  # stay during CHANGE
+            self.players[trigger.nick]["change"] = False
+            self.inc_player()
 
-                if trigger.nick != self.playerOrder[-1]:   # increase the player.
-                    self.show_on_turn(bot)   # shows who's the turn now
-                self.idkcounter += 1
-                print("il idkcounter è stato aggiornato a " + str(self.idkcounter))
-                if self.idkcounter >= len(self.players):
-                    self.secondcounter += 1
-                    bot.say(self.strings["bet_time"])
-                    for i in self.players:
-                        if self.players[i]["left"] != True:
-                            self.players[i]["bet"] = False
+            if trigger.nick != self.playerOrder[-1]:  # increase the player.
+                self.show_on_turn(bot)  # shows who's the turn now
+            self.idkcounter += 1
+            print("il idkcounter è stato aggiornato a " + str(self.idkcounter))
+            if self.idkcounter >= len(self.players):
+                self.secondcounter += 1
+                bot.say(self.strings["bet_time"])
+                for i in self.players:
+                    if self.players[i]["left"] != True:
+                        self.players[i]["bet"] = False
 
         elif self.players[trigger.nick]["bet"] == False:  # stay during BETS
             if self.betsdone[giocatore] < self.maxbet:  # if another player already betted, you cannot stay.
-               canstay = False
+                canstay = False
 
             if canstay:
                 self.players[giocatore]["bet"] = True
@@ -306,15 +304,13 @@ class PokerGame:
             else:
                 bot.say(self.strings["cant_stay"] % trigger.nick)
                 return
-            for i in self.players:   # when this for will return true, self.betsdone can have place.
+            for i in self.players:  # when this for will return true, self.betsdone can have place.
                 if self.players[i]["bet"] == False:
                     return False
-            self.betdone(bot , trigger)   # check the function
+            self.betdone(bot, trigger)  # check the function
         else:
             bot.say(self.strings["cant_stay"] % trigger.nick)
             return
-
-
 
     def bet(self, bot, trigger):  # allows the player to bet
         if trigger.nick not in self.players:  # If the player is NOT part of the game
@@ -324,33 +320,33 @@ class PokerGame:
         if self.players[trigger.nick]["left"] == True:
             bot.say(self.strings["left"] % trigger.nick)
             return
-        if  self.players[trigger.nick]["change"] and self.betcounter < 1: # if it's change time, you cannot bet.
+        if self.players[trigger.nick]["change"] and self.betcounter < 1:  # if it's change time, you cannot bet.
             bot.say(self.strings["not_change"] % trigger.nick)
             return
-        if self.players[trigger.nick]["bet"] == True:   # if you've already betted, you cannot bet anymore.
+        if self.players[trigger.nick]["bet"] == True:  # if you've already betted, you cannot bet anymore.
             bot.say(self.strings["bet_done"] % trigger.nick)
             return
-        #if not self.players[trigger.nick]["hasdone"]:
+        # if not self.players[trigger.nick]["hasdone"]:
         #    bot.say(self.strings["not_done"] % trigger.nick)
         #    return
         if not self.betsdone:
             self.maxbet = int(trigger.group(3))  # If there's no bet done, the 1st one becomes the MAX.
         try:
             bet = int(trigger.group(3))
-        except:                                               # if args is empty, return
+        except:  # if args is empty, return
             bot.say(self.strings["empty"] % trigger.nick)
             return
 
-        if bet > self.players[trigger.nick]["fiches"]:   # if you don't have enough fiches, return.
+        if bet > self.players[trigger.nick]["fiches"]:  # if you don't have enough fiches, return.
             """
             THIS WILL BE CHANGED TO ALLOW THE "ALL IN" FUNCTION.
             """
             bot.say(self.strings["no_fiches"] % (trigger.nick, str(self.players[trigger.nick]["fiches"])))
             return
 
-
         if (bet + self.betsdone[trigger.nick]) < self.maxbet:  # If player did not bet more than previous player
-            bot.say(self.strings["need_more"] % (trigger.nick , str(self.maxbet - bet))) # tells you how many fiches more you need
+            bot.say(self.strings["need_more"] % (
+            trigger.nick, str(self.maxbet - bet)))  # tells you how many fiches more you need
             self.players[trigger.nick]["bets"] = False
             return
 
@@ -358,24 +354,23 @@ class PokerGame:
         self.betsdone[trigger.nick] += bet
         self.ontable += bet
 
-
         if bet > self.maxbet:  # If player bet more than previous player, a new Max bet is set and every player has to
-                                #either reach it or leave the game. "ALL IN" players will just stay in game
+            # either reach it or leave the game. "ALL IN" players will just stay in game
             self.maxbet = bet
-            bot.say(self.strings["relaunched"] % (trigger.nick , str(bet)))
+            bot.say(self.strings["relaunched"] % (trigger.nick, str(bet)))
             for player in self.players:
                 self.players[player]["bet"] = False
             self.players[trigger.nick]["bet"] = True
         else:
             self.players[trigger.nick]["bet"] = True
         for i in self.players:
-            if self.players[i]["bet"] == False:   # will return false until everyone has left, or betted a fair amount
+            if self.players[i]["bet"] == False:  # will return false until everyone has left, or betted a fair amount
                 return False
-        self.betdone(bot , trigger)
+        self.betdone(bot, trigger)
         return True
 
-
-    def betdone(self , bot , trigger):  # sets the maxbet to 0 again. starts the change phase IF the 1st bet took place (not the 2nd)
+    def betdone(self, bot,
+                trigger):  # sets the maxbet to 0 again. starts the change phase IF the 1st bet took place (not the 2nd)
         self.maxbet = 0
         bot.say(self.strings["bets_done"] % str(self.ontable))
         if self.secondcounter == 0:
@@ -384,49 +379,49 @@ class PokerGame:
                 if self.players[player]["left"] != True:
                     self.players[player]["change"] = True
             self.show_on_turn(bot)
-        else:   # if this functin gets called after the 2nd bet, the winner is decided
-            self.decidewin(bot , trigger) # see the function below
+        else:  # if this functin gets called after the 2nd bet, the winner is decided
+            self.decidewin(bot, trigger)  # see the function below
 
-
-    def decidewin(self , bot , trigger ,  forced = False):
+    def decidewin(self, bot, trigger, forced=False):
         punteggio = 0
         if not forced:
-            nomewin , punteggio = self.playerOrder[0] , self.hand_value_def(bot , self.playerOrder[0] )
+            nomewin, punteggio = self.playerOrder[0], self.hand_value_def(bot, self.playerOrder[0])
             for player in self.players:
-                if self.hand_value_def(bot , player) > punteggio and self.players[player]["left"] == False:  # checks who has the most valuable hand.
-                    nomewin , punteggio = player , self.hand_value_def(bot , player)
+                if self.hand_value_def(bot, player) > punteggio and self.players[player][
+                    "left"] == False:  # checks who has the most valuable hand.
+                    nomewin, punteggio = player, self.hand_value_def(bot, player)
                 else:
                     print("cicciole")
 
-                #elif self.hand_value_def(bot , trigger) == punteggio:
+                # elif self.hand_value_def(bot , trigger) == punteggio:
                 #    nomewin , punteggio = self.decide_draw(bot , nomewin , player)
                 """
                 decide_draw will have to decide who wins the draw, and return the result as a tuple (name , score)
                 """
 
-        else:    # the forced occours when there's only one player left in game. triggered by quit.
+        else:  # the forced occours when there's only one player left in game. triggered by quit.
             for i in self.players:
-                nomewin , punteggio = i , self.hand_value_def(bot , i) # used a "for" cuz i'm lazy :p
+                nomewin, punteggio = i, self.hand_value_def(bot, i)  # used a "for" cuz i'm lazy :p
 
         bot.say(self.strings["sus_1"])
         time.sleep(3)
         bot.say(self.strings["sus_2"])
         time.sleep(3)
         for val in hand_value:
-            if punteggio in range(hand_value[val][0] , hand_value[val][1]):
+            if punteggio in range(hand_value[val][0], hand_value[val][1]):
                 punteggio = val
-        bot.say(self.strings["winner"] % (nomewin , str(punteggio)))
+        bot.say(self.strings["winner"] % (nomewin, str(punteggio)))
         time.sleep(1)
         self.players[nomewin]["fiches"] += self.ontable
-        self.reboot(bot , trigger)
+        self.reboot(bot, trigger)
 
-    def reboot(self , bot , trigger):
+    def reboot(self, bot, trigger):
         with lock:
             for player in self.listout:
                 self.players[player] = self.listout[player]
-                self.playerOrder.insert(0 , player )
+                self.playerOrder.insert(0, player)
         if len(self.players) >= 2:
-            self.create_deck()    # a new deck is created each time
+            self.create_deck()  # a new deck is created each time
             self.maxbet = 0
             bot.say(self.strings["new_turn"])
             for i in self.players:
@@ -441,7 +436,6 @@ class PokerGame:
                 while len(self.players[i]["cards"]) < 5:
                     self.players[i]["cards"].append(self.get_card(bot))
 
-
             self.ontable = 0
             self.idkcounter = 0
             self.secondcounter = 0
@@ -451,19 +445,16 @@ class PokerGame:
             bot.say(self.strings["bet_time"])
 
             for player in self.players:
-                self.send_cards(bot , player)
+                self.send_cards(bot, player)
 
             return False
 
         else:
-            pokerbot.game_ended(bot , trigger)  # if the players left are <2, ends the game.
+            pokerbot.game_ended(bot, trigger)  # if the players left are <2, ends the game.
             return True
 
-
-
-
     def change(self, bot, trigger):
-            # makes a player change a N number of cards
+        # makes a player change a N number of cards
         if trigger.nick not in self.players:
             bot.notice(self.strings['cant_play'], trigger.nick)
             print("problema in CHANGE")
@@ -480,7 +471,8 @@ class PokerGame:
 
         try:
             for card in trigger.group(2).split():  # all the cards must go in a line, separated by a space.
-                seed, number = card[-1].upper(), card[:-1].upper()  # here, he takes commands like .change 4c and creates the card "4C"
+                seed, number = card[-1].upper(), card[
+                                                 :-1].upper()  # here, he takes commands like .change 4c and creates the card "4C"
                 if seed not in suits:
                     seed, number = card[:-1].upper(), card[-1].upper()
                 elif number not in values:  # allows both .change 4c and .change c4
@@ -499,11 +491,11 @@ class PokerGame:
 
                 with lock:
                     if searchcard not in self.players[trigger.nick]["cards"]:
-                        bot.notice(self.strings['non_hai'] % (trigger.nick , searchcard), trigger.nick)
+                        bot.notice(self.strings['non_hai'] % (trigger.nick, searchcard), trigger.nick)
                         return
                     if searchcard not in self.removecard and searchcard in self.players[trigger.nick]["cards"]:
                         self.removecard.append(searchcard)
-                    #self.players[trigger.nick]["cards"].remove(searchcard)  # removes from the player's card list the card in the "4C" forma
+                    # self.players[trigger.nick]["cards"].remove(searchcard)  # removes from the player's card list the card in the "4C" forma
 
         except (AttributeError):
             return
@@ -516,12 +508,12 @@ class PokerGame:
         while len(self.players[trigger.nick]["cards"]) < 5:
             self.players[trigger.nick]["cards"].append(self.get_card(bot))
 
-        self.send_cards(bot , trigger)
+        self.send_cards(bot, trigger)
         self.removecard = []
         self.players[trigger.nick]["change"] = False
         self.inc_player()
-        if trigger.nick != self.playerOrder[-1]:   # increase the player.
-            self.show_on_turn(bot)   # shows who's the turn now
+        if trigger.nick != self.playerOrder[-1]:  # increase the player.
+            self.show_on_turn(bot)  # shows who's the turn now
         self.idkcounter += 1
         print("il idkcounter è stato aggiornato a " + str(self.idkcounter))
         if self.idkcounter >= len(self.players):
@@ -531,13 +523,14 @@ class PokerGame:
                 if self.players[i]["left"] != True:
                     self.players[i]["bet"] = False
 
-    def fiches(self , bot , trigger):
+    def fiches(self, bot, trigger):
         if trigger.nick in self.players:
-            bot.notice(self.strings["fiches"] % (trigger.nick , str(self.players[trigger.nick]["fiches"])) , trigger.nick)
+            bot.notice(self.strings["fiches"] % (trigger.nick, str(self.players[trigger.nick]["fiches"])), trigger.nick)
 
-    def send_value(self, bot , trigger):
+    def send_value(self, bot, trigger):
         if trigger.nick in self.players:
-            bot.notice(self.strings["send_value"] % (trigger.nick , str(self.hand_value_def(bot , trigger))), trigger.nick)
+            bot.notice(self.strings["send_value"] % (trigger.nick, str(self.hand_value_def(bot, trigger))),
+                       trigger.nick)
 
     def hand_value_def(self, bot, trigger):
         try:
@@ -549,12 +542,12 @@ class PokerGame:
             mazzo.append(card)
         mazzo.sort(key=lambda numero: int(card_values[numero[:-1]]))
         valori_possibili = [
-            self.is_scala(mazzo) , self.is_colore(mazzo) , self.is_doublecouple(mazzo) ,
-            self.is_full(mazzo) , self.is_poker_tris_couple(mazzo)
-                            ]
+            self.is_scala(mazzo), self.is_colore(mazzo), self.is_doublecouple(mazzo),
+            self.is_full(mazzo), self.is_poker_tris_couple(mazzo)
+        ]
         valore_top = max(valori_possibili)
-    #    for val in hand_value:
-    #        if valore_top in range(hand_value[val][0] , hand_value[val][1]):
+        #    for val in hand_value:
+        #        if valore_top in range(hand_value[val][0] , hand_value[val][1]):
         return valore_top
 
     """
@@ -589,7 +582,7 @@ class PokerGame:
             return False
 
     def is_scala_reale(self, mazzo):
-        if mazzo[-1][0] == "A" :
+        if mazzo[-1][0] == "A":
             return True
         else:
             return False
@@ -604,7 +597,7 @@ class PokerGame:
         else:
             return 0
 
-    def is_doublecouple(self , mazzo):
+    def is_doublecouple(self, mazzo):
         if mazzo[0][:-1] == mazzo[1][:-1] and mazzo[2][:-1] == mazzo[3][:-1] != mazzo[4][:-1]:
             return 200
         elif mazzo[0][:-1] == mazzo[1][:-1] and mazzo[2][:-1] != mazzo[3][:-1] == mazzo[4][:-1]:
@@ -617,7 +610,7 @@ class PokerGame:
     def is_poker_tris_couple(self, mazzo):
         ok_ = {}
         for carta in mazzo:
-            if carta[:-1]  in ok_:
+            if carta[:-1] in ok_:
                 ok_[carta[:-1]] += 1
             else:
                 ok_[carta[:-1]] = 1
@@ -680,13 +673,15 @@ class PokerGame:
                 # trova le carte nel dizionario, renderizzate sotto V
             try:
                 bot.notice("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", trigger)
-                bot.notice(self.strings['tue_carte'] % (str(self._render_colored_cards(self.players[trigger]["cards"]))),
-                           trigger)
+                bot.notice(
+                    self.strings['tue_carte'] % (str(self._render_colored_cards(self.players[trigger]["cards"]))),
+                    trigger)
                 bot.notice("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", trigger)
             except:
                 bot.notice("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", trigger.nick)
-                bot.notice(self.strings['tue_carte'] % (str(self._render_colored_cards(self.players[trigger.nick]["cards"]))),
-                           trigger.nick)
+                bot.notice(
+                    self.strings['tue_carte'] % (str(self._render_colored_cards(self.players[trigger.nick]["cards"]))),
+                    trigger.nick)
                 bot.notice("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=", trigger.nick)
 
     def create_deck(self):
@@ -754,21 +749,22 @@ class PokerGame:
 
         return ''.join(ret) + CONTROL_NORMAL
 
+
 class PokerBot:
     def __init__(self):
         self.games = {}
         self.strings = strings_eng
         self.contatore = 0
 
-    def ontable(self , bot , trigger):
+    def ontable(self, bot, trigger):
         if trigger.sender not in self.games:
             return
         game = self.games[trigger.sender]
-        game.send_ontable(bot , trigger)
+        game.send_ontable(bot, trigger)
 
-    def language(self , bot , trigger):
+    def language(self, bot, trigger):
         try:
-           self.games[trigger.sender]
+            self.games[trigger.sender]
         except:
             bot.say("Need to start the game first.")
             return
@@ -791,26 +787,26 @@ class PokerBot:
                 bot.say(self.strings["lan_done"] % trigger.group(3))
                 self.strings = strings_ita
 
-    def start(self , bot , trigger):
+    def start(self, bot, trigger):
         if trigger.sender in self.games:
             self.join(bot, trigger)
         else:
             self.games[trigger.sender] = PokerGame(trigger)
             bot.say(self.strings['game_started'])
 
-    def leave(self , bot , trigger):
+    def leave(self, bot, trigger):
         if trigger.sender in self.games:
-            self.games[trigger.sender].leave(bot , trigger)
+            self.games[trigger.sender].leave(bot, trigger)
 
-    def stay(self , bot , trigger):
+    def stay(self, bot, trigger):
         self.contatore = 0
         if trigger.sender in self.games:
-            self.games[trigger.sender].stay(bot , trigger)
+            self.games[trigger.sender].stay(bot, trigger)
 
-    def send_value(self , bot , trigger):
+    def send_value(self, bot, trigger):
         self.contatore = 0
         if trigger.sender in self.games:
-            self.games[trigger.sender].send_value(bot , trigger)
+            self.games[trigger.sender].send_value(bot, trigger)
 
     def join(self, bot, trigger):
         if trigger.sender in self.games:
@@ -825,9 +821,9 @@ class PokerBot:
         self.games[trigger.sender].deal(bot, trigger)
 
     def stop(self, bot, trigger, forced=False):
-        chan = trigger.sender #tools.Identifier(trigger.sender)
+        chan = trigger.sender  # tools.Identifier(trigger.sender)
         if chan not in self.games:
-            #bot.notice(self.strings['not_started'] +  "STOP", trigger.nick)
+            # bot.notice(self.strings['not_started'] +  "STOP", trigger.nick)
             return
         game = self.games[chan]
         if trigger.admin or forced:
@@ -842,18 +838,18 @@ class PokerBot:
                 if not game.dealt:
                     bot.say(self.strings["quit_ok"] % (trigger.nick))
                     for player in game.players:
-                        bot.write(['MODE', trigger.sender  , '-v', player])
+                        bot.write(['MODE', trigger.sender, '-v', player])
                     del self.games[trigger.sender]
                     return
 
             for player in game.players:
-                    bot.write(['MODE', trigger.sender  , '-v', player])
-            self.game_ended(bot , trigger)
-            #del self.games[chan]
+                bot.write(['MODE', trigger.sender, '-v', player])
+            self.game_ended(bot, trigger)
+            # del self.games[chan]
         else:
             bot.say("Can't be stopped.")
 
-    def quit(self, bot, trigger , partquit = False):
+    def quit(self, bot, trigger, partquit=False):
         try:
             gioco = self.games[trigger.sender]
         except:
@@ -862,33 +858,32 @@ class PokerBot:
         if trigger.sender not in self.games:
             return
         game = self.games[trigger.sender]
-        game.quit(bot , trigger , partquit)
-        bot.write(['MODE', trigger.sender  , '-v', trigger.nick])
+        game.quit(bot, trigger, partquit)
+        bot.write(['MODE', trigger.sender, '-v', trigger.nick])
 
         if len(gioco.players) < 2:
             self.stop(bot, trigger, forced=True)
 
-    def change(self , bot , trigger):
+    def change(self, bot, trigger):
         self.contatore = 0
         game = self.games[trigger.sender]
         if trigger.sender not in self.games:
             return
-        game.change(bot , trigger)
+        game.change(bot, trigger)
 
-    def bet(self , bot , trigger):
+    def bet(self, bot, trigger):
         self.contatore = 0
         game = self.games[trigger.sender]
         if trigger.sender not in self.games:
             return
-        game.bet(bot , trigger)
+        game.bet(bot, trigger)
 
-    def fiches(self , bot , trigger):
+    def fiches(self, bot, trigger):
         self.contatore = 0
         if trigger.sender not in self.games:
             return
         game = self.games[trigger.sender]
-        game.fiches(bot , trigger)
-
+        game.fiches(bot, trigger)
 
     def send_cards(self, bot, trigger):
         self.contatore = 0
@@ -909,97 +904,104 @@ class PokerBot:
             game = self.games[trigger.sender]
             try:
                 for player in game.players:
-                   bot.write(['MODE', trigger.sender  , '-v', player])
+                    bot.write(['MODE', trigger.sender, '-v', player])
             except:
                 print("Provato a cancellare player inesistente.")
             del self.games[trigger.sender]
 
     def move_game(self, bot, trigger):
-       who = trigger.nick
-       oldchan = trigger.sender
-       newchan = tools.Identifier(trigger.group(3))
-       if newchan[0] != '#':
-           newchan = tools.Identifier('#' + newchan)
-       if oldchan not in self.games:
-           bot.reply(self.strings['not_started'] + "MOVEGAME")
-           return
+        who = trigger.nick
+        oldchan = trigger.sender
+        newchan = tools.Identifier(trigger.group(3))
+        if newchan[0] != '#':
+            newchan = tools.Identifier('#' + newchan)
+        if oldchan not in self.games:
+            bot.reply(self.strings['not_started'] + "MOVEGAME")
+            return
 
-       if not trigger.admin:
-           bot.reply(self.strings['cant_move'])
-           return
-       if not newchan:
-           bot.reply(self.strings['NEED_CHANNEL'])
-           return
-       if newchan == oldchan:
-           return
-       if newchan.lower() not in bot.privileges:
-           bot.reply(self.strings['NOT_IN_CHANNEL'] % newchan)
-           return
-       if newchan in self.games:
-           bot.reply(self.strings['CHANNEL_IN_USE'] % newchan)
-           return
-       game = self.games.pop(oldchan)
-       self.games[newchan] = game
-       game.game_moved(bot, who, oldchan, newchan)
-
-
-
+        if not trigger.admin:
+            bot.reply(self.strings['cant_move'])
+            return
+        if not newchan:
+            bot.reply(self.strings['NEED_CHANNEL'])
+            return
+        if newchan == oldchan:
+            return
+        if newchan.lower() not in bot.privileges:
+            bot.reply(self.strings['NOT_IN_CHANNEL'] % newchan)
+            return
+        if newchan in self.games:
+            bot.reply(self.strings['CHANNEL_IN_USE'] % newchan)
+            return
+        game = self.games.pop(oldchan)
+        self.games[newchan] = game
+        game.game_moved(bot, who, oldchan, newchan)
 
 
 pokerbot = PokerBot()
 
+
 @module.commands("poker")
-def poker1(bot , trigger):
+def poker1(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.start(bot , trigger)
+        pokerbot.start(bot, trigger)
         string = "[" + poker + "] : START iniziata in " + trigger.sender
-        bot.say( string , log_chan)
+        bot.say(string, log_chan)
+
 
 @module.commands("change")
 @module.example(".change 4a 5s 7w")
-def change(bot , trigger):
+def change(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.change(bot , trigger)
+        pokerbot.change(bot, trigger)
+
 
 @module.commands("cards")
-def cards(bot , trigger):
+def cards(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.send_cards(bot , trigger)
+        pokerbot.send_cards(bot, trigger)
+
 
 @module.commands("deal")
 @module.example(".deal")
-def deal(bot , trigger):
+def deal(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.deal(bot , trigger)
-        bot.say("[" + poker + "] : DEAL in " + trigger.sender , log_chan)
+        pokerbot.deal(bot, trigger)
+        bot.say("[" + poker + "] : DEAL in " + trigger.sender, log_chan)
+
 
 @module.commands("bet")
 @module.example(".bet 50")
-def bet(bot , trigger):
+def bet(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.bet(bot , trigger)
+        pokerbot.bet(bot, trigger)
+
 
 @module.commands("join")
 @module.example(".join")
-def join(bot , trigger):
+def join(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.join(bot , trigger)
+        pokerbot.join(bot, trigger)
+
 
 @module.commands("quit")
 @module.example(".leave")
-def quit(bot , trigger):
+def quit(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.quit(bot , trigger)
+        pokerbot.quit(bot, trigger)
+
 
 @module.commands("leave")
-def leave(bot , trigger):
+def leave(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.leave(bot , trigger)
+        pokerbot.leave(bot, trigger)
+
 
 @module.commands("stay")
-def stay(bot , trigger):
+def stay(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.stay(bot , trigger)
+        pokerbot.stay(bot, trigger)
+
 
 @module.commands('adminstop')
 @module.example(".adminstop")
@@ -1007,69 +1009,76 @@ def stay(bot , trigger):
 def pokerstop(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.stop(bot, trigger)
-        bot.say("[" + poker + "] : Admin ha fermato una partita in " + trigger.sender , log_chan)
+        bot.say("[" + poker + "] : Admin ha fermato una partita in " + trigger.sender, log_chan)
+
 
 @module.commands("fiches")
-def fiches(bot , trigger):
+def fiches(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.fiches(bot , trigger)
+        pokerbot.fiches(bot, trigger)
+
 
 @module.commands("value")
-def value(bot , trigger):
+def value(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.send_value(bot , trigger)
+        pokerbot.send_value(bot, trigger)
+
 
 @module.commands('pokergames')
 @module.priority('high')
 @module.require_admin
 def brisgames(bot, trigger):
-   chans = []
-   active = 0
-   pending = 0
-   with lock:
-       for chan, game in pokerbot.games.items():
-           if game.startTime:
-               chans.append(chan)
-               active += 1
-           else:
-               chans.append(chan + " (pending)")
-               pending += 1
-   if not len(chans):
-       bot.say('No ' + poker + ' games in progress, %s.' % trigger.nick)
-       return
-   g_active = "channel" if active == 1 else "channels"
-   g_pending = "channel" if pending == 1 else "channels"
-   chanlist = ", ".join(chans[:-2] + [" and ".join(chans[-2:])])
-   bot.reply(
-       poker + " is pending deal in %d %s and in progress in %d %s: %s."
-       % (pending, g_pending, active, g_active, chanlist))
+    chans = []
+    active = 0
+    pending = 0
+    with lock:
+        for chan, game in pokerbot.games.items():
+            if game.startTime:
+                chans.append(chan)
+                active += 1
+            else:
+                chans.append(chan + " (pending)")
+                pending += 1
+    if not len(chans):
+        bot.say('No ' + poker + ' games in progress, %s.' % trigger.nick)
+        return
+    g_active = "channel" if active == 1 else "channels"
+    g_pending = "channel" if pending == 1 else "channels"
+    chanlist = ", ".join(chans[:-2] + [" and ".join(chans[-2:])])
+    bot.reply(
+        poker + " is pending deal in %d %s and in progress in %d %s: %s."
+        % (pending, g_pending, active, g_active, chanlist))
 
 
-@module.commands("language" , "lan")
-@module.example(".language italiano" , ".lan english")
-def language(bot , trigger):
+@module.commands("language", "lan")
+@module.example(".language italiano", ".lan english")
+def language(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.language(bot , trigger)
+        pokerbot.language(bot, trigger)
+
 
 @module.commands("pokerhelp")
-@module.example(".pokerhelp italiano" , "pokerhelp english")
-def pokerhelp(bot , trigger):
+@module.example(".pokerhelp italiano", "pokerhelp english")
+def pokerhelp(bot, trigger):
     if trigger.group(3) == "italiano":
-       bot.notice("GUIDA: " + string_help_ita , trigger.nick)
+        bot.notice("GUIDA: " + string_help_ita, trigger.nick)
     else:
-       bot.notice("GUIDE: " + string_help_eng , trigger.nick)
+        bot.notice("GUIDE: " + string_help_eng, trigger.nick)
+
 
 @module.commands("ontable")
-def ontable(bot , trigger):
+def ontable(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.ontable(bot , trigger)
+        pokerbot.ontable(bot, trigger)
+
 
 @module.event("PART")
-def part(bot , trigger):
+def part(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.quit(bot , trigger , partquit = True)
+        pokerbot.quit(bot, trigger, partquit=True)
+
 
 @module.event("QUIT")
-def quit_(bot , trigger):
+def quit_(bot, trigger):
     if trigger.sender in game_chan:
-        pokerbot.quit(bot , trigger , partquit = True)
+        pokerbot.quit(bot, trigger, partquit=True)
