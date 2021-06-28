@@ -1,4 +1,4 @@
-import sopel.module as module
+import sopel.plugin as module
 import sopel.tools as tools     #import the 2 sopel modules required
 
 

@@ -3,7 +3,7 @@ various imports. Depends on Sopel. in the future, would like to add a DB for
 fiches and stats like the BRISCOLa one
 (might need to ask yorick or bruand for this eheh, i'd love a SQlite db)
 """
-import sopel.module as module
+import sopel.plugin as module
 import sopel.tools as tools
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL , CONTROL_HEX_COLOR
 import time
