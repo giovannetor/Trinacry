@@ -772,7 +772,6 @@ class BrisGame:
             bot.say("[" + bris + "] : DEAL di BRISCOLA in " + trigger.sender, "#trinacry-logs")
 
     def play(self, bot, trigger):
-
         if trigger.nick not in self.players:
             bot.notice(self.strings['cant_play'], trigger.nick)
             return
