@@ -7,7 +7,7 @@ from enum import Enum
 from io import StringIO
 from pathlib import Path
 
-import sopel.plugin as module
+import sopel.plugin as plugin
 import sopel.tools as tools
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
 
@@ -45,10 +45,10 @@ class tttgame:
                 if self.dealt:
                     bot.say(self.strings["cant_play"])
                     return
-                self.players = {self.starter: {"squares" : [] , "sign" : O}}  # add player to players dict
+                self.players[trigger.nick]= {"squares" : [] , "sign" : O}  # add player to players dict
                 self.playerOrder.append(trigger.nick)  # add player to players order list
-                bot.say(self.strings['pronti'])  # at least 2 players, ready to deal
-                self.deal(bot , trigger)
+                bot.say(self.strings['inizio'])  # at least 2 players, ready to deal
+                self.dealt = True
             else:
                 bot.say(self.strings["gia_dentro"] % trigger.nick)  # player already in
 
@@ -88,13 +88,31 @@ class tttgame:
 
         self.print_grid(bot)
 
-        self.currentPlayer += 1
-        if self.currentPlayer > 1:
-            self.currentPlayer = 0
+        if self.checkwin(player):
+            bot.say(self.strings["win"] % player)
+        else:
+            self.currentPlayer += 1
+            if self.currentPlayer > 1:
+               self.currentPlayer = 0
+            bot.say(self.strings["next_turn"])
 
-        self.checkwin()
 
-    def checkwin(self):
+    def checkwin(self , player):
+        squ =  self.players[player]["squares"]
+        check_dic = {"A" : 0 , "B" : 0 , "C" : 0 , "1" : 0 , "2" : 0 , "3" : 0}
+
+        for combination in squ:
+            check_dic[combination[0]] += 1
+            check_dic[str(combination[1])] += 1
+
+        if max(check_dic.values()) == 3:
+            return True
+        elif "A1" in squ and "B2" in squ and "C3" in squ:
+            return True
+        elif "A3" in squ and "B2" in squ and "C1" in squ:
+            return True
+        else:
+            return False
 
     def check_possible(self , player , cmd):
         if gridlist[cmd] == self.players[player]["sign"]:
@@ -113,4 +131,6 @@ class tttgame:
         bot.say("------------------------------")
         bot.say(dicgrid["C1"]+ "   |   " + dicgrid["C2"] + "   |   " + dicgrid["C3"])
 
-
+@plugin.commands("grid")
+def grid(bot):
+    tttgame.print_grid(bot)
