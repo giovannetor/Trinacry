@@ -41,7 +41,7 @@ Base = declarative_base()
 bris = CONTROL_BOLD + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + " B" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "R" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "I" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "S" + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + "C" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "O" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "L" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "A " + CONTROL_NORMAL
 
 log_chan = "#trinacry-logs"
-game_chan = ["#briscola"]
+game_chan = ["#briscola" , "#games"]
 
 
 # Classe giocatore
@@ -1173,7 +1173,7 @@ class BrisBot:
         try:
             self.games[trigger.sender]
         except:
-            bot.say("Need to start the game first.")
+            #bot.say("Need to start the game first.")
             return
         game = self.games[trigger.sender]
 
@@ -1205,13 +1205,13 @@ class BrisBot:
     def join(self, bot, trigger):
         if trigger.sender in self.games:
             self.games[trigger.sender].join(bot, trigger)
-        else:
-            bot.say(self.strings['not_started'])
+        #else:
+        #    bot.say(self.strings['not_started'])
 
     def stop(self, bot, trigger, forced=False):
         chan = trigger.sender
         if chan not in self.games:
-            bot.notice(self.strings['not_started'], trigger.nick)
+            #bot.notice(self.strings['not_started'], trigger.nick)
             return
         game = self.games[chan]
         if trigger.admin or forced:
@@ -1258,7 +1258,7 @@ class BrisBot:
 
     def deal(self, bot, trigger):
         if trigger.sender not in self.games:
-            bot.say(self.strings['not_started'])
+            #bot.say(self.strings['not_started'])
             return
         self.games[trigger.sender].deal(bot, trigger)
 
@@ -1468,8 +1468,8 @@ def language(bot, trigger):
         brisbot.language(bot, trigger)
 
 
-@module.commands('adminstop')
-@module.example(".adminstop")
+@module.commands('adstop')
+@module.example(".adstop")
 @module.priority('high')
 def brisstop(bot, trigger):
     if trigger.sender in game_chan:
@@ -1493,15 +1493,15 @@ def brisquit(bot, trigger):
         brisbot.quit(bot, trigger)
 
 
-@module.commands("rules", "ru")
-@module.example(".ru italiano")
-@module.priority("low")
-def sendrules(bot, trigger):
-    if trigger.sender in game_chan:
-        if trigger.group(3) == "italiano":
-            bot.notice("REGOLE DEL GIOCO: " + rules_ita, trigger.nick)
-        else:
-            bot.notice("GAME'S RULES: " + rules_eng, trigger.nick)
+#@module.commands("rules", "ru")
+#@module.example(".ru italiano")
+#@module.priority("low")
+#def sendrules(bot, trigger):
+#    if trigger.sender in game_chan:
+#        if trigger.group(3) == "italiano":
+##            bot.notice("REGOLE DEL GIOCO: " + rules_ita, trigger.nick)
+#        else:
+#            bot.notice("GAME'S RULES: " + rules_eng, trigger.nick)
 
 
 @module.commands('brismove', "brmove")
@@ -1552,8 +1552,10 @@ def brishelp(bot, trigger):
     if trigger.sender in game_chan:
         if trigger.group(3) == "italiano":
             bot.notice("GUIDA: " + string_help_ita, trigger.nick)
+            bot.notice("REGOLE DEL GIOCO: " + rules_ita, trigger.nick)
         else:
             bot.notice("GUIDE: " + string_help_eng, trigger.nick)
+            bot.notice("GAME'S RULES: " + rules_eng, trigger.nick)
 
 
 @module.commands('brisgames', "brgm")
