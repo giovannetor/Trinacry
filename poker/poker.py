@@ -766,7 +766,7 @@ class PokerBot:
         try:
             self.games[trigger.sender]
         except:
-            bot.say("Need to start the game first.")
+            #bot.say("Need to start the game first.")
             return
         game = self.games[trigger.sender]
 
@@ -811,12 +811,12 @@ class PokerBot:
     def join(self, bot, trigger):
         if trigger.sender in self.games:
             self.games[trigger.sender].join(bot, trigger)
-        else:
-            bot.say(self.strings['not_started'] + "JOIN")
+        #else:
+        #    bot.say(self.strings['not_started'] )
 
     def deal(self, bot, trigger):
         if trigger.sender not in self.games:
-            bot.say(self.strings['not_started'] + "DEAL")
+            #bot.say(self.strings['not_started'] )
             return
         self.games[trigger.sender].deal(bot, trigger)
 
@@ -1003,8 +1003,8 @@ def stay(bot, trigger):
         pokerbot.stay(bot, trigger)
 
 
-@module.commands('adminstop')
-@module.example(".adminstop")
+@module.commands('adstop')
+@module.example(".adstop")
 @module.priority('high')
 def pokerstop(bot, trigger):
     if trigger.sender in game_chan:
