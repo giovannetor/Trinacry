@@ -19,4 +19,4 @@ This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)
 
 1. `Pasqua` : Contains the modules used for Easter. 
 
-1. `Tris` : The game TicTacToe
+1. `Tris` : The game TicTacToe on IRC!
