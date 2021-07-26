@@ -36,7 +36,10 @@ strings_eng = {"impos_unirsi": "I'm sorry %s , the max number of players is 4. W
                "adstop" : CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER"
                            + CONTROL_NORMAL + ". The game was stopped by an Admin.",
                "not_started" : "The match hasn't started yet. Find another player to start.",
-               "no_square" : "Please put a slot after the command. e.g. 'A2'"}
+               "no_square" : "Please put a slot after the command. e.g. 'A2'",
+               "quit_stop" : CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER"
+                           + CONTROL_NORMAL + ":a player left the match."
+               }
 
 class tttgame:
     def __init__(self , trigger):
@@ -213,9 +216,11 @@ class tttbot:
             self.join(bot, trigger)
 
 
-    def endgame(self, bot , player_win, place, forced = False):
+    def endgame(self, bot , player_win, place, forced = False , partquit=False):
         if forced:
             bot.say(self.strings["adstop"])
+        elif partquit:
+            bot.say(self.strings["quit_stop"])
         else:
             bot.say("[" + TRIS + "] : partita finita in " + place + ". Vincitore: " + player_win , log_chan)
         del self.games[place]
@@ -262,9 +267,20 @@ def ttt_join(bot , trigger):
 def adstop(bot , trigger):
     if trigger.sender in game_chan:
         bot.say("[" + TRIS + "] : partita BLOCCATA in " + trigger.sender + " da: " + trigger.nick , log_chan)
-        ttt.endgame(bot , forced = True ,place = trigger.sender , player_win = None )
+        ttt.endgame(bot , forced = True ,place = trigger.sender ,partquit=False, player_win = None )
 
 @plugin.commands("play")
 def play(bot , trigger):
     if trigger.sender in game_chan:
         ttt.play(bot , trigger)
+
+@plugin.event("PART")
+def part(bot, trigger):
+    if trigger.sender in game_chan:
+        ttt.endgame(bot, forced=False,place = trigger.sender, partquit=True, player_win = None)
+
+
+@plugin.event("QUIT")
+def quit_(bot, trigger):
+    if trigger.sender in game_chan:
+        ttt.endgame(bot, forced=False,place = trigger.sender, partquit=True, player_win = None)
