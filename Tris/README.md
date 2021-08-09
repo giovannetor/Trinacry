@@ -3,11 +3,16 @@
 # TicTacToe
 
 Hi. This is a lil module to play TicTacToe on IRC with Trinacry. 
+Called "Tris" in some countries, it's a popular 1v1 game.
 
 ##What it does
-1. *cmd* `ttt` : Starts the game.
-2. *cmd* `grid` : Shows the actual grid.
-3. *cmd* `play` : Put your sign on a slot. *ex: `.play A2`*
-4. *cmd* `join` : Joins the match.
-5. *cmd* `adstop` (admin only) : Forcefully stops the game.
+1. *cmd* `.ttt` : Starts the game.
+2. *cmd* `.grid` : Shows the actual grid.
+3. *cmd* `.play` : Put your sign on a slot. *ex: `.play A2`*
+4. *cmd* `.join` : Joins the match.
+5. *cmd* `quit` : Quits the game.    
+6. *cmd* `.adstop ttt` _(admin only)_ : Forcefully stops the game.
+   
 
+1. *ev* `QUIT` : Triggered when the user quits. Executes `.quit`
+2. *ev* `LEAVE` : Triggered when the user leaves. Executes `.quit`

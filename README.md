@@ -15,8 +15,10 @@ This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)
 
 1. `Poker` : The game Poker (Italian version) to play on IRC! 
 
+1. `Tris` : The game TicTacToe on IRC!
+
 1. `Briscola` : The game Briscola to play on IRC!
 
 1. `Pasqua` : Contains the modules used for Easter. 
 
-1. `Tris` : The game TicTacToe on IRC!
+

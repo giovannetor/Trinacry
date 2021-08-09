@@ -21,13 +21,13 @@ Sopel bot created to host a match of BRISCOLA (typical Italian card game) on IRC
 ## Commands in-game for Admins:
 1. `.adrank` : (*PRIV MSG ONLY*) Makes the BOT send a rank of players based on a parameter *(win - tot - time - score - player (playernick))*
 2. `.delplayer` : (*PRIV MSG ONLY and REQUIRES OWNER*) Delete a player from the Database.
-3. `.adminstop` : Stops an ongoing game. No one wins.
+3. `.adstop bris` : Stops an ongoing game. No one wins.
 4. `.brmove` : Moves the game to another channel.
 5. `.brisgames` : Shows where the BOT has ongoing games.
 ### Note:
 - The Module already has a DB inside. The files manager.py and models.py are no more required, since they have been included in the main code.
 - Linux recomended.
-- Uses SQlite 1.3.32 and Sopel 7.0.7 (check requirements.txt and INSTALL.md)
+- Uses SQlite 1.3.32 and Sopel v8.0.0.dev0 (check requirements.txt and INSTALL.md)
 - ***IMPORTANT*** : the bot sends by default some logs to a channel named *#trinacry-logs*. You can remove the log feature, or change the chan name.
 ## TO IMPLEMENT:
 - [X] Create a DB that keeps track of user's score. Probably using SQlite.
