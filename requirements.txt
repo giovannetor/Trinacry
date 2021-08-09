@@ -1,0 +1,4 @@
+sopel~=8.0.0dev0
+SQLAlchemy~=1.3.23
+
+packaging~=20.9
