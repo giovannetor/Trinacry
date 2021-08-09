@@ -28,7 +28,7 @@ strings_eng = {"impos_unirsi": "I'm sorry %s , the max number of players is 4. W
                "altro" : "This slot belongs to the other player.",
                "ok" : "%s in %s by %s!",
                "win" : "%s made " + TRIS + "!!",
-               "next_turn" : "It's %s 's turn now!",
+               "next_turn" : "It's %s's turn now!",
                "final_win" : "%s scored 3 wins and won the " + TRIS + " game!!",
                "endgame" : CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER"
                            + CONTROL_NORMAL + ". Start a new match if you wanna play again.",
@@ -38,7 +38,9 @@ strings_eng = {"impos_unirsi": "I'm sorry %s , the max number of players is 4. W
                "not_started" : "The match hasn't started yet. Find another player to start.",
                "no_square" : "Please put a slot after the command. e.g. 'A2'",
                "quit_stop" : CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER"
-                           + CONTROL_NORMAL + ":a player left the match."
+                           + CONTROL_NORMAL + ":a player left the match.",
+               "draw_" : "The match is a DRAW!",
+               "missing" : "A parameter is missing...try to write all together? :) "
                }
 
 class tttgame:
@@ -57,6 +59,7 @@ class tttgame:
                          "B1" : "/"  ,"B2" : "/" , "B3" : "/" ,
                          "C1" : "/" , "C2" : "/" , "C3" : "/"}
         self.jcount = 0
+        self.counter = 0
 
     def join(self, bot, trigger):
         with lock:
@@ -95,17 +98,24 @@ class tttgame:
         if not trigger.group(3):
             bot.say(self.strings["no_square"])
             return
+        
 
         cmd = trigger.group(3).upper()
-        print(cmd)
+        #print(cmd)
 
         if cmd[0] not in "ABC":
-            bot.say(self.strings["noletter"] % cmd[0])
+            try:
+                bot.say(self.strings["noletter"] % cmd[0])
+            except:
+                bot.say(self.strings["missing"])
             return
 
         try: int(cmd[1])
         except:
-            bot.say(self.strings["nonumber"] % cmd[1])
+            try:
+                bot.say(self.strings["nonumber"] % cmd[1])
+            except:
+                bot.say(self.strings["missing"])
             return
 
         if cmd not in gridlist:
@@ -125,22 +135,30 @@ class tttgame:
         self.players[player]["squares"].append(cmd)
         self.griglia[cmd] = self.players[player]["sign"]
         self.print_grid(bot)
-
+        self.counter += 1
+        print(self.counter)
         if self.checkwin(player):
             bot.say(self.strings["win"] % player)
             self.players[player]["score"] += 1
-            self.reboot(bot , place = trigger.sender)
+            self.reboot(bot , trigger  ,place = trigger.sender)
         else:
             self.currentPlayer += 1
             if self.currentPlayer == len(self.playerOrder):
                self.currentPlayer = 0
+            if self.counter == 9:
+                bot.say(self.strings["draw_"])                
+                self.currentPlayer += 1
+                if self.currentPlayer == len(self.playerOrder):
+                    self.currentPlayer = 0
+                self.reboot(bot , trigger , place = trigger.sender)
+                return
             bot.say(self.strings["next_turn"] % self.playerOrder[self.currentPlayer])
 
-    def reboot(self , bot , place):
+    def reboot(self , bot , trigger, place):
         for player in self.players:
             if self.players[player]["score"] == 3:
                 bot.say(self.strings["final_win"] % (player))
-                self.endgame(bot , player_win = player , place = place)
+                self.endgame(bot , trigger ,player_win = player , place = place)
                 return
             self.players[player]["squares"].clear()
 
@@ -149,22 +167,23 @@ class tttgame:
             else:
                 self.players[player]["sign"] = X
 
-            self.currentPlayer += 1
-            if self.currentPlayer == len(self.playerOrder):
-               self.currentPlayer = 0
+        self.currentPlayer += 1
+        if self.currentPlayer == len(self.playerOrder):
+           self.currentPlayer = 0
 
-            self.griglia = {"A1" : "/" , "A2" : "/" , "A3" : "/",
+        self.griglia = {"A1" : "/" , "A2" : "/" , "A3" : "/",
                          "B1" : "/"  ,"B2" : "/" , "B3" : "/" ,
                          "C1" : "/" , "C2" : "/" , "C3" : "/"}
 
-            self.print_grid(bot)
-            bot.say(self.strings['turno'] % self.playerOrder[self.currentPlayer])
+        self.print_grid(bot)
+        bot.say(self.strings['turno'] % self.playerOrder[self.currentPlayer])
+        self.counter = 0
+        self.jcount = 0
 
-
-    def endgame(self , bot, player_win , place):
+    def endgame(self , bot, trigger, player_win , place):
         bot.say(self.strings["endgame"])
         forced = False
-        tttbot.endgame( bot ,player_win,  place , forced )
+        tttbot.endgame( bot , trigger ,player_win,  place , forced )
 
     def checkwin(self , player):
         squ =  self.players[player]["squares"]
@@ -212,12 +231,16 @@ class tttbot:
             self.join(bot, trigger)
         else:
             bot.say(self.strings['game_started'])
+            bot.say("[" + TRIS + "] : partita INIZIATA in " + trigger.sender + " da: " + trigger.nick , log_chan)
             self.games[trigger.sender] = tttgame(trigger)
             self.join(bot, trigger)
 
 
-    def endgame(self, bot , player_win, place, forced = False , partquit=False):
+    def endgame(self, bot , trigger , player_win, place, forced = False , partquit=False):
         if forced:
+            if trigger.sender not in self.games:
+                return
+            bot.say("[" + TRIS + "] : partita BLOCCATA in " + trigger.sender + " da: " + trigger.nick , log_chan)
             bot.say(self.strings["adstop"])
         elif partquit:
             bot.say(self.strings["quit_stop"])
@@ -247,40 +270,46 @@ class tttbot:
 
 ttt = tttbot()
 
-@plugin.commands("grid")
+@plugin.commands("grid" , "gr")
 def grid(bot , trigger):
     if trigger.sender in game_chan:
         ttt.print_grid(bot , trigger)
 
-@plugin.commands("ttt")
+@plugin.commands("ttt" , "TicTacToe" , "tictactoe")
 def ttt_start(bot , trigger):
     if trigger.sender in game_chan:
-        bot.say("[" + TRIS + "] : partita INIZIATA in " + trigger.sender + " da: " + trigger.nick , log_chan)
+        
         ttt.start(bot , trigger)
 
-@plugin.commands("join")
+@plugin.commands("join" , "jo")
 def ttt_join(bot , trigger):
     if trigger.sender in game_chan:
         ttt.join(bot , trigger)
 
 @plugin.commands("adstop")
 def adstop(bot , trigger):
-    if trigger.sender in game_chan:
-        bot.say("[" + TRIS + "] : partita BLOCCATA in " + trigger.sender + " da: " + trigger.nick , log_chan)
-        ttt.endgame(bot , forced = True ,place = trigger.sender ,partquit=False, player_win = None )
+    if trigger.sender in game_chan and trigger.group(3) == "ttt":      
+        
+        ttt.endgame(bot ,trigger , forced = True ,place = trigger.sender ,partquit=False, player_win = None )
 
-@plugin.commands("play")
+@plugin.commands("play" , "pl")
 def play(bot , trigger):
     if trigger.sender in game_chan:
         ttt.play(bot , trigger)
+        
+@plugin.commands("quit" , "qu")
+def part(bot, trigger):
+    if trigger.sender in game_chan:
+        ttt.endgame(bot, trigger , forced=False,place = trigger.sender, partquit=True, player_win = None)
+
 
 @plugin.event("PART")
 def part(bot, trigger):
     if trigger.sender in game_chan:
-        ttt.endgame(bot, forced=False,place = trigger.sender, partquit=True, player_win = None)
+        ttt.endgame(bot, trigger ,forced=False,place = trigger.sender, partquit=True, player_win = None)
 
 
 @plugin.event("QUIT")
 def quit_(bot, trigger):
     if trigger.sender in game_chan:
-        ttt.endgame(bot, forced=False,place = trigger.sender, partquit=True, player_win = None)
+        ttt.endgame(bot, trigger ,forced=False,place = trigger.sender, partquit=True, player_win = None)

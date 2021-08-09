@@ -15,7 +15,7 @@ from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
 lock = threading.RLock()  # initialise lock
 
 max_player = 10
-game_chan = ["#poker"]
+game_chan = ["#poker" , "#games"]
 log_chan = "#trinacry-logs"
 poker = CONTROL_BOLD + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + " P" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "O" + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + "K" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "E" + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + "R" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "! " + CONTROL_NORMAL
 """
@@ -829,6 +829,7 @@ class PokerBot:
         if trigger.admin or forced:
             if not forced:
                 bot.say(self.strings['game_stopped'])
+                bot.say("[" + poker + "] : Admin ha fermato una partita in " + trigger.sender, log_chan)
                 if trigger.sender != chan:
                     bot.say(self.strings['admin_stop'], chan)
                 else:
@@ -941,7 +942,7 @@ class PokerBot:
 pokerbot = PokerBot()
 
 
-@module.commands("poker")
+@module.commands("poker" , "pk")
 def poker1(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.start(bot, trigger)
@@ -949,20 +950,20 @@ def poker1(bot, trigger):
         bot.say(string, log_chan)
 
 
-@module.commands("change")
+@module.commands("change" , "chg")
 @module.example(".change 4a 5s 7w")
 def change(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.change(bot, trigger)
 
 
-@module.commands("cards")
+@module.commands("cards" , "ca")
 def cards(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.send_cards(bot, trigger)
 
 
-@module.commands("deal")
+@module.commands("deal" , "de")
 @module.example(".deal")
 def deal(bot, trigger):
     if trigger.sender in game_chan:
@@ -977,27 +978,27 @@ def bet(bot, trigger):
         pokerbot.bet(bot, trigger)
 
 
-@module.commands("join")
+@module.commands("join" , "jo")
 @module.example(".join")
 def join(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.join(bot, trigger)
 
 
-@module.commands("quit")
+@module.commands("quit" , "qu")
 @module.example(".leave")
 def quit(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.quit(bot, trigger)
 
 
-@module.commands("leave")
+@module.commands("leave" , "le")
 def leave(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.leave(bot, trigger)
 
 
-@module.commands("stay")
+@module.commands("stay" , "st")
 def stay(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.stay(bot, trigger)
@@ -1007,9 +1008,9 @@ def stay(bot, trigger):
 @module.example(".adstop")
 @module.priority('high')
 def pokerstop(bot, trigger):
-    if trigger.sender in game_chan:
+    if trigger.sender in game_chan and trigger.group(3) == "poker":
         pokerbot.stop(bot, trigger)
-        bot.say("[" + poker + "] : Admin ha fermato una partita in " + trigger.sender, log_chan)
+        
 
 
 @module.commands("fiches")
@@ -1018,13 +1019,13 @@ def fiches(bot, trigger):
         pokerbot.fiches(bot, trigger)
 
 
-@module.commands("value")
+@module.commands("value" , "vl")
 def value(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.send_value(bot, trigger)
 
 
-@module.commands('pokergames')
+@module.commands('pokergames', "pkgame")
 @module.priority('high')
 @module.require_admin
 def brisgames(bot, trigger):
@@ -1057,7 +1058,7 @@ def language(bot, trigger):
         pokerbot.language(bot, trigger)
 
 
-@module.commands("pokerhelp")
+@module.commands("pokerhelp" , "pkhelp")
 @module.example(".pokerhelp italiano", "pokerhelp english")
 def pokerhelp(bot, trigger):
     if trigger.group(3) == "italiano":
@@ -1066,7 +1067,7 @@ def pokerhelp(bot, trigger):
         bot.notice("GUIDE: " + string_help_eng, trigger.nick)
 
 
-@module.commands("ontable")
+@module.commands("ontable" , "ot")
 def ontable(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.ontable(bot, trigger)

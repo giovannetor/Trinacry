@@ -1217,6 +1217,7 @@ class BrisBot:
         if trigger.admin or forced:
             if not forced:
                 bot.say(self.strings['game_stopped'])
+                bot.say("[" + bris + "] : Admin ha fermato una partita in  " + trigger.sender, log_chan)
                 if trigger.sender != chan:
                     bot.say(self.strings['admin_stop'], chan)
                 else:
@@ -1472,9 +1473,9 @@ def language(bot, trigger):
 @module.example(".adstop")
 @module.priority('high')
 def brisstop(bot, trigger):
-    if trigger.sender in game_chan:
+    if trigger.sender in game_chan and trigger.group(3) == "bris":
         brisbot.stop(bot, trigger)
-        bot.say("[" + bris + "] : Admin ha fermato una partita in  " + trigger.sender, log_chan)
+        
 
 
 @module.commands('jo', "join")
