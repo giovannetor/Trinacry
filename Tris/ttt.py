@@ -299,7 +299,7 @@ def play(bot , trigger):
         ttt.play(bot , trigger)
         
 @plugin.commands("quit" , "qu")
-def part(bot, trigger):
+def quit(bot, trigger):
     if trigger.sender in game_chan:
         ttt.endgame(bot, trigger , forced=False,place = trigger.sender, partquit=True, player_win = None)
 
