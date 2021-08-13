@@ -60,7 +60,7 @@ def resurrect(bot , trigger):
     if not trigger.group(2):
         return
     bot.write(['MODE', trigger.sender, '-b', trigger.group(2)])
-    bot.write(["invite" , trigger.nick(2)])
+    bot.write(["invite" , trigger.group(2)])
     bot.say(trigger.group(2) + " has succesfully been resurrected.")
 
 @event("JOIN")
