@@ -5,9 +5,9 @@ from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NOR
 
 @commands("drink")
 def drink(bot , trigger):
-    if trigger.nick == "Ash":
-        bot.say("No drinks for kiddos!!")
-        return
+   # if trigger.nick == "Ash":
+   #     bot.say("No drinks for kiddos!!")
+   #     return
     lista_drink = ["Water" , "Coca Cola" , "Pepsi" , "Vodka",
                    "Tequila", "Beer", "Absinth", "Rum" , "Red Wine" , "White Wine" , "Fanta" , "Chardonnay" ,
                    "Beer",  "Tea", "Hot Chocolate", "soda" , "Icetea" ,
