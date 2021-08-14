@@ -86,15 +86,6 @@ def adtest(bot , trigger):
 
 
 
-@commands("giokick")
-def giokick(bot, trigger):
-    text = trigger.group().split()
-    reason = ' '.join(text[2:])
-    if trigger.admin:
-        bot.kick(trigger.group(2), trigger.sender, reason)
-    else:
-        bot.say("You are not an admin, go away!")
-
 
 @commands("sendcard", "sc")
 def sendcard(bot, trigger):
