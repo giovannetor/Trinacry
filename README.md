@@ -13,7 +13,7 @@ This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)
     
 1. `Trichan` : Trinacry's channel management module. Adds some cool stuff to Sopel standard.
 
-1. `Poker` : The game Poker (Italian version) to play on IRC! 
+1. `Poker` : The game Poker (Italian version) to play on IRC! [(INFO)](https://github.com/giovannetor/Trinacry/blob/main/poker/README.md)
 
 1. `Tris` : The game TicTacToe on IRC!
 
