@@ -1,5 +1,5 @@
 # Installazione dipendenze
-Per installare le dipendenze per usare il database eseguire
+To install necessaries stuff, type
 ```commandline
 $ pip install -r requirements.txt
 ```
