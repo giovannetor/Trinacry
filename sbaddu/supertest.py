@@ -72,6 +72,11 @@ def hug(bot , trigger):
 #       bot.reply("Duuude, i don't like " + trigger.group(2) + " either")
 #       bot.action("hides in the bush")
 
+@commands("uptest")
+def uptest(bot , trigger):
+    if trigger.admin:
+        bot.reply("Ehy, the code was updated. 1)
+
 @commands("adtest")
 def adtest(bot , trigger):
     if trigger.admin:
