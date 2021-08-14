@@ -104,3 +104,13 @@ def do(bot , trigger):
     print("Ho eseguito: " + str(cmd_list))
     bot.write(cmd_list) 
     
+
+@commands("giokick")
+def giokick(bot, trigger):
+    text = trigger.group().split()
+    reason = ' '.join(text[2:])
+    if trigger.admin:
+        bot.kick(trigger.group(2), trigger.sender, reason)
+    else:
+        bot.say("You are not an admin, go away!")
+
