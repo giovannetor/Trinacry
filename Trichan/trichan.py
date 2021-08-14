@@ -81,12 +81,15 @@ def manop(bot , trigger):
         bot.write(["MODE", trigger.sender , "+V " , trigger.nick] )
         bot.say("Here's your hat darling :)")
     else:
-        bot.say("FUCK DIDN'T WORK")
+        bot.say("Something didn't work...")
 
 @commands("hvoice")
 @require_admin("You're not an admin")
 def hvoice(bot , trigger):
-    bot.write(["MODE" , trigger.sender , "+V" , trigger.group(3)])
+    if not trigger.group(3):
+        bot.write(["MODE" , trigger.sender , "+V" , trigger.nick])
+    else:
+        bot.write(["MODE" , trigger.sender , "+V" , trigger.group(3)])
 
 @commands("do")
 @require_admin("You're not an admin")
