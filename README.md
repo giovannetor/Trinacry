@@ -5,7 +5,7 @@ IRC Sopel Bot.
 This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)／
 
 ## What's inside?
-1. `Sbaddu` : miscellaneous folder, contains the following:
+1. `Sbaddu` : miscellaneous folder, contains the following: [here](https://github.com/giovannetor/Trinacry/blob/main/sbaddu/README.md)
     - *supertest* : basically a play ground.
     - *food* : every true Italian has a module for foods.
     - *ping_echo* : reports all the owner pings in log chan  
