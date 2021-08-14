@@ -55,22 +55,22 @@ def hug(bot , trigger):
         bot.action("hugs " + trigger.nick + " veeeery tight. Love you :) ")
 
 
-@commands("dontlike")
-@example(".dontlike giovannetor")
-def dontlike(bot, trigger):
-    if trigger.group(2) == "Trinacry":
-        if trigger.admin:
-            bot.say("Mh, only cuz it's you gio...")
-            bot.action("hugs gio")
-        else:
-           bot.say("What have i done to you T.T")
-           bot.action("goes to hide under the sofa crying")
-    elif trigger.group(2) == "giovannetor":
-        bot.say("HOW DARE YOU!")
-        bot.action("slaps " + trigger.nick)
-    else:
-       bot.reply("Duuude, i don't like " + trigger.group(2) + " either")
-       bot.action("hides in the bush")
+#@commands("dontlike")
+#@example(".dontlike giovannetor")
+#def dontlike(bot, trigger):
+#    if trigger.group(2) == "Trinacry":
+#        if trigger.admin:
+#            bot.say("Mh, only cuz it's you gio...")
+#            bot.action("hugs gio")
+#        else:
+#           bot.say("What have i done to you T.T")
+#           bot.action("goes to hide under the sofa crying")
+#    elif trigger.group(2) == "giovannetor":
+#        bot.say("HOW DARE YOU!")
+#        bot.action("slaps " + trigger.nick)
+#    else:
+#       bot.reply("Duuude, i don't like " + trigger.group(2) + " either")
+#       bot.action("hides in the bush")
 
 @commands("adtest")
 def adtest(bot , trigger):
