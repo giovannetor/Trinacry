@@ -18,13 +18,14 @@ def drink(bot , trigger):
                    "Eggnog", "Gluhwein", "Jägermeister", "Sherry", "Prosecco", "Port"," Gin Tonic", "Amaretto",
                   " Bailey's", "Bourbon",  "Cognac" , "Champagne" ]
 
-    lista_cups = ["shot glass", "cup", "glass", "pint", "wine glass", "mug", "bottle" ]
+    lista_cups = ["shot glass", "cup", "glass", "pint", "wine glass", "mug", "bottle" , "barrel" , "bowl", "can" , "jar"] 
     if not trigger.group(2):
+         
         bot.action("gives a " + lista_cups[randint(0 , len(lista_cups) -1)] + " of "  + CONTROL_BOLD + CONTROL_COLOR + colors.FUCHSIA +
             lista_drink[randint(0 , len(lista_drink) -1)] + CONTROL_NORMAL+ " to " + trigger.nick)
     else:
         bot.action("gives a " + lista_cups[randint(0 , len(lista_cups) -1)] + " of "  + CONTROL_BOLD + CONTROL_COLOR + colors.FUCHSIA +
-            lista_drink[randint(0 , len(lista_drink) -1)] + CONTROL_NORMAL+ " to " + trigger.group(2))
+            trigger.group(2) + CONTROL_NORMAL+ " to " + trigger.nick)
 
 @rule(".*pineapple.*" )
 def pineapple(bot , trigger):
@@ -47,10 +48,5 @@ def pizza(bot , trigger):
     except:
         bot.action(lista_act[randint(0 , len(lista_act)-1)] + listapizze[randint(0 , len(listapizze)-1)] +  " to you.")
 
-#@event(JOIN)
-#def kicklego(bot , trigger):
-#    if trigger.nick == "Legomannetje":
-#        bot.kick(trigger.nick , message="GO AWAY THIJS")
 
-#@commands("coffee")
 
