@@ -26,14 +26,14 @@ def bang(bot , trigger):
 @require_admin()
 def powah(bot , trigger):
     bot.say(CONTROL_COLOR + colors.RED + "HERE'S THE POWAH!")
-    bot.write(['MODE', trigger.sender, '+o', trigger.nick])
+    bot.write(['MODE', trigger.sender, '+h', trigger.nick])
 
 
 
 @rule(".*mask.*")
 @require_admin()
 def mask(bot , trigger):
-    bot.write(['MODE', trigger.sender, '-o', trigger.nick])
+    bot.write(['MODE', trigger.sender, '-h', trigger.nick])
 
 
 
