@@ -1232,11 +1232,14 @@ class BrisBot:
 
     def quit(self, bot, trigger):
         if trigger.sender in self.games:
+            game = self.games[trigger.sender]
+            if trigger.nick not in game.players:
+                return
             if self.contatore == 0:
                 bot.say(self.strings["quit_warn"])
                 self.contatore += 1
                 return
-            game = self.games[trigger.sender]
+
 
             self.contatore = 0
             self.stop(bot, trigger, forced=True)
@@ -1459,7 +1462,7 @@ def language(bot, trigger):
 def brisstop(bot, trigger):
     if trigger.sender in game_chan and trigger.group(3) == "bris":
         brisbot.stop(bot, trigger)
-        
+
 
 
 @module.commands('jo', "join")
@@ -1571,7 +1574,7 @@ def brisgames(bot, trigger):
 def afktime(bot):
     brisbot.afktime(bot)
     brisbot.checkidle(bot)
-    
+
 
 @module.event("PART")
 def brispart(bot, trigger):
