@@ -1,0 +1,23 @@
+POKER HELP!!
+================================================
+Comandi:
+
+1)  .poker = inizia la partita. Se iniziata, entra nella partita.
+2)  .join  = entra nella partita.
+3)  .deal  = inizia il turno.
+4)  .change = cambia 1 o più carte.
+5)  .bet = scommetti un certo ammontare di fiches.
+6)  .fiches = mostra quanche fiches possiedi.
+7)  .value = mostra quale combinazione di carte possiedi.
+8)  .leave = lascia il turno, ma non la partita.
+9)  .quit = lascia la partita.
+10) .stay = decidi di non scommettere O di non cambiare carte.
+11) .cards = mostra le carte nella tua mano.
+12) .language = permette di cambiare la lingua del gioco.
+13) .ontable = permette di vedere le fiches attualmente sul tavolo.
+
+================================================
+### Suggerimenti di Sintassi ###
+
+CHANGE :  .change ac 10s jh    --> cambia "AC , 10S, JH" con altre 3 carte. Le carte vanno scritte tutte nella stessa linea. Lascia uno spazio tra le carte.
+BET : .bet 50    --> scommetti 50 fiches.

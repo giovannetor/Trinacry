@@ -9,10 +9,12 @@ Commands:
 5)  .bet = bet a certain amount of fiches.
 6)  .fiches = show the amount of fiches you own.
 7)  .value = shows the combination in your hand.
-8)  .leave = leave the match.
-9)  .stay = decided not to bet OR not to change cards.
-10) .cards = shows the cards in your hand.
-11) .rules = shows Poker rules.
+8)  .leave = leave the turn but not the match.
+9)  .quit = leave the match
+10) .stay = decided not to bet OR not to change cards.
+11) .cards = shows the cards in your hand.
+12) .language = allows to change the game's language.
+13) .ontable = allows to see how many fiches are there on the table.
 
 ================================================
 ### Syntax Hints ###
