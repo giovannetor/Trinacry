@@ -79,8 +79,8 @@ strings_eng = {"nuovo_player": " %s has joined the match of " + poker + " as pla
                "left": "%s you left, wait until next turn."
 
                }  # STRINGS IN ENGLISH
-string_help_ita = ""
-string_help_eng = "https://webchat.duckie.chat/uploads/70cff387909b997b/paste.txt"
+string_help_ita = "https://webchat.duckie.chat/uploads/d7a1a9f67b032751/paste.txt"
+string_help_eng = "https://webchat.duckie.chat/uploads/3150af865aeda59d/paste.txt"
 
 """
 Here i defined all the value given to cards and combinations. Also added a value for seeds, i think it'll be 
@@ -775,13 +775,13 @@ class PokerBot:
         else:
             if trigger.group(3) == "italiano":
                 game.strings = strings_ita
-                game.rules = rules_ita
+
                 game.string_help = string_help_ita
                 bot.say(self.strings["lan_done"] % trigger.group(3))
                 self.strings = strings_eng
             elif trigger.group(3) == "english":
                 game.strings = strings_eng
-                game.rules = rules_eng
+
                 game.string_help = string_help_eng
                 bot.say(self.strings["lan_done"] % trigger.group(3))
                 self.strings = strings_ita
@@ -1060,7 +1060,7 @@ def language(bot, trigger):
 @module.commands("help")
 @module.example(".pokerhelp italiano", "pokerhelp english")
 def pokerhelp(bot, trigger):
-    if trigger.sender in game_chan and trigger.group(3).lower == "poker"
+    if trigger.sender in game_chan and trigger.group(3).lower == "poker":
         if trigger.group(4).lower == "italiano" or trigger.group(4).lower == "it":
             bot.notice("GUIDA: " + string_help_ita, trigger.nick)
         else:
