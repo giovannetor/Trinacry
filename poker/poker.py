@@ -869,6 +869,7 @@ class PokerBot:
         if trigger.sender not in self.games:
             #bot.say(self.strings['not_started'] )
             return
+        bot.say("[" + poker + "] : DEAL in " + trigger.sender, log_chan)
         self.games[trigger.sender].deal(bot, trigger)
 
     def stop(self, bot, trigger, forced=False):
@@ -1019,7 +1020,7 @@ def cards(bot, trigger):
 def deal(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.deal(bot, trigger)
-        bot.say("[" + poker + "] : DEAL in " + trigger.sender, log_chan)
+
 
 
 @module.commands("bet")
