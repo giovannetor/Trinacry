@@ -1109,11 +1109,11 @@ def language(bot, trigger):
         pokerbot.language(bot, trigger)
 
 
-@module.commands("help")
+@module.commands("help poker")
 @module.example(".help poker italiano", ".help poker IT")
 def pokerhelp(bot, trigger):
-    if trigger.sender in game_chan and trigger.group(3).lower == "poker":
-        if trigger.group(4).lower == "italiano" or trigger.group(4).lower == "it":
+    if trigger.sender in game_chan:
+        if trigger.group(3) == "italiano" or trigger.group(3) == "it":
             bot.notice("GUIDA: " + string_help_ita, trigger.nick)
         else:
             bot.notice("GUIDE: " + string_help_eng, trigger.nick)

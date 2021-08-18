@@ -1529,11 +1529,11 @@ def unocards(bot, trigger):
     if trigger.sender in game_chan:
         brisbot.send_cards(bot, trigger)
 
-@module.commands("help")
+@module.commands("help bris" , "help briscola")
 @module.example(".help bris italiano", ".help briscola IT")
 def brishelp(bot, trigger):
-    if trigger.sender in game_chan and trigger.group(3).lower == ("bris" or "briscola"):
-        if trigger.group(4).lower == "italiano" or trigger.group(4).lower == "it":
+    if trigger.sender in game_chan:
+        if trigger.group(3) == "italiano" or trigger.group(3) == "it":
             bot.notice("GUIDA: " + string_help_ita, trigger.nick)
             bot.notice("REGOLE DEL GIOCO: " + rules_ita, trigger.nick)
         else:

@@ -304,10 +304,10 @@ def quit(bot, trigger):
     if trigger.sender in game_chan:
         ttt.endgame(bot, trigger , forced=False,place = trigger.sender, partquit=True, player_win = None)
 
-@plugin.commands("help")
+@plugin.commands("help ttt" , "help tictactoe")
 @plugin.example(".help ttt", ".help tictactoe")
 def brishelp(bot, trigger):
-    if trigger.sender in game_chan and trigger.group(3).lower == ("ttt" or "tictactoe"):
+    if trigger.sender in game_chan:
         bot.notice("GUIDE: " + string_help_eng, trigger.nick)
 
 
