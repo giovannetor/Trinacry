@@ -1589,3 +1589,18 @@ def brisgames(bot, trigger):
 def afktime(bot):
     brisbot.afktime(bot)
     brisbot.checkidle(bot)
+    
+
+@module.event("PART")
+def brispart(bot, trigger):
+    if trigger.sender in game_chan:
+        brisbot.quit(bot, trigger)
+        brisbot.quit(bot, trigger)
+
+
+
+@module.event("QUIT")
+def brisquit_(bot, trigger):
+    if trigger.sender in game_chan:
+        brisbot.quit(bot, trigger)
+        brisbot.quit(bot, trigger)
