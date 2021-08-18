@@ -23,8 +23,7 @@ Here are defined all the strings used in the game.
 We have: RULES , GAME STRINGS and HELP.
 They'll always be provided in ITALIAN and ENGLISH and translated according to the last .lan command given .
 """
-rules_eng = ""
-rules_ita = ""
+
 strings_ita = {}
 strings_eng = {"nuovo_player": " %s has joined the match of " + poker + " as player: *%s* .",
                "impos_unirsi": "I'm sorry %s , the max number of players is 10. Wait until next match :)",
@@ -108,8 +107,8 @@ suits = ["S", "H", "C", "D"]
 class PokerGame:
     def __init__(self, trigger):
         self.strings = strings_eng
-        self.string_help = string_help_eng  # TO IMPLEMENT
-        self.rules = rules_eng  # TO IMPLEMENT
+        self.string_help = string_help_eng  
+     
         self.starter = trigger.nick
         self.channel = trigger.sender
         self.deck = []
@@ -1058,13 +1057,14 @@ def language(bot, trigger):
         pokerbot.language(bot, trigger)
 
 
-@module.commands("pokerhelp" , "pkhelp")
+@module.commands("help")
 @module.example(".pokerhelp italiano", "pokerhelp english")
 def pokerhelp(bot, trigger):
-    if trigger.group(3) == "italiano":
-        bot.notice("GUIDA: " + string_help_ita, trigger.nick)
-    else:
-        bot.notice("GUIDE: " + string_help_eng, trigger.nick)
+    if trigger.sender in game_chan and trigger.group(3).lower == "poker"
+        if trigger.group(4).lower == "italiano" or trigger.group(4).lower == "it":
+            bot.notice("GUIDA: " + string_help_ita, trigger.nick)
+        else:
+            bot.notice("GUIDE: " + string_help_eng, trigger.nick)
 
 
 @module.commands("ontable" , "ot")
