@@ -16,7 +16,7 @@ game_chan = ["#TicTacToe" , "#games"]
 lock = threading.RLock()
 max_player = 2
 
-string_help_eng = ""
+string_help_eng = "https://webchat.duckie.chat/uploads/529a233f498da3b7/paste.txt"
 strings_eng = {"impos_unirsi": "I'm sorry %s , the max number of players is 4. Wait until next match :)",
                "cant_play": "You are not inside the match, please do not disturb the other players :)",
                "start" : "Players Reached! Let's play " + TRIS + "!!",
