@@ -3,11 +3,10 @@ from random import randint
 from sopel.plugin import (event, commands, example, priority, OP, HALFOP, require_privilege, require_chanmsg , require_privmsg)
 logs = "#trinacry-logs"
 
-@commands("giohelp")
-@example("=giohelp i can't understand anything, please contact me XD")
-def giohelp(bot, trigger):
+@commands("contact" , "giohelp")
+def contact(bot, trigger):
     bot.say("Don't worry " + trigger.nick + ", you'll be contacted ASAP.")
-    bot.say("SUPERTEST :" + trigger.nick + " ha richiesto il tuo aiuto in " + trigger.sender+ ": " + trigger.group(2) , logs)
+    bot.say("CONTACT :" + trigger.nick + " ha scritto in " + trigger.sender+ ": " + trigger.group(2) , logs)
 
 @commands("boop")
 @require_privmsg()
