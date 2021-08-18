@@ -1,12 +1,13 @@
 from random import randint
-
-from sopel.plugin import (event, commands, example, priority, OP, HALFOP, require_privilege, require_chanmsg , require_privmsg)
+from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NORMAL, CONTROL_ITALIC
+from sopel.plugin import  commands, require_privmsg
 logs = "#trinacry-logs"
 
 @commands("contact" , "giohelp")
 def contact(bot, trigger):
     bot.say("Don't worry " + trigger.nick + ", you'll be contacted ASAP.")
-    bot.say("CONTACT :" + trigger.nick + " ha scritto in " + trigger.sender+ ": " + trigger.group(2) , logs)
+    bot.say(CONTROL_BOLD + CONTROL_COLOR +  colors.YELLOW + "CONTACT: " +CONTROL_NORMAL+
+            trigger.nick + " ha scritto in " + trigger.sender+ ": "+ CONTROL_ITALIC + trigger.group(2) , logs)
 
 @commands("boop")
 @require_privmsg()
