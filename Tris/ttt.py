@@ -16,6 +16,7 @@ game_chan = ["#TicTacToe" , "#games"]
 lock = threading.RLock()
 max_player = 2
 
+string_help_eng = ""
 strings_eng = {"impos_unirsi": "I'm sorry %s , the max number of players is 4. Wait until next match :)",
                "cant_play": "You are not inside the match, please do not disturb the other players :)",
                "start" : "Players Reached! Let's play " + TRIS + "!!",
@@ -302,6 +303,12 @@ def play(bot , trigger):
 def quit(bot, trigger):
     if trigger.sender in game_chan:
         ttt.endgame(bot, trigger , forced=False,place = trigger.sender, partquit=True, player_win = None)
+
+@plugin.commands("help")
+@plugin.example(".help ttt italiano", ".help tictactoe IT")
+def brishelp(bot, trigger):
+    if trigger.sender in game_chan and trigger.group(3).lower == ("ttt" or "tictactoe"):
+        bot.notice("GUIDE: " + string_help_eng, trigger.nick)
 
 
 @plugin.event("PART")
