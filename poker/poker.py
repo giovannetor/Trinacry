@@ -1110,7 +1110,7 @@ def language(bot, trigger):
 
 
 @module.commands("help")
-@module.example(".pokerhelp italiano", "pokerhelp english")
+@module.example(".help poker italiano", ".help poker IT")
 def pokerhelp(bot, trigger):
     if trigger.sender in game_chan and trigger.group(3).lower == "poker":
         if trigger.group(4).lower == "italiano" or trigger.group(4).lower == "it":
