@@ -46,7 +46,7 @@ strings_eng = {"impos_unirsi": "I'm sorry %s , the max number of players is 4. W
                "not_started" : "The match hasn't started yet. Find another player to start.",
                "no_square" : "Please put a slot after the command. e.g. 'A2'",
                "quit_stop" : CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER"
-                           + CONTROL_NORMAL + ":a player left the match.",
+                           + CONTROL_NORMAL + ": a player left the match.",
                "draw_" : "The match is a DRAW!",
                "missing" : "A parameter is missing...try to write all together? :) "
                }
@@ -152,7 +152,7 @@ class tttgame: # this class thinks about the "RULES" side of the game
             if self.currentPlayer == len(self.playerOrder):
                self.currentPlayer = 0
             if self.counter == 9: # If the match gets to 9 moves without a win, it's a draw.
-                bot.say(self.strings["draw_"])                
+                bot.say(self.strings["draw_"])
                 self.currentPlayer += 1
                 if self.currentPlayer == len(self.playerOrder):
                     self.currentPlayer = 0
@@ -237,8 +237,8 @@ class tttbot:   # This class thinks about the "LOGISCIT" part of the game
             self.join(bot, trigger)
         else:
             bot.say(self.strings['game_started'])
-            bot.say("[" + TRIS + "] : partita INIZIATA in " +   # This log says where and by who a match is started
-                    trigger.sender + " da: " + trigger.nick , log_chan)
+            bot.say("[" + TRIS + "] : match" + CONTROL_COLOR + colors.LIME + " STARTED" + CONTROL_NORMAL+ " in " +   # This log says where and by who a match is started
+                    trigger.sender + " by: " +CONTROL_COLOR + colors.LIGHT_CYAN + trigger.nick , log_chan)
             self.games[trigger.sender] = tttgame(trigger)
             self.join(bot, trigger)
 
@@ -247,9 +247,9 @@ class tttbot:   # This class thinks about the "LOGISCIT" part of the game
         if trigger.sender not in self.games:
                return
         if forced:
-            
-            bot.say("[" + TRIS + "] : partita BLOCCATA in " + # This log says where and by what admin the match is stopped
-                    trigger.sender + " da: " + trigger.nick , log_chan)
+             # This log says where and by what admin the match is stopped
+            bot.say("[" + TRIS + "] : match"  + CONTROL_COLOR + colors.RED + " STOPPED" + CONTROL_NORMAL +
+                    " in " +  trigger.sender + " by: " + CONTROL_COLOR + colors.LIGHT_CYAN + trigger.nick , log_chan)
             bot.say(self.strings["adstop"])
 
         elif partquit:
@@ -258,14 +258,16 @@ class tttbot:   # This class thinks about the "LOGISCIT" part of the game
                 if player != player_win:
                     pl_win += player
             bot.say(self.strings["quit_stop"])
-            try:
-                bot.say("[" + TRIS + "] : partita finita in " # Where and who won the match if the other leaves
-                    + place + ". Vincitore: " + pl_win , log_chan)
-            except: print("ehhh whatever, bad code")
+            if not pl_win:
+                pl_win = "NONE"
+            bot.say("[" + TRIS + "] : match" + CONTROL_COLOR + colors.YELLOW + " ENDED "
+                    + CONTROL_NORMAL + "in "                                            # Where and who won the match
+                    + place + ". Winner: " + CONTROL_COLOR + colors.LIGHT_CYAN+ pl_win , log_chan)
 
         else:
-            bot.say("[" + TRIS + "] : partita finita in " # Where and who won the match
-                    + place + ". Vincitore: " + player_win , log_chan)
+            bot.say("[" + TRIS + "] : match" + CONTROL_COLOR + colors.YELLOW + " ENDED "
+                    + CONTROL_NORMAL + "in "                                            # Where and who won the match
+                    + place + ". Winner: " + CONTROL_COLOR + colors.LIGHT_CYAN + player_win , log_chan)
         del self.games[place]
 
     def play(self , bot , trigger):
@@ -298,7 +300,6 @@ def grid(bot , trigger):
 @plugin.commands("ttt" , "TicTacToe" , "tictactoe")
 def ttt_start(bot , trigger):
     if trigger.sender in game_chan:
-        
         ttt.start(bot , trigger)
 
 @plugin.commands("join" , "jo")
@@ -307,16 +308,18 @@ def ttt_join(bot , trigger):
         ttt.join(bot , trigger)
 
 @plugin.commands("adstop")
+@plugin.example(".adstop ttt" , ".adstop tictactoe")
 def adstop(bot , trigger):
-    if trigger.sender in game_chan and trigger.group(3) == "ttt":      
-        
+    if trigger.sender in game_chan and trigger.group(3) == "ttt" or trigger.group(3) == "tictactoe":
+
         ttt.endgame(bot ,trigger , forced = True ,place = trigger.sender ,partquit=False, player_win = None )
 
 @plugin.commands("play" , "pl")
+@plugin.example(".play a2" , ".pl C3")
 def play(bot , trigger):
     if trigger.sender in game_chan:
         ttt.play(bot , trigger)
-        
+
 @plugin.commands("quit" , "qu")
 def quit(bot, trigger):
     if trigger.sender in game_chan:
@@ -326,7 +329,7 @@ def quit(bot, trigger):
 @plugin.example(".help ttt", ".help tictactoe")
 def brishelp(bot, trigger):
     if trigger.sender in game_chan:
-        bot.notice("GUIDE: " + string_help_eng, trigger.nick)
+        bot.notice(CONTROL_COLOR + CONTROL_BOLD + colors.YELLOW + "GUIDE: " + CONTROL_NORMAL + string_help_eng, trigger.nick)
 
 
 @plugin.event("PART")
