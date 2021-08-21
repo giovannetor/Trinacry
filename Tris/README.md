@@ -18,7 +18,7 @@ Commands:
 5. *cmd* `.quit` : Quits the game.
 6. *cmd* `.help ttt` : Provide a file with game help.
 6. *cmd* `.adstop ttt` _(admin only)_ : Forcefully stops the game. 
-7. 
+
 Events:
 1. *ev* `QUIT` : Triggered when the user quits. Executes `.quit`
 2. *ev* `LEAVE` : Triggered when the user leaves. Executes `.quit`
