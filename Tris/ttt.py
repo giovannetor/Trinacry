@@ -292,6 +292,7 @@ class tttbot:   # This class thinks about the "LOGISCIT" part of the game
 
 ttt = tttbot()
 
+@plugin.thread(True)
 @plugin.commands("grid" , "gr")
 def grid(bot , trigger):
     if trigger.sender in game_chan:
