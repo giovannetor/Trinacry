@@ -1,9 +1,8 @@
 import threading
-import time
 import sopel.plugin as plugin
-import sopel.tools as tools
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
 
+# Format for the X, O and the word "TicTacToe" in-game
 X = CONTROL_BOLD + CONTROL_COLOR + colors.LIGHT_CYAN + "X" + CONTROL_NORMAL
 O = CONTROL_BOLD + CONTROL_COLOR + colors.RED + "O" + CONTROL_NORMAL
 TRIS = CONTROL_BOLD + CONTROL_COLOR + colors.RED + "," + colors.WHITE + " Tic" + CONTROL_COLOR + colors.BLACK \
@@ -11,12 +10,20 @@ TRIS = CONTROL_BOLD + CONTROL_COLOR + colors.RED + "," + colors.WHITE + " Tic" +
 
 gridlist = ["A1" , "A2"  , "A3" , "B1"   ,"B2"  , "B3" , "C1" , "C2", "C3"]
 
-log_chan = "#trinacry-logs"
-game_chan = ["#TicTacToe" , "#games"]
+
+log_chan = "#trinacry-logs"   # chans where the logs will be sent. Can be changed
+game_chan = ["#TicTacToe" , "#games"]  # chans where the game is allowed to run. Can be changed
 lock = threading.RLock()
 max_player = 2
 
-string_help_eng = "https://webchat.duckie.chat/uploads/529a233f498da3b7/paste.txt"
+"""
+The following strings are provided in english. 
+They can easily be translate to any language.
+
+The link for the help sends to a .txt file. Can be easily changed with another type of link.
+"""
+
+string_help_eng = "https://webchat.duckie.chat/uploads/50e88c66ccdd34d9/paste.txt "
 strings_eng = {"impos_unirsi": "I'm sorry %s , the max number of players is 4. Wait until next match :)",
                "cant_play": "You are not inside the match, please do not disturb the other players :)",
                "start" : "Players Reached! Let's play " + TRIS + "!!",
@@ -44,11 +51,10 @@ strings_eng = {"impos_unirsi": "I'm sorry %s , the max number of players is 4. W
                "missing" : "A parameter is missing...try to write all together? :) "
                }
 
-class tttgame:
+class tttgame: # this class thinks about the "RULES" side of the game
     def __init__(self , trigger):
         self.strings = strings_eng  # default strings are in english
         #self.string_help = string_help_eng
-        #self.rules = rules_eng
         self.starter = trigger.nick
         self.channel = trigger.sender
         self.players = {}  # Player's dict
@@ -64,17 +70,17 @@ class tttgame:
 
     def join(self, bot, trigger):
         with lock:
-            if trigger.nick not in self.players:  # if the player is not in the game
+            if trigger.nick not in self.players:
                 if len(self.players) == max_player:
-                    bot.say(self.strings["impos_unirsi"] % trigger.nick)  # match full
+                    bot.say(self.strings["impos_unirsi"] % trigger.nick)
                     return
                 if self.dealt:
                     bot.say(self.strings["cant_play"])
                     return
-                if self.jcount == 0:
+                if self.jcount == 0: # if the player is the 1st, give him an X. Otherwise, O
                     self.players[trigger.nick]= {"squares" : [] , "sign" : X , "score" : 0}
                 else:
-                    self.players[trigger.nick]= {"squares" : [] , "sign" : O , "score" : 0}  # add player to players dict
+                    self.players[trigger.nick]= {"squares" : [] , "sign" : O , "score" : 0} # add player to players dict
                 self.jcount += 1
                 self.playerOrder.append(trigger.nick)  # add player to players order list
                 if len(self.players) == 2:
@@ -99,31 +105,29 @@ class tttgame:
         if not trigger.group(3):
             bot.say(self.strings["no_square"])
             return
-        
 
         cmd = trigger.group(3).upper()
-        #print(cmd)
 
         if cmd[0] not in "ABC":
             try:
-                bot.say(self.strings["noletter"] % cmd[0])
+                bot.say(self.strings["noletter"] % cmd[0]) # if there's something, then it's not a letter allowed
             except:
-                bot.say(self.strings["missing"])
+                bot.say(self.strings["missing"]) # if there's nothing at all
             return
 
         try: int(cmd[1])
         except:
             try:
-                bot.say(self.strings["nonumber"] % cmd[1])
+                bot.say(self.strings["nonumber"] % cmd[1])  # if there's something, then it's not a number
             except:
-                bot.say(self.strings["missing"])
+                bot.say(self.strings["missing"])  # if there's no number at all
             return
 
-        if cmd not in gridlist:
+        if cmd not in gridlist: # If the square isn't in the grid. A-C 1-3
             bot.say(self.strings["nogrid"] % cmd)
             return
 
-        cp = self.check_possible(player , cmd)
+        cp = self.check_possible(player , cmd) # Checks if it's possible to make the move. Check the function.
         if cp == 0:
             bot.say(self.strings["yours"])
             return
@@ -137,16 +141,17 @@ class tttgame:
         self.griglia[cmd] = self.players[player]["sign"]
         self.print_grid(bot)
         self.counter += 1
-        print(self.counter)
-        if self.checkwin(player):
+        #print(self.counter)
+        if self.checkwin(player):  # Checks if the player won with the move. Check the function
             bot.say(self.strings["win"] % player)
+
             self.players[player]["score"] += 1
             self.reboot(bot , trigger  ,place = trigger.sender)
         else:
             self.currentPlayer += 1
             if self.currentPlayer == len(self.playerOrder):
                self.currentPlayer = 0
-            if self.counter == 9:
+            if self.counter == 9: # If the match gets to 9 moves without a win, it's a draw.
                 bot.say(self.strings["draw_"])                
                 self.currentPlayer += 1
                 if self.currentPlayer == len(self.playerOrder):
@@ -155,7 +160,7 @@ class tttgame:
                 return
             bot.say(self.strings["next_turn"] % self.playerOrder[self.currentPlayer])
 
-    def reboot(self , bot , trigger, place):
+    def reboot(self , bot , trigger, place): # after each game, reboots the game.
         for player in self.players:
             if self.players[player]["score"] == 3:
                 bot.say(self.strings["final_win"] % (player))
@@ -181,12 +186,12 @@ class tttgame:
         self.counter = 0
         self.jcount = 0
 
-    def endgame(self , bot, trigger, player_win , place):
+    def endgame(self , bot, trigger, player_win , place): # game ends
         bot.say(self.strings["endgame"])
         forced = False
         tttbot.endgame( bot , trigger ,player_win,  place , forced )
 
-    def checkwin(self , player):
+    def checkwin(self , player):  # checks if the player won the game.
         squ =  self.players[player]["squares"]
         check_dic = {"A" : 0 , "B" : 0 , "C" : 0 , "1" : 0 , "2" : 0 , "3" : 0}
 
@@ -194,22 +199,22 @@ class tttgame:
             check_dic[combination[0]] += 1
             check_dic[str(combination[1])] += 1
 
-        if max(check_dic.values()) == 3:
+        if max(check_dic.values()) == 3:  # if the player has 3 letters or 3 numbers, it's a Win
             return True
-        elif "A1" in squ and "B2" in squ and "C3" in squ:
+        elif "A1" in squ and "B2" in squ and "C3" in squ: # if diag 1
             return True
-        elif "A3" in squ and "B2" in squ and "C1" in squ:
+        elif "A3" in squ and "B2" in squ and "C1" in squ: # if diag 2
             return True
         else:
             return False
 
     def check_possible(self , player , cmd):
-        if self.griglia[cmd] == self.players[player]["sign"]:
+        if self.griglia[cmd] == self.players[player]["sign"]:  # If the square belongs to the player
             return 0
         else:
-            if self.griglia[cmd] == "/":
+            if self.griglia[cmd] == "/":  # If the square is empty
                 return 1
-            else:
+            else:   # If the square belongs to the enemy
                 return 2
 
     def print_grid(self , bot):
@@ -221,7 +226,7 @@ class tttgame:
         bot.say(dicgrid["C1"] + "   |   " + dicgrid["C2"] + "   |   " + dicgrid["C3"])
 
 
-class tttbot:
+class tttbot:   # This class thinks about the "LOGISCIT" part of the game
     def __init__(self):
         self.games = {}
         self.strings = strings_eng
@@ -232,7 +237,8 @@ class tttbot:
             self.join(bot, trigger)
         else:
             bot.say(self.strings['game_started'])
-            bot.say("[" + TRIS + "] : partita INIZIATA in " + trigger.sender + " da: " + trigger.nick , log_chan)
+            bot.say("[" + TRIS + "] : partita INIZIATA in " +   # This log says where and by who a match is started
+                    trigger.sender + " da: " + trigger.nick , log_chan)
             self.games[trigger.sender] = tttgame(trigger)
             self.join(bot, trigger)
 
@@ -242,12 +248,24 @@ class tttbot:
                return
         if forced:
             
-            bot.say("[" + TRIS + "] : partita BLOCCATA in " + trigger.sender + " da: " + trigger.nick , log_chan)
+            bot.say("[" + TRIS + "] : partita BLOCCATA in " + # This log says where and by what admin the match is stopped
+                    trigger.sender + " da: " + trigger.nick , log_chan)
             bot.say(self.strings["adstop"])
+
         elif partquit:
+            pl_win = ""
+            for player in self.games[trigger.sender].players:
+                if player != player_win:
+                    pl_win += player
             bot.say(self.strings["quit_stop"])
+            try:
+                bot.say("[" + TRIS + "] : partita finita in " # Where and who won the match if the other leaves
+                    + place + ". Vincitore: " + pl_win , log_chan)
+            except: print("ehhh whatever, bad code")
+
         else:
-            bot.say("[" + TRIS + "] : partita finita in " + place + ". Vincitore: " + player_win , log_chan)
+            bot.say("[" + TRIS + "] : partita finita in " # Where and who won the match
+                    + place + ". Vincitore: " + player_win , log_chan)
         del self.games[place]
 
     def play(self , bot , trigger):
@@ -302,7 +320,7 @@ def play(bot , trigger):
 @plugin.commands("quit" , "qu")
 def quit(bot, trigger):
     if trigger.sender in game_chan:
-        ttt.endgame(bot, trigger , forced=False,place = trigger.sender, partquit=True, player_win = None)
+        ttt.endgame(bot, trigger , forced=False,place = trigger.sender, partquit=True, player_win = trigger.nick)
 
 @plugin.commands("help ttt" , "help tictactoe")
 @plugin.example(".help ttt", ".help tictactoe")
@@ -314,10 +332,10 @@ def brishelp(bot, trigger):
 @plugin.event("PART")
 def part(bot, trigger):
     if trigger.sender in game_chan:
-        ttt.endgame(bot, trigger ,forced=False,place = trigger.sender, partquit=True, player_win = None)
+        ttt.endgame(bot, trigger ,forced=False,place = trigger.sender, partquit=True, player_win = trigger.nick)
 
 
 @plugin.event("QUIT")
 def quit_(bot, trigger):
     if trigger.sender in game_chan:
-        ttt.endgame(bot, trigger ,forced=False,place = trigger.sender, partquit=True, player_win = None)
+        ttt.endgame(bot, trigger ,forced=False,place = trigger.sender, partquit=True, player_win = trigger.nick)
