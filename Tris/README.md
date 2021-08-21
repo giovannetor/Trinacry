@@ -8,8 +8,9 @@ Called "Tris" in some countries, it's a popular 1v1 game.
 ## How to win
 - Score 3 signs in a raw / column / diagonal
 - Make the enemy leave.
+![alt text](https://github.com/giovannetor/Trinacry/blob/main/Tris/files/Jogo_da_velha_-_tic_tac_toe.png)
 
-## What it does
+## What it does 
 Commands:
 1. *cmd* `.ttt` : Starts the game.
 2. *cmd* `.grid` : Shows the actual grid.
