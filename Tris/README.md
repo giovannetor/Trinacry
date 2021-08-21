@@ -8,7 +8,9 @@ Called "Tris" in some countries, it's a popular 1v1 game.
 ## How to win
 - Score 3 signs in a raw / column / diagonal
 - Make the enemy leave.
-![alt text](https://github.com/giovannetor/Trinacry/blob/main/Tris/files/Jogo_da_velha_-_tic_tac_toe.png width="200" height="200")
+<img src="https://github.com/giovannetor/Trinacry/blob/main/Tris/files/Jogo_da_velha_-_tic_tac_toe.png" alt="TTT" width="200" height="200">
+
+
 
 ## What it does 
 Commands:
