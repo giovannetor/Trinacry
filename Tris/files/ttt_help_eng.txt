@@ -1,5 +1,8 @@
 POKER HELP!!
 ================================================
+How to win:
+  Win 3 games, or make the enemy leave.
+
 Commands:
 
 1)  .ttt = starts the match. If started, joins you to the match.
@@ -25,4 +28,3 @@ Using .play B3 will result in this:
        ___________
         B1 | B2 |  X
        ___________
-        C1 | C2 | C3
