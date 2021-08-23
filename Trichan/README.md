@@ -14,3 +14,4 @@ Hi. This is a lil module i made to have fun with Trinacry.
 7. *ev* `autop` : Flag substitute, allows auto modes based on NickServ accounts. (Used mostly for halfvoice)
 8. *cmd* `do` : Used to execute dommands. *WIP*
 9. *ncom* `hv|hvoice|halfvoice` : Required for a +V if deserved (be gentle)
+10. *cmd* `privacy` : Gives the link of the Bot's Privacy Policy (idk if it's required but...better having it)
