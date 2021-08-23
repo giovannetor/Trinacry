@@ -146,8 +146,13 @@ def dbtest(bot , trigger):
         bot.reply(" use add/get/del ")
 
 @commands("prtest")
+@example(".prtest gio")
 def prtest(bot , trigger):
+    print("DOING")
     gender = bot.db.get_nick_value(trigger.group(3) , "pronouns")
+    if not trigger.group(3):
+        bot.reply(" who do you want to test?")
+        return
     if not gender:
         bot.reply(trigger.group(3) + " hasn't already set his gender.")
         return
