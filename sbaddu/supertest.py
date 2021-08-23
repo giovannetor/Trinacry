@@ -151,9 +151,11 @@ def prtest(bot , trigger):
     print("DOING")
     gender = bot.db.get_nick_value(trigger.group(3) , "pronouns")
     if not trigger.group(3):
+        print("Ehy, not name")
         bot.reply(" who do you want to test?")
         return
-    if not gender:
+    elif not gender:
+        print("Ehy, no data")
         bot.reply(trigger.group(3) + " hasn't already set his gender.")
         return
     gender_test = gender.split("/")[1]
