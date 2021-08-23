@@ -75,7 +75,7 @@ def hug(bot , trigger):
 @commands("uptest")
 def uptest(bot , trigger):
     if trigger.admin:
-        bot.reply("Ehy, the code was updated. 1")
+        bot.reply("Ehy, the code was updated. 2")
 
 @commands("adtest")
 def adtest(bot , trigger):
