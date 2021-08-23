@@ -156,7 +156,7 @@ def prtest(bot , trigger):
         return
     elif not gender:
         print("Ehy, no data")
-        bot.reply(trigger.group(3) + " hasn't already set his gender.")
+        bot.reply(trigger.group(3) + " hasn't already set his/her gender.")
         return
     gender_test = gender.split("/")[1]
     bot.act("hands " + trigger.group(3) + " " + gender_test + " Ice-Cream.")
