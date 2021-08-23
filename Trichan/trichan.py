@@ -5,6 +5,10 @@ from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NOR
 
 
 log_chan = "#trinacry-logs"
+@commands("privacy")
+def privacy(bot , trigger):
+    bot.notice("Here's the Privacy Policy: https://www.termsfeed.com/live/c0b6de93-39dc-484b-a460-b946ecb9428e " , trigger.nick)
+
 @rule(".*BANG.*")
 def bang(bot , trigger):
     if trigger.sender == "#general":
