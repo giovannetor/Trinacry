@@ -121,13 +121,13 @@ def grouptest(bot, trigger):
     bot.say(trigger)
 
 @commands("dbtest")
-@example(".dbtest in gio test")
+@example(".dbtest add gio test")
 def dbtest(bot , trigger):
-    if trigger.group(3) == "in":
+    if trigger.group(3) == "add":
         bot.db.set_nick_value(trigger.group(4) ,"test", trigger.group(5))
         bot.reply(" value assigned.")
 
-    elif trigger.group(3) == "out":
+    elif trigger.group(3) == "get":
         test = bot.db.get_nick_value(trigger.group(4) , "test")
         if test:
             bot.reply(" your test value is " + test)
@@ -141,4 +141,4 @@ def dbtest(bot , trigger):
             bot.reply(" there's no value to delete for " + trigger.group(4))
 
     else:
-        bot.reply(" use 'in' or 'out' ")
+        bot.reply(" use add/get/del ")
