@@ -158,6 +158,7 @@ def prtest(bot , trigger):
         print("Ehy, no data")
         bot.reply(trigger.group(3) + " hasn't already set his/her gender.")
         return
+    print("STEP 1")
     gender_test = gender.split("/")[1]
     bot.act("hands " + trigger.group(3) + " " + gender_test + " Ice-Cream." , trigger.sender)
     print("GOT " + gender_test + " and " + gender)
