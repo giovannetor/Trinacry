@@ -35,6 +35,9 @@ Trinacry's playground, contains the following modules:
 10.`grouptest` (**cmd**): used to test "group()" working.
 
 11. `boop` (**cmd**): boops a user by hiding in the shadows. Scary
+12. `uptest` (**cmd**) : verifies that the file got updated.
+13. `dbtest` (**cmd**) : test for db.
+14. `prtest` (**cmd**) : implement db test to pronouns module.
 
 
 ## Ping
