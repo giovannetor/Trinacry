@@ -134,6 +134,11 @@ def dbtest(bot , trigger):
         else:
             bot.reply(" no value for " + trigger.group(4))
             return
+    elif trigger.group(3) == "del":
+        try:
+            bot.db.delete_nick_value(trigger.group(4) , "test")
+        except:
+            bot.reply(" there's no value to delete for " + trigger.group(4))
 
     else:
         bot.reply(" use 'in' or 'out' ")
