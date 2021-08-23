@@ -148,18 +148,13 @@ def dbtest(bot , trigger):
 @commands("prtest")
 @example(".prtest gio")
 def prtest(bot , trigger):
-    print("DOING")
     gender = bot.db.get_nick_value(trigger.group(3) , "pronouns")
     if not trigger.group(3):
-        print("Ehy, not name")
         bot.reply(" who do you want to test?")
         return
     elif not gender:
-        print("Ehy, no data")
         bot.reply(trigger.group(3) + " hasn't already set his/her gender.")
         return
-    print("STEP 1")
-    gender_test = gender.split("/")[1]
-    print("STEP 2")
-    bot.act("hands " + trigger.group(3) + " " + gender_test + " Ice-Cream." , trigger.sender)
-    print("GOT " + gender_test + " and " + gender)
+    gender_test = gender.split("/")[2]
+    bot.action("hands " + trigger.group(3) + " " + gender_test + " Ice-Cream." , trigger.sender)
+
