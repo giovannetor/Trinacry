@@ -158,3 +158,4 @@ def prtest(bot , trigger):
         return
     gender_test = gender.split("/")[1]
     bot.act("hands " + trigger.group(3) + " " + gender_test + " Ice-Cream.")
+    print("GOT " + gender_test + " and " + gender)
