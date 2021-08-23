@@ -144,3 +144,12 @@ def dbtest(bot , trigger):
 
     else:
         bot.reply(" use add/get/del ")
+
+@commands("prtest")
+def prtest(bot , trigger):
+    gender = bot.db.get_nick_value(trigger.group(3))
+    if not gender:
+        bot.reply(trigger.group(3) + " hasn't already set his gender.")
+        return
+    gender_test = gender.split("/")[1]
+    bot.act("hands " + trigger.group(3) + " " + gender_test + " Ice-Cream.")
