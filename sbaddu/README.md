@@ -7,9 +7,7 @@ Trinacry's playground, contains the following modules:
 ## Food
 
 1. `drink` (**cmd**): gives a random drink from a wide range! 
-
 2. `pineapple` (**rule**): pineapple on pizza SUCKS! Immediate kick. 
-
 3. `pizza` (**cmd**): gives a pizza from a wide range!
 
 ## Supertest
@@ -32,7 +30,7 @@ Trinacry's playground, contains the following modules:
 
 ## Ping
 
-1.`ping_echo` (**rule**): Repeats every ping of the owner in log chan.
+1. `ping_echo` (**rule**): Repeats every ping of the owner in log chan.
 
 ## Announce
 
