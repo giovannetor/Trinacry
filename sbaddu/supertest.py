@@ -1,6 +1,6 @@
 from random import randint
 from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NORMAL, CONTROL_ITALIC
-from sopel.plugin import  commands, require_privmsg
+from sopel.plugin import  commands, require_privmsg , example
 logs = "#trinacry-logs"
 
 @commands("contact" , "giohelp")
@@ -119,3 +119,21 @@ def grouptest(bot, trigger):
         "Ho trovato la stringa " + stringa00 + "+" + stringa0 + "+" + stringa1 + "+" + stringa2 + "++" + stringa3 + "+++" + stringa4)
     stringa = trigger.group(2).split()
     bot.say(trigger)
+
+@commands("dbtest")
+@example(".dbtest in gio test")
+def dbtest(bot , trigger):
+    if trigger.group(3) == "in":
+        bot.db.set_nick_value(trigger.group(4) ,"test", trigger.group(5))
+        bot.reply(" value assigned.")
+
+    elif trigger.group(3) == "out":
+        test = bot.db.get_nick_value(trigger.group(4) , "test")
+        if test:
+            bot.reply(" your test value is " + test)
+        else:
+            bot.reply(" no value for " + trigger.group(4))
+            return
+
+    else:
+        bot.reply(" use 'in' or 'out' ")
