@@ -94,7 +94,10 @@ def give(bot , trigger):
 def take(bot , trigger):
 
     money = money_getter(bot , trigger.group(3))
-    money -= int(trigger.group(4))
+    if trigger.group(4) == "*":
+        money = 0
+    else:
+        money -= int(trigger.group(4))
     if money < 0:
         money = 0
 
