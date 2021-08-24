@@ -1,5 +1,4 @@
-![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
-
+<img src="https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png" alt="perlogo" width="110" height="100"> <img src="https://github.com/giovannetor/Trinacry/blob/main/T_LOGO_WHITE.png" alt="TTT_logo_white" width="100" height="100">
 # easter_egg
 
 Hi, this little code wants to provide a MAX of 3 eggs to users requiring them for the Easter Hunt Event of the Youth Team.
