@@ -17,14 +17,14 @@ def coins():
     coins_format = CONTROL_BOLD + CONTROL_COLOR +colors.ORANGE + " TriCoins (₸) " + CONTROL_NORMAL
     return coins_format
 
-def format_add(money):
+def format_add(money , reason):
     add = BANK + CONTROL_BOLD + "[" + CONTROL_COLOR + colors.LIGHT_GREEN + "+" + CONTROL_NORMAL + CONTROL_BOLD + "]" + CONTROL_NORMAL + \
-           " ADDED " + str(money) + coins() + " to your Bank Account."
+           " ADDED " + str(money) + coins() + " to your Bank Account. Reason: " + CONTROL_ITALIC + reason
     return add
 
-def format_rem(money):
+def format_rem(money , reason):
     rem = BANK + CONTROL_BOLD + "[" + CONTROL_COLOR + colors.LIGHT_RED + "-" + CONTROL_NORMAL + CONTROL_BOLD + "]" + CONTROL_NORMAL + \
-           " REMOVED " + str(money) + coins() + " from your Bank Account."
+           " REMOVED " + str(money) + coins() + " from your Bank Account. Reason: " + CONTROL_ITALIC + reason
     return rem
 
 @commands("bank" , "ba")
@@ -76,8 +76,8 @@ def pay(bot , trigger):
     bot.db.set_nick_value(trigger.group(3) , "coins" , money_2)
     bot.say(BANK + "Succesfully paid " + str(money_2) + coins() + "to " + trigger.group(3))
 
-    bot.say(format_rem(to_give) , trigger.nick)
-    bot.say(format_add(to_give) , trigger.group(3))
+    bot.say(format_rem(to_give , "Payment to " + trigger.group(3)) , trigger.nick)
+    bot.say(format_add(to_give , "Payment from " + trigger.nick) , trigger.group(3))
 
 @commands("give")
 @require_admin("I'm sorry, but only admins can give TriCoins.")
@@ -92,7 +92,7 @@ def give(bot , trigger):
     bot.say(BANK + trigger.nick + ": correctly added " + str(trigger.group(4)) + coins() + "to "  +
               trigger.group(3) + "'s Bank Account.")
 
-    bot.say(format_add(trigger.group(4)) ,trigger.group(3))
+    bot.say(format_add(trigger.group(4) , "TriCoins given by an Admin.") ,trigger.group(3))
 
 @commands("take")
 @require_admin("I'm sorry, but only admins can take TriCoins.")
@@ -112,7 +112,7 @@ def take(bot , trigger):
     bot.say(BANK + trigger.nick + ": correctly removed " + str(trigger.group(4)) + coins() +
               "from "  + trigger.group(3) + "'s Bank Account.")
 
-    bot.say(format_rem(trigger.group(4)) ,trigger.group(3))
+    bot.say(format_rem(trigger.group(4) , "TriCoins taken by an Admin.") ,trigger.group(3))
 
 @commands("transfer")
 @example(".transfer gio giovannetor" , ".transfer gio(3) gio2(4) 50(5)")
@@ -127,8 +127,8 @@ def transfer(bot , trigger):
         money_tot = money_from + money_to
         bot.db.set_nick_value(trigger.group(3) , "coins" , None)
         bot.db.set_nick_value(trigger.group(4) , "coins" , money_tot)
-        bot.say(format_rem(money_from) ,trigger.group(3))
-        bot.say(format_add(money_from) ,trigger.group(4))
+        bot.say(format_rem(money_from , "Transfer to " + trigger.group(4)) ,trigger.group(3))
+        bot.say(format_add(money_from , "Transfer from " + trigger.group(3)) ,trigger.group(4))
         bot.say(BANK + trigger.nick + "transferred " + str(money_from) + coins() + "from " + trigger.group(3) + " to "
                 + trigger.group(4) + " succesfully." , log)
 
@@ -141,8 +141,8 @@ def transfer(bot , trigger):
         money_tot = money_from + money_to
         bot.db.set_nick_value(trigger.group(3) , "coins" , money_left)
         bot.db.set_nick_value(trigger.group(4) , "coins" , money_tot)
-        bot.say(format_rem(money_from) ,trigger.group(3))
-        bot.say(format_add(money_from) ,trigger.group(4))
+        bot.say(format_rem(money_from , "Transfer to " + trigger.group(4)) ,trigger.group(3))
+        bot.say(format_add(money_from , "Transfer from " + trigger.group(3)) ,trigger.group(4))
         bot.say(BANK + trigger.nick + " transferred " + str(money_from) + coins() + "from " + trigger.group(3) + " to "
                 + trigger.group(4) + " succesfully." , log)
 
