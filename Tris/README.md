@@ -1,4 +1,6 @@
-![alt text](https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png)
+<img src="https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png" alt="perlogo" width="100" height="100"> <img src="https://github.com/giovannetor/Trinacry/blob/main/T_LOGO_WHITE.png" alt="TTT_logo_white" width="100" height="100">
+
+
 
 # TicTacToe
 
@@ -9,7 +11,6 @@ Called "Tris" in some countries, it's a popular 1v1 game.
 - Score 3 signs in a raw / column / diagonal
 - Make the enemy leave.
 <img src="https://github.com/giovannetor/Trinacry/blob/main/Tris/files/Jogo_da_velha_-_tic_tac_toe.png" alt="TTT" width="200" height="200">
-<img src="https://github.com/giovannetor/Trinacry/blob/main/T_LOGO_WHITE.png" alt="TTT_logo_white" width="100" height="100">
 
 
 ## What it does 
