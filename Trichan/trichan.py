@@ -1,5 +1,4 @@
 from sopel.plugin import rule , require_admin , commands , OP , require_owner , event , require_privmsg, nickname_commands
-from sopel.tools.target import Channel
 from random import randint , shuffle
 from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NORMAL
 
