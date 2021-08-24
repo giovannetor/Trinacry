@@ -89,7 +89,7 @@ def give(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "coins" , money)
 
-    bot.reply(BANK + trigger.nick + ": correctly added " + str(trigger.group(4)) + coins() + "to "  +
+    bot.say(BANK + trigger.nick + ": correctly added " + str(trigger.group(4)) + coins() + "to "  +
               trigger.group(3) + "'s Bank Account.")
 
     bot.say(format_add(trigger.group(4)) ,trigger.group(3))
@@ -109,7 +109,7 @@ def take(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "coins" , money)
 
-    bot.reply(BANK + trigger.nick + ": correctly removed " + str(trigger.group(4)) + coins() +
+    bot.say(BANK + trigger.nick + ": correctly removed " + str(trigger.group(4)) + coins() +
               "from "  + trigger.group(3) + "'s Bank Account.")
 
     bot.say(format_rem(trigger.group(4)) ,trigger.group(3))
@@ -133,7 +133,7 @@ def transfer(bot , trigger):
                 + trigger.group(4) + " succesfully." , log)
 
     else:
-        money_from = trigger.group(5)
+        money_from = int(trigger.group(5))
         if money_from > money_available:
             bot.reply("you don't have this many TriCoins.")
             return
