@@ -2,7 +2,7 @@ from sopel import plugin
 from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NORMAL
 
 logs = "#trinacry-logs"
-nono = ["#bot" , "#opscourse" , "#opers" , logs]
+nono = ["#bot" , "#opscourse" , "#opers" , logs , "#minecraft"]
 @plugin.commands("ann")
 @plugin.require_admin
 def ann(bot , trigger):
