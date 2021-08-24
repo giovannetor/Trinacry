@@ -91,7 +91,7 @@ def give(bot , trigger):
 
     bot.say(BANK + trigger.nick + ": correctly added " + str(trigger.group(4)) + coins() + "to "  +
               trigger.group(3) + "'s Bank Account.")
-
+    bot.say(BANK + trigger.nick + " gave " + str(money) + coins() + "to " + trigger.group(3) + " succesfully." , log)
     bot.say(format_add(trigger.group(4) , "TriCoins given by an Admin.") ,trigger.group(3))
 
 @commands("take")
@@ -111,7 +111,7 @@ def take(bot , trigger):
 
     bot.say(BANK + trigger.nick + ": correctly removed " + str(trigger.group(4)) + coins() +
               "from "  + trigger.group(3) + "'s Bank Account.")
-
+    bot.say(BANK + trigger.nick + " took " + str(money) + coins() + "from " + trigger.group(3) + " succesfully." , log)
     bot.say(format_rem(trigger.group(4) , "TriCoins taken by an Admin.") ,trigger.group(3))
 
 @commands("transfer")
@@ -125,11 +125,13 @@ def transfer(bot , trigger):
     if not trigger.group(5) or trigger.group(5) == "*":
         money_from = money_available
         money_tot = money_from + money_to
+
         bot.db.set_nick_value(trigger.group(3) , "coins" , None)
         bot.db.set_nick_value(trigger.group(4) , "coins" , money_tot)
+
         bot.say(format_rem(money_from , "Transfer to " + trigger.group(4)) ,trigger.group(3))
         bot.say(format_add(money_from , "Transfer from " + trigger.group(3)) ,trigger.group(4))
-        bot.say(BANK + trigger.nick + "transferred " + str(money_from) + coins() + "from " + trigger.group(3) + " to "
+        bot.say(BANK + trigger.nick + " transferred " + str(money_from) + coins() + "from " + trigger.group(3) + " to "
                 + trigger.group(4) + " succesfully." , log)
 
     else:
@@ -139,8 +141,10 @@ def transfer(bot , trigger):
             return
         money_left = money_available - money_from
         money_tot = money_from + money_to
+
         bot.db.set_nick_value(trigger.group(3) , "coins" , money_left)
         bot.db.set_nick_value(trigger.group(4) , "coins" , money_tot)
+
         bot.say(format_rem(money_from , "Transfer to " + trigger.group(4)) ,trigger.group(3))
         bot.say(format_add(money_from , "Transfer from " + trigger.group(3)) ,trigger.group(4))
         bot.say(BANK + trigger.nick + " transferred " + str(money_from) + coins() + "from " + trigger.group(3) + " to "
