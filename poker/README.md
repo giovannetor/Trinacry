@@ -37,5 +37,5 @@ Sopel module for Italian (traditional) Poker on IRC!
 - ***IMPORTANT*** : the bot sends by default some logs to a channel named *#trinacry-logs*. You can remove the log feature, or change the chan name.
 - ***IMPORTANT*** : the bot only works in the chan listed in `game_chan = []` (will implement the config in the future)
 
-![alt text](https://github.com/giovannetor/BrisBot2/blob/main/perlogo_2.png?raw=true)
+
 
