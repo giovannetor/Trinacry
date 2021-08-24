@@ -1,0 +1,19 @@
+*** BANK HELP ***
+
+Currency Used: TriCoins (₸)
+
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+COMMAND | WHAT DOES IT DO?
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+--USER COMMANDS--
+.bank (<nick>)            | shows your (or another's) current amount of ₸.
+.pay <nick> <value>  | pays a user with a certain amount of ₸. Be sure to have that amount before using it.
+
+--ADMIN COMMANDS--
+.give <nick> <value> | gives to a user a certain amount of ₸.
+.take <nick> <value> | takes from a user a certain amount of ₸.
+.transfer <nickfrom> <nickto> (<amount>) | transfer all the ₸ from a nick to another (or just an amount. Optional.)
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+NOTE: TriCoins (₸) are Nick-based. If you want to change your nick for long, ask to the admins to transfer the ₸ into
+your new account.
