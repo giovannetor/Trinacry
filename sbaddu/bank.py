@@ -11,17 +11,17 @@ def money_getter(bot , nick):
         return money
 
 def denari():
-    denari_format = CONTROL_BOLD + CONTROL_COLOR +colors.ORANGE + "Denari (₪)" + CONTROL_NORMAL
+    denari_format = CONTROL_BOLD + CONTROL_COLOR +colors.ORANGE + " Denari (₪) " + CONTROL_NORMAL
     return denari_format
 
 def format_add(money):
     add = CONTROL_BOLD + "[" + CONTROL_COLOR + colors.LIGHT_GREEN + "+" + CONTROL_NORMAL + CONTROL_BOLD + "]" + CONTROL_NORMAL + \
-          CONTROL_ITALIC + " ADDED " + str(money) + denari() + " to your Bank."
+           " ADDED " + str(money) + denari() + " to your Bank."
     return add
 
 def format_rem(money):
     rem = CONTROL_BOLD + "[" + CONTROL_COLOR + colors.LIGHT_RED + "-" + CONTROL_NORMAL + CONTROL_BOLD + "]" + CONTROL_NORMAL + \
-          CONTROL_ITALIC + " REMOVED " + str(money) + denari() + " from your Bank."
+           " REMOVED " + str(money) + denari() + " from your Bank."
     return rem
 
 @commands("bank" , "ba")
@@ -32,7 +32,7 @@ def bank(bot , trigger):
         bot.reply(" you have " + str(money) + denari() + " in your Bank.")
     else:
         if trigger.group(3) == "Trinacry" or trigger.group(3) == "trinacry":
-            bot.reply("Darling, I'm the Bank. I own all of your " + denari() + " MUAHAHA!!")
+            bot.reply("Darling, I'm the Bank. I own all of your" + denari() + "MUAHAHA!!")
             return
 
         gender = bot.db.get_nick_value(trigger.group(3) , "pronouns")
@@ -43,7 +43,7 @@ def bank(bot , trigger):
             gender_def = gender.split("/")[2]
 
         money = money_getter(bot , trigger.group(3))
-        bot.reply(trigger.group(3) + "  has " + str(money) + denari() + " in " + gender_def + " Bank.")
+        bot.reply(trigger.group(3) + "  has " + str(money) + denari() + "in " + gender_def + " Bank.")
 
 @commands("pay")
 @example(".pay gio 50")
@@ -61,7 +61,7 @@ def pay(bot , trigger):
         return
 
     if to_give > money_1:
-        bot.reply(" you don't have enough " + denari() + " to pay.")
+        bot.reply(" you don't have enough" + denari() + "to pay.")
         return
 
     money_1 -= to_give
@@ -69,7 +69,7 @@ def pay(bot , trigger):
 
     bot.db.set_nick_value(trigger.nick , "denari" , money_1)
     bot.db.set_nick_value(trigger.group(3) , "denari" , money_2)
-    bot.say("Succesfully paid " + str(money_2) + denari() + " to " + trigger.group(3))
+    bot.say("Succesfully paid " + str(money_2) + denari() + "to " + trigger.group(3))
 
     bot.say(format_rem(to_give) , trigger.nick)
     bot.say(format_add(to_give) , trigger.group(3))
@@ -84,6 +84,22 @@ def give(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "denari" , money)
 
-    bot.reply(" correctly added " + str(money) + denari() + " to "  + trigger.group(3) + "'s Bank.")
+    bot.reply(" correctly added " + str(money) + denari() + "to "  + trigger.group(3) + "'s Bank.")
 
     bot.say(format_add(trigger.group(4)) ,trigger.group(3))
+
+@commands("take")
+@require_admin("I'm sorry, but only admins can take money.")
+@example(".take gio 50")
+def take(bot , trigger):
+
+    money = money_getter(bot , trigger.group(3))
+    money -= int(trigger.group(4))
+    if money < 0:
+        money = 0
+
+    bot.db.set_nick_value(trigger.group(3) , "denari" , money)
+
+    bot.reply(" correctly removed " + str(money) + denari() + "from "  + trigger.group(3) + "'s Bank.")
+
+    bot.say(format_rem(trigger.group(4)) ,trigger.group(3))
