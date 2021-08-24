@@ -33,4 +33,6 @@ Trinacry's playground, contains the following modules:
 
 ## Announce
 
-1. `ann` (**cmd**): Announces a message in all the chans the bot is in. 
+1. `ann pm` (**cmd**): Announces a message to all the users the bot knows. 
+1. `ann chan` (**cmd**): Announces a message in all the chans the bot is in. 
+
