@@ -143,7 +143,7 @@ def transfer(bot , trigger):
         bot.db.set_nick_value(trigger.group(4) , "coins" , money_tot)
         bot.say(format_rem(money_from) ,trigger.group(3))
         bot.say(format_add(money_from) ,trigger.group(4))
-        bot.say(BANK + trigger.nick + "transferred " + str(money_from) + coins() + "from " + trigger.group(3) + " to "
+        bot.say(BANK + trigger.nick + " transferred " + str(money_from) + coins() + "from " + trigger.group(3) + " to "
                 + trigger.group(4) + " succesfully." , log)
 
 @commands("help bank")
