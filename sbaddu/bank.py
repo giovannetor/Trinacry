@@ -43,7 +43,7 @@ def bank(bot , trigger):
             gender_def = gender.split("/")[2]
 
         money = money_getter(bot , trigger.group(3))
-        bot.reply(trigger.group(3) + "  has " + str(money) + denari() + "in " + gender_def + " Bank.")
+        bot.reply(" "+ trigger.group(3) + " has " + str(money) + denari() + "in " + gender_def + " Bank.")
 
 @commands("pay")
 @example(".pay gio 50")
@@ -84,7 +84,7 @@ def give(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "denari" , money)
 
-    bot.reply(" correctly added " + str(money) + denari() + "to "  + trigger.group(3) + "'s Bank.")
+    bot.reply(" correctly added " + str(trigger.group(4)) + denari() + "to "  + trigger.group(3) + "'s Bank.")
 
     bot.say(format_add(trigger.group(4)) ,trigger.group(3))
 
@@ -100,6 +100,6 @@ def take(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "denari" , money)
 
-    bot.reply(" correctly removed " + str(money) + denari() + "from "  + trigger.group(3) + "'s Bank.")
+    bot.reply(" correctly removed " + str(trigger.group(4)) + denari() + "from "  + trigger.group(3) + "'s Bank.")
 
     bot.say(format_rem(trigger.group(4)) ,trigger.group(3))
