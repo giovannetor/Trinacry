@@ -1,7 +1,7 @@
 import threading
 
 import sopel.plugin as plugin
-from sopel.plugins.bank import bank_add
+from bank import bank_add
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
 
 game_chan = ["#games", "#tictactoe"]
