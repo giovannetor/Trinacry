@@ -103,8 +103,8 @@ def give(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "coins" , money)
 
-    bot.say(BANK + trigger.nick + ": correctly added " + str(trigger.group(4)) + coins() + "to "  +
-              trigger.group(3) + "'s Bank Account.")
+    bot.notice(BANK + trigger.nick + ": correctly added " + str(trigger.group(4)) + coins() + "to "  +
+              trigger.group(3) + "'s Bank Account." , trigger.nick)
     bot.say(BANK + trigger.nick + " gave " + str(trigger.group(4)) + coins() + "to " + trigger.group(3) + " succesfully." , log)
     bot.say(format_add(trigger.group(4) , "TriCoins given by an Admin.") ,trigger.group(3))
 
@@ -123,8 +123,8 @@ def take(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "coins" , money)
 
-    bot.say(BANK + trigger.nick + ": correctly removed " + str(trigger.group(4)) + coins() +
-              "from "  + trigger.group(3) + "'s Bank Account.")
+    bot.notice(BANK + trigger.nick + ": correctly removed " + str(trigger.group(4)) + coins() +
+              "from "  + trigger.group(3) + "'s Bank Account." , trigger.nick)
     bot.say(BANK + trigger.nick + " took " + str(trigger.group(4)) + coins() + "from " + trigger.group(3) + " succesfully." , log)
     bot.say(format_rem(trigger.group(4) , "TriCoins taken by an Admin.") ,trigger.group(3))
 
