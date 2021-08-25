@@ -8,6 +8,7 @@ import threading
 import time
 from datetime import datetime
 
+from bank.bank import bank_add , bank_rem
 import sopel.plugin as module
 import sopel.tools as tools
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL, CONTROL_HEX_COLOR
@@ -165,7 +166,7 @@ class PokerGame:
         self.channel = trigger.sender
         self.deck = []
         self.players = {
-            self.starter: {"cards": [], "hasdone": False, "change": False, "bet": False, "fiches": 1000, "allin": False,
+            self.starter: {"cards": [], "hasdone": False, "change": False, "bet": False, "fiches": 100, "allin": False,
                            "left": False}}
         self.playerOrder = [self.starter]
         self.currentPlayer = 0
@@ -205,7 +206,7 @@ class PokerGame:
                     return
                 bot.write(['MODE', trigger.sender, '+v', trigger.nick])  # playing players will be voiced
                 self.players[trigger.nick] = {"cards": [], "hasdone": False, "change": False, "bet": False,
-                                              "fiches": 1000, "allin": False,
+                                              "fiches": 100, "allin": False,
                                               "left": False}  # initiates the dict, same for each player ("hasdone" is useless iirc)
                 self.betsdone[trigger.nick] = 0  # add player to bets dict
                 self.playerOrder.append(trigger.nick)  # add player to players order list (maybe to remove?)
@@ -481,7 +482,7 @@ class PokerGame:
                 self.players[i]["change"] = False
                 self.players[i]["hasdone"] = False
                 if self.players[i]["fiches"] == 0:  # if a player has no fiches left, 10 are kindly given to continue :p
-                    self.players[i]["fiches"] = 100
+                    self.players[i]["fiches"] = 10
                     bot.say(self.strings["extra_fiches"] % i)
                 self.players[i]["cards"] = []
                 while len(self.players[i]["cards"]) < 5:
@@ -911,10 +912,25 @@ class PokerBot:
         if trigger.sender not in self.games:
             return
         game = self.games[trigger.sender]
+
+        score = game.players.trigger.nick["fiches"]
+        score_to_give = score - 100
+        if score_to_give < 0:
+            bank_rem(bot , trigger.nick , score_to_give , "Poker loss.")
+        else:
+            bank_add(bot , trigger.nick , score_to_give , "Poker win.")
+
         game.quit(bot, trigger, partquit)
         bot.write(['MODE', trigger.sender, '-v', trigger.nick])
 
         if len(gioco.players) < 2:
+            for player in game.players:
+                score = game.players.player["fiches"]
+                score_to_give = score - 100
+                if score_to_give < 0:
+                    bank_rem(bot , player , score_to_give , "Poker loss.")
+                else:
+                    bank_add(bot , player , score_to_give , "Poker win.")
             self.stop(bot, trigger, forced=True)
 
     def change(self, bot, trigger):
