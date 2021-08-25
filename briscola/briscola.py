@@ -1,4 +1,3 @@
-
 # Version 4.1
 
 import os
@@ -21,21 +20,23 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import desc
 
+from bank.bank import bank_add
+
 Base = declarative_base()
 bris = CONTROL_BOLD + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + " B" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "R" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "I" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "S" + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + "C" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "O" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "L" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "A " + CONTROL_NORMAL
 
 log_chan = "#trinacry-logs"
-game_chan = ["#briscola" , "#games"]
+game_chan = ["#briscola", "#games"]
 
 
 # Classe giocatore
 class Scores(Base):
     __tablename__ = "score"
-    username = Column(String(250), primary_key=True)
-    score = Column(Integer, default=0)
-    win = Column(Integer, default=0)
-    tot = Column(Integer, default=0)
-    time = Column(Integer, default=0)
+    username = Column(String(250), primary_key = True)
+    score = Column(Integer, default = 0)
+    win = Column(Integer, default = 0)
+    tot = Column(Integer, default = 0)
+    time = Column(Integer, default = 0)
 
     def __init__(self, username: str, score: int = 0, win: int = 0, tot: int = 0, time: int = 0):
         self.username = username
@@ -64,30 +65,26 @@ class Manager:
 
     def __init__(self, db_path):
         db_base_path = os.path.dirname(db_path)
-        Path(db_base_path).mkdir(parents=True, exist_ok=True)
+        Path(db_base_path).mkdir(parents = True, exist_ok = True)
         sqlite_filepath = db_path
         self.engine = create_engine(f"sqlite:///{sqlite_filepath}")
 
     def cont_scores(self, team_members: [str], punteggio: int) -> [Scores]:
         session_maker = sessionmaker()
-        session_maker.configure(bind=self.engine)
+        session_maker.configure(bind = self.engine)
         session = session_maker()
         users: [Scores] = []
 
         for team_member in team_members:
             user = None
             try:
-                user = (
-                    session.query(Scores)
-                        .filter(Scores.username == team_member)
-                        .one_or_none()
-                )
+                user = (session.query(Scores).filter(Scores.username == team_member).one_or_none())
             except OperationalError:
-                Scores.__table__.create(bind=self.engine, checkfirst=True)
+                Scores.__table__.create(bind = self.engine, checkfirst = True)
                 print("Tabella scores creata")
 
             if user is None:
-                user = Scores(username=team_member, score=punteggio)
+                user = Scores(username = team_member, score = punteggio)
                 session.add(user)
             else:
                 user.score = user.score + punteggio
@@ -100,24 +97,20 @@ class Manager:
 
     def cont_win(self, team_members: [str]) -> [Scores]:
         session_maker = sessionmaker()
-        session_maker.configure(bind=self.engine)
+        session_maker.configure(bind = self.engine)
         session = session_maker()
         users: [Scores] = []
 
         for team_member in team_members:
             user = None
             try:
-                user = (
-                    session.query(Scores)
-                        .filter(Scores.username == team_member)
-                        .one_or_none()
-                )
+                user = (session.query(Scores).filter(Scores.username == team_member).one_or_none())
             except OperationalError:
-                Scores.__table__.create(bind=self.engine, checkfirst=True)
+                Scores.__table__.create(bind = self.engine, checkfirst = True)
                 print("Tabella scores creata")
 
             if user is None:
-                user = Scores(username=team_member, win=1)
+                user = Scores(username = team_member, win = 1)
                 session.add(user)
             else:
                 user.win = user.win + 1
@@ -130,24 +123,20 @@ class Manager:
 
     def cont_tot(self, team_members: [str]) -> [Scores]:
         session_maker = sessionmaker()
-        session_maker.configure(bind=self.engine)
+        session_maker.configure(bind = self.engine)
         session = session_maker()
         users: [Scores] = []
 
         for team_member in team_members:
             user = None
             try:
-                user = (
-                    session.query(Scores)
-                        .filter(Scores.username == team_member)
-                        .one_or_none()
-                )
+                user = (session.query(Scores).filter(Scores.username == team_member).one_or_none())
             except OperationalError:
-                Scores.__table__.create(bind=self.engine, checkfirst=True)
+                Scores.__table__.create(bind = self.engine, checkfirst = True)
                 print("Tabella scores creata")
 
             if user is None:
-                user = Scores(username=team_member, tot=1)
+                user = Scores(username = team_member, tot = 1)
                 session.add(user)
             else:
                 user.tot = user.tot + 1
@@ -160,7 +149,7 @@ class Manager:
 
     def cont_time(self, team_members: [str], hours: int = 0, minutes: int = 0, seconds: int = 0) -> [Scores]:
         session_maker = sessionmaker()
-        session_maker.configure(bind=self.engine)
+        session_maker.configure(bind = self.engine)
         session = session_maker()
         users: [Scores] = []
         time_played: int = (hours * 3600) + (minutes * 60) + seconds
@@ -168,17 +157,13 @@ class Manager:
         for team_member in team_members:
             user = None
             try:
-                user = (
-                    session.query(Scores)
-                        .filter(Scores.username == team_member)
-                        .one_or_none()
-                )
+                user = (session.query(Scores).filter(Scores.username == team_member).one_or_none())
             except OperationalError:
-                Scores.__table__.create(bind=self.engine, checkfirst=True)
+                Scores.__table__.create(bind = self.engine, checkfirst = True)
                 print("Tabella scores creata")
 
             if user is None:
-                user = Scores(username=team_member, time=time_played)
+                user = Scores(username = team_member, time = time_played)
                 session.add(user)
             else:
                 user.time = user.time + time_played
@@ -192,7 +177,7 @@ class Manager:
     def update_players(self, team_members: [str], win: bool = False, punteggio: int = 0, hours: int = 0,
                        minutes: int = 0, seconds: int = 0) -> [Scores]:
         session_maker = sessionmaker()
-        session_maker.configure(bind=self.engine)
+        session_maker.configure(bind = self.engine)
         session = session_maker()
         users: [Scores] = []
         time_played: int = (hours * 3600) + (minutes * 60) + seconds
@@ -201,23 +186,13 @@ class Manager:
         for team_member in team_members:
             user = None
             try:
-                user = (
-                    session.query(Scores)
-                        .filter(Scores.username == team_member)
-                        .one_or_none()
-                )
+                user = (session.query(Scores).filter(Scores.username == team_member).one_or_none())
             except OperationalError:
-                Scores.__table__.create(bind=self.engine, checkfirst=True)
+                Scores.__table__.create(bind = self.engine, checkfirst = True)
                 print("Tabella scores creata")
 
             if user is None:
-                user = Scores(
-                    username=team_member,
-                    score=punteggio,
-                    win=win_value,
-                    tot=1,
-                    time=time_played
-                )
+                user = Scores(username = team_member, score = punteggio, win = win_value, tot = 1, time = time_played)
                 session.add(user)
             else:
                 user.score = int(user.score) + int(punteggio)
@@ -233,13 +208,9 @@ class Manager:
 
     def delete_player(self, username: str) -> Scores:
         session_maker = sessionmaker()
-        session_maker.configure(bind=self.engine)
+        session_maker.configure(bind = self.engine)
         session = session_maker()
-        user = (
-            session.query(Scores)
-                .filter(Scores.username == username)
-                .one_or_none()
-        )
+        user = (session.query(Scores).filter(Scores.username == username).one_or_none())
         if user is not None:
             session.delete(user)
             session.commit()
@@ -251,13 +222,9 @@ class Manager:
 
     def get_user(self, username: str) -> Scores:
         session_maker = sessionmaker()
-        session_maker.configure(bind=self.engine)
+        session_maker.configure(bind = self.engine)
         session = session_maker()
-        user = (
-            session.query(Scores)
-                .filter(Scores.username == username)
-                .one_or_none()
-        )
+        user = (session.query(Scores).filter(Scores.username == username).one_or_none())
         session.close()
         return user
 
@@ -286,7 +253,7 @@ class Manager:
         result = StringIO()
 
         session_maker = sessionmaker()
-        session_maker.configure(bind=self.engine)
+        session_maker.configure(bind = self.engine)
         session = session_maker()
 
         i = 1
@@ -338,150 +305,14 @@ WIN = True
 lock = threading.RLock()
 
 listpoint = ["NUMBER | ONTABLE | POINTS                         ",
-             "1________11________11                              ",
-             "2________2________0                            ",
-             "3________10________10                              ",
-             "4________4________0                             ",
-             "5________5________0                          ",
-             "6________6________0     ",
-             "7________7________0",
-             "8________8________2",
-             "9________9________3",
-             "10________10________4", ]
+             "1________11________11                              ", "2________2________0                            ",
+             "3________10________10                              ", "4________4________0                             ",
+             "5________5________0                          ", "6________6________0     ", "7________7________0",
+             "8________8________2", "9________9________3", "10________10________4", ]
 
-string_help_ita_notused = [
-    " |||||   PAGINA DI AIUTO DI:   BRISCOLA    |||||",
-    "═════════════════════════════════════════════════════════════════════════════════════════════════════════",
-    "COMANDO  | COMANDO COMPRESSO | COSA FA?",
-    "═════════════════════════════════════════════════════════════════════════════════════════════════════════",
-    ".briscola  | .bris  .br | Apre la lobby. Non starta il gioco. ",
-    ".join      | .jo | Ti unisce alla partita.",
-    ".quit      | .qu | Abbandona la partita. ATTENZIONE! se la partita è iniziata, vincerà la squadra avversaria",
-    ".deal      | .de | Starta la partita. Non si torna indietro. ",
-    ".play      | .pl | Gioca una carta. ",
-    ".cards     | .ca | Mostra le carte nella tua mano, e la Briscola. ",
-    ".brishelp  |.brhelp | Come sei arrivato fino a qui senza saperlo? O.o ",
-    ".rules     |.ru | Mostra le REGOLE del GIOCO ",
-    ".language  |.lan| Cambia la lingua del gioco (disponibili english e italiano)",
-    "═════════════════════════════════════════════════════════════════════════════════════════════════════════",
-    "     ",
-    "COME GIOCARE UNA CARTA: .play C S o .play S C (S = Seme della carta , V = Valore della carta)",
-    "Semi possibili: S (spade) , M (mazze) , O (oro) , C (coppe)",
-    "Valori possibili: ogni numero da 1 a 10"
-]
 string_help_ita = "https://webchat.duckie.chat/uploads/bfe6a7d7e4dfd403/paste.txt"
-
-string_help_eng_notused = [
-    " ||||| HELP PAGE OF BRISCOLA |||||",
-    "═════════════════════════════════════════════════════════════════════════════════════════════════════════ ",
-    "COMMAND | COMPRESSED COMMAND | WHAT DOES IT DO?",
-    "═════════════════════════════════════════════════════════════════════════════════════════════════════════ ",
-    ".briscola | .bris .br | Opens the lobby. Don't start the game.",
-    ".join     | .jo | Joins you in the game.",
-    ".quit     | .qu | Leave the game. ATTENTION! if the game has started, the opposing team will win",
-    ".deal     | .de | The game starts. There's no turning back.",
-    ".play     | .pl | Play a card.",
-    ".cards    | .ca | Show the cards in your hand, and the BRISCOLA.",
-    ".brishelp | .brhelp | How did you get here without knowing it? O.o",
-    ".rules    | .ru | Show the GAME RULES",
-    ".pointlist|.poli| Show just the Table of the Value of Cards.",
-    "═════════════════════════════════════════════════════════════════════════════════════════════════════════ ",
-    "  ",
-    "HOW TO PLAY A CARD: .play C S or .play S C (S = Card suit, V = Card value)",
-    "Possible suits: S (spade), M (mazze), O (oro), C (coppe)",
-    "Possible values: any number from 1 to 10"
-]
 string_help_eng = "https://webchat.duckie.chat/uploads/4411d905aa804c03/paste.txt "
-
-rules_ita_notused = [
-    "                                     ════════════════════",
-    "                                      REGOLE DI BRISCOLA",
-    "                                     ════════════════════",
-    " ",
-    "--QUAL E' L'OBIETTIVO?--",
-    "Due squadre (composte da 2 o 4 giocatori) si sfidano con un unico obiettivo: a fine partita,",
-    "avere più punti dell'altra squadra. I punti massimi ottenibili sono 120.",
-    "Il primo giocatore a iniziare il primo turno è scelto casualmente. Dal secondo in poi, il giocatore",
-    "a iniziare il turno sarà il vincitore della mano precedente."
-    " "
-    "--COME SI VINCE UNA MANO--?",
-    "Il giocatore a iniziare il turno gioca una carta. Questa carta deciderà il SEME DEL TURNO.",
-    "Il giocatore successivo, per vincere il turno, deve giocare una carta dello STESSO SEME ma VALORE SUPERIORE",
-    "es.  G1 gioca '4 di Mazze'.  G2 gioca '8 di Coppe'. vincitore -> G1 (anche se la carta di G2 ha VALORE SUPERIORE, ha un seme diverso.)",
-    "es.  G1 gioca '6 di Oro'  .  G2 gioca '10 di Oro' . vincitore -> G2 (la carta del G2 ha lo STESSO SEME, e VALORE SUPERIORE)",
-    "QUESTO ^ fa capire come il primo giocatore a giocare una carta abbia un vantaggio rispetto ai giocatori successivi. ",
-    "Il vincitore del punto si prente TUTTE le carte sul tavolo, che andranno a costituire i suoi PUNTI",
-    "ATTENZIONE: nel gioco sono presenti carte 'jolly' chiamate BRISCOLA. Queste carte, quando giocate, hanno la precedenza su tutte le altre.",
-    "In caso di presenza di più BRISCOLE, vince la maggiore. Il seme della BRISCOLA è sorteggiato a inizio partita",
-    "TUTTE le carte con lo stesso SEME della briscola, sono anch'esse BRISCOLE.",
-    "es. BRISCOLA = MAZZE    G1 gioca '7 di Oro' . G2 gioca '2 di Mazze'. vincitore -> G2 (perchè il G2 ha giocato una BRISCOLA. Non importa il",
-    "seme nè il valore della carta del G1, le briscole hanno SEMPRE la precedenza.",
-    "es. BRISCOLA = COPPE    G1 gioca '8 di Coppe' . G2 gioca '9 di Coppe'. vincitore -> G2 (entrambi i giocatori hanno giocato BRISCOLE, quindi vince quella maggiore)",
-    " ",
-    "IMPORTANTE! Le carte hanno un valore diverso, a seconda che siano giocate sul tavolo o contate come punti alla fine del turno (vedi tabella)",
-    " ",
-    "NUMERO | TAVOLO | PUNTI                                      @@@ ESEMPI @@@  ",
-    " 1         11       11                  |BRISCOLA = ORO per tutti gli esempi               |",
-    " 2          2        0                  |G1 = 3 di Coppe    G2 = 5 di Coppe  vincitore = G1|",
-    " 3         10       10                  |G1 = 3 di Coppe    G2 = 1 di Mazze  vincitore = G1|",
-    " 4          4        0                  |G1 = 3 di Coppe    G2 = 2 di Oro    vincitore = G2|",
-    " 5          5        0                  |G1 = 7 di Mazze    G2 = 9 di Mazze  vincitore = G2|",
-    " 6          6        0                  |G1 = 10 di Mazze   G2 = 3 di Mazze  vincitore = G2|",
-    " 7          7        0                  |G1 = 5 di Oro      G2 = 3 di Mazze  vincitore = G1|",
-    " 8          8        2",
-    " 9          9        3",
-    "10         10        4",
-    " ",
-    "(p.s. : sia 3 che 10 valgono 10 sul tavolo. In caso di scontro, 3 > 10)",
-    "Finite le carte del mazzo, si contano i punti secondo la colonna PUNTI. Chi ne ha di più vince la partita."
-]
 rules_ita = "https://webchat.duckie.chat/uploads/a08b870c8146cc85/paste.txt "
-
-rules_eng_notused = [
-    "════════════════════",
-    "   BRISCOLA RULES",
-    "════════════════════",
-    "",
-    "--WHAT IS THE GOAL?--",
-    "Two teams (made up of 2 or 4 players) compete with one goal: at the end of the game,",
-    "having more points than the other team. The maximum points achievable are 120.",
-    "The first player to start the first round is chosen randomly. From the second on, ",
-    "The winner of the previous hand will start the round."
-    "===================================================================="
-    "--HOW DO YOU WIN A HAND--?",
-    "The player who starts the turn plays a card. This card will decide the SUIT OF THE TURN.",
-    "The next player,in order to win the turn, must play a card of the SAME SUIT but HIGHER VALUE",
-    "eg. G1 plays '4 di MAZZE'. G2 plays '8 di COPPE' . winner -> G1",
-    "(even if G2's card has HIGHER VALUE, it has a different suit.)",
-    "eg. G1 plays '6 di ORO'. G2 plays '10 di ORO'. winner -> G2 ",
-    "(G2's card has the SAME SUIT, and HIGHER VALUE)",
-    "THIS ^ shows how the first player to play a card has an advantage over subsequent players.",
-    "The winner of the turn takes ALL the cards on the table, which will make up his POINTS",
-    "=====================================================================",
-    "ATTENTION: in the game there are SPECIAL cards called BRISCOLA. These cards, when played, take precedence over all the others.",
-    "In case of more BRISCOLE, the largest wins. The BRISCOLA suit is drawn at the beginning of the game",
-    "ALL the cards with the same SEED of the Briscola, are also BRISCOLE.",
-    "eg. BRISCOLA = MAZZE. G1 plays '7 of ORO '. G2 plays '2 of MAZZE '. winner -> G2 (because G2 has played a BRISCOLA. It doesn't matter what",
-    "suit nor the value of the G1 card, Briscolas ALWAYS take precedence.",
-    "eg. BRISCOLA = COPPE. G1 plays '8 of COPPE'. G2 plays  '9 of COPPE' . Winner -> G2 (both players have played BRISCOLE, so the higher one wins)",
-    "                  ",
-    "IMPORTANT! The cards have a different value, depending on whether they are played on the table or counted as points at the end of the round (see table)",
-    "                ",
-    "NUMBER | ONTABLE | POINTS                          @@@ EXAMPLES @@@",
-    "1    11    11                              | BRISCOLA = GOLD for all examples |",
-    "2     2     0                              | G1 = 3 of COPPE. G2 = 5 of COPPE. winner = G1 |",
-    "3    10    10                              | G1 = 3 of COPPE. G2 = 1 of MAZZE. winner = G1 |",
-    "4     4     0                              | G1 = 3 of COPPE. G2 = 2 of ORO. winner = G2 |",
-    "5     5     0                              | G1 = 7 of MAZZE. G2 = 9 of MAZZE. winner = G2 |",
-    "6     6     0                              | G1 = 10 of MAZZE. G2 = 3 of MAZZE. winner = G2 |",
-    "7     7     0                              | G1 = 5 of ORO. G2 = 3 of Clubs. winner = G1 |",
-    "8     8     2",
-    "9     9     3",
-    "10    10    4",
-    "                      ",
-    "(ps: both 3 and 10 are worth 10 on the table. In case of a clash, 3 > 10)",
-    "Once the cards in the deck are finished, the points are counted according to the POINTS column. Whoever has the most wins the game."
-]
 rules_eng = "https://webchat.duckie.chat/uploads/0ef1689d1c6ca140/paste.txt "
 
 strings_eng = {"nuovo_player": " %s joins the match as player: %s .",
@@ -489,32 +320,23 @@ strings_eng = {"nuovo_player": " %s joins the match as player: %s .",
                "gia_dentro": " %s you are already inside the match of " + bris + " O.o",
                "pronti": "Enough players, ready to deeeeal.",
                "player_quit": " %s abandoned the match of " + bris + " .",
-               "non_abbastanza": "Can't play alone, wait for someone else...",
-               "iniziato": "Match already started.",
+               "non_abbastanza": "Can't play alone, wait for someone else...", "iniziato": "Match already started.",
                "cant_play": "You are not inside the match, please do not disturb the other players :)",
-               "turno": " %s 's turn.",
-               "non_hai": "%s you don't have this card: %s",
-               "tue_carte": "Your cards: %s",
-               "mano_win": CONTROL_BOLD + " %s  wins the hand!",
-               "prossimo": CONTROL_BOLD + "ON TURN: ",
-               "game_started": bris + " started. use .join to join .",
-               "not_started": "Match not started yet.",
+               "turno": " %s 's turn.", "non_hai": "%s you don't have this card: %s", "tue_carte": "Your cards: %s",
+               "mano_win": CONTROL_BOLD + " %s  wins the hand!", "prossimo": CONTROL_BOLD + "ON TURN: ",
+               "game_started": bris + " started. use .join to join .", "not_started": "Match not started yet.",
                "game_stopped": CONTROL_BOLD + "GAME OVER.",
                "admin_stop": CONTROL_BOLD + "AN ADMIN TERMINATED THE MATCH FROM REMOTE.",
                "cant_continue": "a player left the game. The other team wins!!",
                "win": "The winner team is made of %s   !!!. Play time: %s",
-               "on_table": " %s's turn. Cards on table: %s  ",
-               'SB_PLAYER': "%s (%d %s)",
-               "briscola": bris + " : %s",
-               "cant_move": "Only an admin can move the match. ",
-               'NEED_CHANNEL': "I need a channel name to move to.",
+               "on_table": " %s's turn. Cards on table: %s  ", 'SB_PLAYER': "%s (%d %s)", "briscola": bris + " : %s",
+               "cant_move": "Only an admin can move the match. ", 'NEED_CHANNEL': "I need a channel name to move to.",
                'NOT_IN_CHANNEL': "I'm not in %s, so I can't move the game there.",
                'CHANNEL_IN_USE': "Channel %s already has a " + bris + " game in progress.",
                'MOVED_FROM': "Note: %s moved an " + bris + " game here from %s.",
                'GAME_MOVED': "%s " + bris + " game moved to %s.",
                "lan_done": "Succesfully changed " + bris + "language to %s .",
-               "not_admin": "Only an admin can change this setting.",
-               "joined": " %s joined the TEAM %s .",
+               "not_admin": "Only an admin can change this setting.", "joined": " %s joined the TEAM %s .",
                "wrong_seed": "Suits can be ORO(o) , MAZZE(m) , COPPE(c) or SPADE(s), not %s .",
                "team_comp": "Teams formed by:    TEAM 1: %s  *** TEAM 2: %s",
                "not_3": "The number of players can be 2 or 4, NOT 3. please wait for another player, or leave :)",
@@ -523,17 +345,14 @@ strings_eng = {"nuovo_player": " %s joins the match as player: %s .",
                "quit_win": "The player %s left the match. WINNER: %s .",
                "quit_ok": "The player %s left the match. Match has to be started again.",
                "change_time": CONTROL_BOLD + "TIME TO SWAP!! You have 10 seconds to see the cards of your  mate.",
-               "change_cards": "Your mate's cards: %s",
-               "team_earn": "TEAM %s earns  | %s |  points!",
-               "player_list": "TEAM 1 : %s    TEAM 2 : %s",
-               "local_stop": CONTROL_BOLD + "AN ADMIN STOPPED THE MATCH",
+               "change_cards": "Your mate's cards: %s", "team_earn": "TEAM %s earns  | %s |  points!",
+               "player_list": "TEAM 1 : %s    TEAM 2 : %s", "local_stop": CONTROL_BOLD + "AN ADMIN STOPPED THE MATCH",
                "quit_warn": "If you leave the match, the opposite team will win. Use .quit to confirm. ",
                "idle_kick": "Player %s had been IDLE for 1 MINUTE. Going to be kicked from the match.",
                "idle_warn1": " %s your turn! Idle for: 15s",
                "idle_warn2": " %s your turn. Being Idle for more than 60 seconds will result in a kick. Idle for : 30s",
                "idle_warn3": " %s you here??? Do something or you'll be kicked in 15 secondi! Idle for: 45s",
-               "idle_end": "Match terminated for inactivity."
-               }
+               "idle_end": "Match terminated for inactivity."}
 strings_ita = {"nuovo_player": " %s si unisce alla partita di " + bris + "  come giocatore: %s .",
                "impos_unirsi": "Mi spiace %s , il numero massimo di giocatori è 4. Aspetta l'inizio della prossima partita :)",
                "gia_dentro": " %s sei già dentro la partita di " + bris + " O.o",
@@ -542,29 +361,22 @@ strings_ita = {"nuovo_player": " %s si unisce alla partita di " + bris + "  come
                "non_abbastanza": "Non puoi giocare da solo, aspetta qualcun altro...",
                "iniziato": "La partita non è iniziata.",
                "cant_play": "Non sei dentro la partita, per favore non disturbare gli altri giocatori :)",
-               "turno": "Turno di %s.",
-               "non_hai": "%s non hai questa carta: %s",
-               "tue_carte": "Le tue carte: : %s",
-               "mano_win": " %s  vince la mano!",
-               "prossimo": "E' il turno di: ",
+               "turno": "Turno di %s.", "non_hai": "%s non hai questa carta: %s", "tue_carte": "Le tue carte: : %s",
+               "mano_win": " %s  vince la mano!", "prossimo": "E' il turno di: ",
                "game_started": bris + " iniziata. Usa .join per unirti .",
-               "not_started": "La partita non è ancora iniziata.",
-               "game_stopped": "GAME OVER.",
+               "not_started": "La partita non è ancora iniziata.", "game_stopped": "GAME OVER.",
                "admin_stop": "Un admin ha forzatamente terminato la partita di " + bris + ".",
                "cant_continue": "Un giocatore ha lasciato la partita. Vince il team avversario!!",
                "win": "Il team vincitore è composto da: %s !!!. Tempo di gioco: %s",
-               "on_table": " Turno di: %s.  Carte sul tavolo: %s  ",
-               'SB_PLAYER': "%s (%d %s)",
-               "briscola": bris + " : %s",
-               "cant_move": "Solo un admin può muovere la partita. ",
+               "on_table": " Turno di: %s.  Carte sul tavolo: %s  ", 'SB_PLAYER': "%s (%d %s)",
+               "briscola": bris + " : %s", "cant_move": "Solo un admin può muovere la partita. ",
                'NEED_CHANNEL': "Ok ma...dimmi dove andare.",
                'NOT_IN_CHANNEL': "Non sono dentro %s, quindi non posso muovere la partita là.",
                'CHANNEL_IN_USE': "Il canale %s ha già una partita di " + bris + " in corso.",
                'MOVED_FROM': "ATTENZIONE: %s ha mosso una partita di " + bris + " qui da %s.",
                'GAME_MOVED': "%s partita di " + bris + " mossa in %s.",
                "lan_done": "La lingua di " + bris + " è stata correttamente cambiata in %s .",
-               "not_admin": "NON SEI UN ADMIN. VADE RETRO.",
-               "joined": " %s si è unito al TEAM %s .",
+               "not_admin": "NON SEI UN ADMIN. VADE RETRO.", "joined": " %s si è unito al TEAM %s .",
                "wrong_seed": "I semi possono essere ORO(o) , MAZZE(m) , COPPE(c) o SPADE(s), non %s .",
                "team_comp": "I team sono formati da: TEAM 1: %s  *** TEAM 2: %s",
                "not_3": "Il numero di giocatori deve essere 2 o 4, NON 3. Per favore attendi un altro giocatore, o abbandona :)",
@@ -573,8 +385,7 @@ strings_ita = {"nuovo_player": " %s si unisce alla partita di " + bris + "  come
                "quit_win": "Il giocatore %s ha lasciato la partita. VINCITORE: %s .",
                "quit_ok": "Il giocatore %s ha lasciato la partita. La partita deve essere avviata di nuovo.",
                "change_time": CONTROL_BOLD + "ULTIMO TURNO!!! Hai 10 secondi di tempo per vedere le carte del compagno.",
-               "change_cards": "Carte del tuo compagno: %s",
-               "team_earn": "Il TEAM %s guadagna  | %s |  punti!",
+               "change_cards": "Carte del tuo compagno: %s", "team_earn": "Il TEAM %s guadagna  | %s |  punti!",
                "player_list": "TEAM 1 : %s    TEAM 2 : %s",
                "local_stop": CONTROL_BOLD + "UN ADMIN HA FERMATO LA PARTITA",
                "quit_warn": "Se abbandoni, il team avversatio vincerà. Usa .quit per confermare.",
@@ -582,29 +393,25 @@ strings_ita = {"nuovo_player": " %s si unisce alla partita di " + bris + "  come
                "idle_warn1": " %s è il tuo turno! Idle da: 15s",
                "idle_warn2": " %s è il tuo turno. Restare idle per più di 60 secondi causerà un kick. Idle da : 30s",
                "idle_warn3": " %s ci sei??? Fai qualcosa o sarai buttato fuori tra 15 secondi! Idle da: 45s",
-               "idle_end": "Partita terminata per inattività."
-               }
+               "idle_end": "Partita terminata per inattività."}
 
 strings = strings_eng
 rules = rules_eng
 string_help = string_help_eng
 
-seeds = {"MAZZE": " di MAZZE  ", "COPPE": " di COPPE  ", "SPADE": " di SPADE  ",
-         "ORO": " di ORO  ", "O": " di ORO  ", "C": " di COPPE  ", "M": " di MAZZE  ", "S": " di SPADE  "}
+seeds = {"MAZZE": " di MAZZE  ", "COPPE": " di COPPE  ", "SPADE": " di SPADE  ", "ORO": " di ORO  ", "O": " di ORO  ",
+         "C": " di COPPE  ", "M": " di MAZZE  ", "S": " di SPADE  "}
 
 seedsstandard = ["M", "O", "C", "S"]
 valoristandard = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
-numbers = {"1": "1", "ASSO": "ASSO", "2": "2", "3": "3", "4": "4", "5": "5",
-           "6": "6", "7": "7", "8": "8", "DONNA": "DONNA",
-           "9": "9 ", "CAVALLO": "CAVALLO ", "0": "10", "RE": "RE "}
+numbers = {"1": "1", "ASSO": "ASSO", "2": "2", "3": "3", "4": "4", "5": "5", "6": "6", "7": "7", "8": "8",
+           "DONNA": "DONNA", "9": "9 ", "CAVALLO": "CAVALLO ", "0": "10", "RE": "RE "}
 
-valori = {"1": 11, "ASSO": 11, "2": 0, "3": 10, "4": 0, "5": 0,
-          "6": 0, "7": 0, "8": 2, "DONNA": 2,
-          "9": 3, "CAVALLO": 3, "0": 4, "RE": 4}
+valori = {"1": 11, "ASSO": 11, "2": 0, "3": 10, "4": 0, "5": 0, "6": 0, "7": 0, "8": 2, "DONNA": 2, "9": 3,
+          "CAVALLO": 3, "0": 4, "RE": 4}
 
-valori_tavolo = {"1": 11, "2": 2, "3": 10.5, "4": 4, "5": 5,
-                 "6": 6, "7": 7, "8": 8, "9": 9, "0": 10}
+valori_tavolo = {"1": 11, "2": 2, "3": 10.5, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "0": 10}
 
 
 class BrisGame:
@@ -687,9 +494,7 @@ class BrisGame:
                     self.team1.append(trigger.nick)
                     bot.say(self.strings["joined"] % (trigger.nick, "1"))
 
-                bot.say(self.strings['nuovo_player'] % (
-                    trigger.nick, str(self.playerOrder.index(trigger.nick) + 1
-                                      )))
+                bot.say(self.strings['nuovo_player'] % (trigger.nick, str(self.playerOrder.index(trigger.nick) + 1)))
                 if len(self.players) > 1:
                     bot.say(self.strings['pronti'])  # at least 2 players, ready to deal
                 str1 = ""
@@ -704,7 +509,7 @@ class BrisGame:
                 bot.say(self.strings["gia_dentro"] % trigger.nick)  # player already in
 
     def quit(self, bot, trigger,
-             idle=False):  # remove the player from the team. the other team wins. (need to add: if game not dealt, no one loses)
+             idle = False):  # remove the player from the team. the other team wins. (need to add: if game not dealt, no one loses)
         if not idle:
             player = trigger.nick
             if player not in self.players:
@@ -734,9 +539,8 @@ class BrisGame:
             self.team2.append(0)
             self.startTime = datetime.now()
             self.deck = self.create_deck()  # create the deck (check the functino)
-            briscola = str(
-                self.get_card(
-                    bot)) + "*"  # make a "briscola" recognizable for the _render_coloured_cards method. e.g. briscola: "4M*"
+            briscola = str(self.get_card(
+                bot)) + "*"  # make a "briscola" recognizable for the _render_coloured_cards method. e.g. briscola: "4M*"
             self.briscola.append(
                 briscola)  # adds the briscola to the briscola list. ONLY ONE CARD will be here, that will decide the seed of the briscola
             for player_list in self.players:
@@ -814,8 +618,8 @@ class BrisGame:
             0]  # the first card in the self.ontable is the "command card". to win a turn, the other cards must have same seed and > number, OR be a briscola
         # briscola always wins. if there are more briscola, the highest wins
 
-        for c in range(1, len(
-                self.ontable)):  # analyzes the cards in the .ontable one by one. if one of the same seed has number > carcom, it becomes the new carcom
+        for c in range(1,
+                       len(self.ontable)):  # analyzes the cards in the .ontable one by one. if one of the same seed has number > carcom, it becomes the new carcom
             card_sfid = self.ontable[c]  # c is just an index
             if card_sfid[1] == carcom[1]:
                 if valori_tavolo[card_sfid[0]] > valori_tavolo[carcom[
@@ -849,25 +653,23 @@ class BrisGame:
         if plwin in self.team1:  # if player in team 1
             for i in self.ontable:  # for card in the .ontable list (not yet emptied)
                 numero = i[0]  # takes the number of the card (remember, format "9S giovannetor"
-                self.team1[-1] += int(valori[str(
-                    numero)])  # the dict valori contains the point value of cards. remeber that the team1 list has an empty int at the end.
-            bot.say(self.strings["team_earn"] % ("1", str(self.team1[-1] - punti1prima)))
-            # bot.say(self.strings["mano_win"] % (self.playerOrder[self.currentPlayer]))
-            # bot.say("Team 1 earns " + str(self.team1[-1] - punti1prima) + " points! Gets to " + str(self.team1[-1]))
+                self.team1[-1] += int(valori[
+                                          str(numero)])  # the dict valori contains the point value of cards. remeber that the team1 list has an empty int at the end.
+            bot.say(self.strings["team_earn"] % ("1", str(self.team1[
+                                                              -1] - punti1prima)))  # bot.say(self.strings["mano_win"] % (self.playerOrder[self.currentPlayer]))  # bot.say("Team 1 earns " + str(self.team1[-1] - punti1prima) + " points! Gets to " + str(self.team1[-1]))
         else:
             for i in self.ontable:
                 numero = i[0]
                 self.team2[-1] += int(valori[str(numero)])
-            bot.say(self.strings["team_earn"] % ("2", str(self.team2[-1] - punti2prima)))
-            # bot.say("Team 2 earns " + str(self.team2[-1] - punti2prima) + " points! Gets to " + str(self.team2[-1]))
+            bot.say(self.strings["team_earn"] % ("2", str(self.team2[
+                                                              -1] - punti2prima)))  # bot.say("Team 2 earns " + str(self.team2[-1] - punti2prima) + " points! Gets to " + str(self.team2[-1]))
 
     def show_on_turn(self, bot):  # shows the cards atm on the table.
         with lock:
             giocatore = self.playerOrder[self.currentPlayer]
             bot.say(self.strings['on_table'] % (giocatore, self._render_colored_cards(self.ontable)))
 
-            self.send_cards(bot, self.playerOrder[self.currentPlayer])
-        # self.send_next(bot)
+            self.send_cards(bot, self.playerOrder[self.currentPlayer])  # self.send_next(bot)
 
     def send_cards(self, bot, trigger):  # shows the cards in your hand, and the match's briscola card
         with lock:
@@ -890,8 +692,8 @@ class BrisGame:
             bot.notice(self.strings['tue_carte'] % (str(self._render_colored_cards(self.players[trigger]["cards"]))),
                        trigger)
             bot.notice(self.strings["briscola"] % (str(self._render_colored_cards(self.briscola))), trigger)
-            bot.notice("=========================================", trigger)
-            # importante! le info personali vanno mandate come notifica, non con .say
+            bot.notice("=========================================",
+                       trigger)  # importante! le info personali vanno mandate come notifica, non con .say
 
     def inc_player(self, bot, trigger):  # actually send the next player to play
         with lock:
@@ -928,9 +730,7 @@ class BrisGame:
                     self.previousPlayer = self.currentPlayer  # if not all the players have played a card, the turn goes on as normal.
                     self.currentPlayer += 1
                 if self.currentPlayer >= len(self.players):
-                    self.currentPlayer = 0
-                # if self.currentPlayer < 0:
-                # self.currentPlayer = len(self.players) - 1
+                    self.currentPlayer = 0  # if self.currentPlayer < 0:  # self.currentPlayer = len(self.players) - 1
 
             if len(self.players) == 4:  # important part!! a turn consist of each player paying a card, then counting who wins the turn, then starting another turn till the
                 if len(self.ontable) == 4:  # cards in the deck are done. i used self.turncounter == 2, but for some reason it triggered at 1st turn instead of 2nd
@@ -953,17 +753,13 @@ class BrisGame:
                     if self.lastturn and self.changecount == 0:
                         bot.say(strings["change_time"])
                         bot.notice(strings["change_cards"] % (
-                            self._render_colored_cards(self.players[self.team1[0]]["cards"])),
-                                   self.team1[1])
+                            self._render_colored_cards(self.players[self.team1[0]]["cards"])), self.team1[1])
                         bot.notice(strings["change_cards"] % (
-                            self._render_colored_cards(self.players[self.team1[1]]["cards"])),
-                                   self.team1[0])
+                            self._render_colored_cards(self.players[self.team1[1]]["cards"])), self.team1[0])
                         bot.notice(strings["change_cards"] % (
-                            self._render_colored_cards(self.players[self.team2[0]]["cards"])),
-                                   self.team2[1])
+                            self._render_colored_cards(self.players[self.team2[0]]["cards"])), self.team2[1])
                         bot.notice(strings["change_cards"] % (
-                            self._render_colored_cards(self.players[self.team2[1]]["cards"])),
-                                   self.team2[0])
+                            self._render_colored_cards(self.players[self.team2[1]]["cards"])), self.team2[0])
                         time.sleep(15)
                         self.changecount += 1
                     if self.lastturn:  # if last turn, choose the total winner
@@ -984,9 +780,8 @@ class BrisGame:
                     self.currentPlayer += 1
                 if self.currentPlayer >= len(self.players):
                     self.currentPlayer = 0
-        self.players[self.playerOrder[self.currentPlayer]]["idletime"] = 0
-        # if self.currentPlayer < 0:
-        #    self.currentPlayer = len(self.players) - 1
+        self.players[self.playerOrder[self.currentPlayer]][
+            "idletime"] = 0  # if self.currentPlayer < 0:  #    self.currentPlayer = len(self.players) - 1
 
     def get_player(self):
         if "WIN" in self.team1 or "WIN" in self.team2 or "DRAW" in self.team1:
@@ -995,7 +790,7 @@ class BrisGame:
         else:
             return False
 
-    def render_counts(self, full=NO):
+    def render_counts(self, full = NO):
         with lock:
             if full:
                 stop = len(self.players)
@@ -1046,51 +841,46 @@ class BrisGame:
             for card in cards:
                 if "*" in card:  # distingue le briscole per seme. DA OTTIMIZZARE
                     if card[1] == "M":
-                        ret.append(CONTROL_COLOR + white + "," + briscola_code + " ** " +
-                                   CONTROL_COLOR + white + "," + mace_code + numbers[card[0]] +
-                                   CONTROL_COLOR + white + "," + mace_code + seeds[card[1]] +
-                                   CONTROL_COLOR + white + "," + briscola_code + " ** " +
-                                   CONTROL_NORMAL + "   ")
+                        ret.append(
+                            CONTROL_COLOR + white + "," + briscola_code + " ** " + CONTROL_COLOR + white + "," + mace_code +
+                            numbers[card[0]] + CONTROL_COLOR + white + "," + mace_code + seeds[card[
+                                1]] + CONTROL_COLOR + white + "," + briscola_code + " ** " + CONTROL_NORMAL + "   ")
 
                     if card[1] == "C":
-                        ret.append(CONTROL_COLOR + white + "," + briscola_code + " ** " +
-                                   CONTROL_COLOR + white + "," + cup_code + numbers[card[0]] +
-                                   CONTROL_COLOR + white + "," + cup_code + seeds[card[1]] +
-                                   CONTROL_COLOR + white + "," + briscola_code + " ** " +
-                                   CONTROL_NORMAL + "   ")
+                        ret.append(
+                            CONTROL_COLOR + white + "," + briscola_code + " ** " + CONTROL_COLOR + white + "," + cup_code +
+                            numbers[card[0]] + CONTROL_COLOR + white + "," + cup_code + seeds[card[
+                                1]] + CONTROL_COLOR + white + "," + briscola_code + " ** " + CONTROL_NORMAL + "   ")
 
                     if card[1] == "S":
-                        ret.append(CONTROL_COLOR + white + "," + briscola_code + " ** " +
-                                   CONTROL_COLOR + black + "," + sword_code + numbers[card[0]] +
-                                   CONTROL_COLOR + black + "," + sword_code + seeds[card[1]] +
-                                   CONTROL_COLOR + white + "," + briscola_code + " ** " +
-                                   CONTROL_NORMAL + "   ")
+                        ret.append(
+                            CONTROL_COLOR + white + "," + briscola_code + " ** " + CONTROL_COLOR + black + "," + sword_code +
+                            numbers[card[0]] + CONTROL_COLOR + black + "," + sword_code + seeds[card[
+                                1]] + CONTROL_COLOR + white + "," + briscola_code + " ** " + CONTROL_NORMAL + "   ")
 
                     if card[1] == "O":
-                        ret.append(CONTROL_COLOR + white + "," + briscola_code + " ** " +
-                                   CONTROL_COLOR + black + "," + coin_code + numbers[card[0]] +
-                                   CONTROL_COLOR + black + "," + coin_code + seeds[card[1]] +
-                                   CONTROL_COLOR + white + "," + briscola_code + " ** " +
-                                   CONTROL_NORMAL + "   ")
+                        ret.append(
+                            CONTROL_COLOR + white + "," + briscola_code + " ** " + CONTROL_COLOR + black + "," + coin_code +
+                            numbers[card[0]] + CONTROL_COLOR + black + "," + coin_code + seeds[card[
+                                1]] + CONTROL_COLOR + white + "," + briscola_code + " ** " + CONTROL_NORMAL + "   ")
 
                 else:
 
                     if card[1] == "M":
-                        ret.append(CONTROL_COLOR + white + "," + mace_code + numbers[card[0]]
-                                   + CONTROL_COLOR + white + "," + mace_code + seeds[card[1]] +
-                                   CONTROL_NORMAL + "   ")
+                        ret.append(CONTROL_COLOR + white + "," + mace_code + numbers[
+                            card[0]] + CONTROL_COLOR + white + "," + mace_code + seeds[
+                                       card[1]] + CONTROL_NORMAL + "   ")
                     if card[1] == "C":  # colora le altre carte, abbastanza ez
-                        ret.append(CONTROL_COLOR + white + "," + cup_code + numbers[card[0]]
-                                   + CONTROL_COLOR + white + "," + cup_code + seeds[card[1]] +
-                                   CONTROL_NORMAL + "   ")
+                        ret.append(CONTROL_COLOR + white + "," + cup_code + numbers[
+                            card[0]] + CONTROL_COLOR + white + "," + cup_code + seeds[card[1]] + CONTROL_NORMAL + "   ")
                     if card[1] == "S":
-                        ret.append(CONTROL_COLOR + black + "," + sword_code + numbers[card[0]]
-                                   + CONTROL_COLOR + black + "," + sword_code + seeds[card[1]] +
-                                   CONTROL_NORMAL + "   ")
+                        ret.append(CONTROL_COLOR + black + "," + sword_code + numbers[
+                            card[0]] + CONTROL_COLOR + black + "," + sword_code + seeds[
+                                       card[1]] + CONTROL_NORMAL + "   ")
                     if card[1] == "O":
-                        ret.append(CONTROL_COLOR + black + "," + coin_code + numbers[card[0]]
-                                   + CONTROL_COLOR + black + "," + coin_code + seeds[card[1]] +
-                                   CONTROL_NORMAL + "   ")
+                        ret.append(CONTROL_COLOR + black + "," + coin_code + numbers[
+                            card[0]] + CONTROL_COLOR + black + "," + coin_code + seeds[
+                                       card[1]] + CONTROL_NORMAL + "   ")
 
         return ''.join(ret) + CONTROL_NORMAL
 
@@ -1147,7 +937,7 @@ class BrisBot:
 
         for game in self.games:
             if self.games[game].get_player():
-                self.play(bot, game, stop=True, idle=True)
+                self.play(bot, game, stop = True, idle = True)
 
     def afktime(self, bot):
         for game in self.games:
@@ -1157,7 +947,7 @@ class BrisBot:
         try:
             self.games[trigger.sender]
         except:
-            #bot.say("Need to start the game first.")
+            # bot.say("Need to start the game first.")
             return
         game = self.games[trigger.sender]
 
@@ -1188,14 +978,12 @@ class BrisBot:
 
     def join(self, bot, trigger):
         if trigger.sender in self.games:
-            self.games[trigger.sender].join(bot, trigger)
-        #else:
-        #    bot.say(self.strings['not_started'])
+            self.games[trigger.sender].join(bot, trigger)  # else:  #    bot.say(self.strings['not_started'])
 
-    def stop(self, bot, trigger, forced=False):
+    def stop(self, bot, trigger, forced = False):
         chan = trigger.sender
         if chan not in self.games:
-            #bot.notice(self.strings['not_started'], trigger.nick)
+            # bot.notice(self.strings['not_started'], trigger.nick)
             return
         game = self.games[chan]
         if trigger.admin or forced:
@@ -1215,11 +1003,11 @@ class BrisBot:
                 if trigger.nick in game.team1:
                     bot.say(self.strings["quit_win"] % (trigger.nick, "TEAM 2"))
                     game.team2.append("WIN")
-                    self.play(bot, trigger, stop=True)
+                    self.play(bot, trigger, stop = True)
                 elif trigger.nick in game.team2:
                     bot.say(self.strings["quit_win"] % (trigger.nick, "TEAM 1"))
                     game.team1.append("WIN")
-                    self.play(bot, trigger, stop=True)
+                    self.play(bot, trigger, stop = True)
 
             for player in game.players:
                 bot.write(['MODE', trigger.sender, '-v', player])
@@ -1240,18 +1028,19 @@ class BrisBot:
                 self.contatore += 1
                 return
 
-
             self.contatore = 0
-            self.stop(bot, trigger, forced=True)
+            self.stop(bot, trigger, forced = True)
 
     def deal(self, bot, trigger):
         if trigger.sender not in self.games:
-            #bot.say(self.strings['not_started'])
+            # bot.say(self.strings['not_started'])
             return
         self.games[trigger.sender].deal(bot, trigger)
 
-    def play(self, bot, trigger, stop=False, idle=False):
+    def play(self, bot, trigger, stop = False, idle = False):
         self.contatore = 0
+        punteggiowin = 0
+        punteggiolose = 0
         if stop == False:
             if trigger.sender not in self.games:
                 return
@@ -1262,6 +1051,7 @@ class BrisBot:
             game = self.games[trigger.sender]
             place = trigger.sender
         winner = game.currentPlayer
+
         if stop == False:
             game.play(bot, trigger)
         if game.get_player():
@@ -1304,16 +1094,19 @@ class BrisBot:
             if self.win:
                 bot.say(self.strings['win'] % (winner, game_duration), trigger or trigger.sender)
                 for playerwin in winner.split():
-                    db_manager.update_players([playerwin], win=True, punteggio=punteggiowin, minutes=minutes,
-                                              seconds=seconds)
+                    bank_add(bot, playerwin, int(punteggiowin) + 20, "Briscola win.")
+                    db_manager.update_players([playerwin], win = True, punteggio = int(punteggiowin), minutes = minutes,
+                                              seconds = seconds)
                 for playerlose in loser.split():
-                    db_manager.update_players([playerlose], win=False, punteggio=punteggiolose, minutes=minutes,
-                                              seconds=seconds)
+                    bank_add(bot, playerlose, int(punteggiowin), "Briscola lose.")
+                    db_manager.update_players([playerlose], win = False, punteggio = int(punteggiolose),
+                                              minutes = minutes, seconds = seconds)
                 bot.say("[" + bris + "] : partita finita in WIN per " + winner + " in TEST " + place, log_chan)
             if self.draw:
                 bot.say("NO ONE WINS")
                 for totplayer in game.players:
-                    db_manager.update_players([totplayer], win=False, punteggio=60, minutes=minutes, seconds=seconds)
+                    db_manager.update_players([totplayer], win = False, punteggio = 60, minutes = minutes,
+                                              seconds = seconds)
                 bot.say("[" + bris + "] : partita finita in DRAW in " + place, log_chan)
 
             self.game_ended(bot, place)
@@ -1406,17 +1199,12 @@ def delplayer(bot, trigger):
 @module.require_privmsg()
 def brisdbad(bot, trigger):
     if trigger.group(3) == "player":
-        bot.say(db_manager.show_stats_admin(stat=AdminStats.PLAYER, username=trigger.group(4)))
+        bot.say(db_manager.show_stats_admin(stat = AdminStats.PLAYER, username = trigger.group(4)))
         bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha richiesto le stats di " + trigger.group(4),
                 log_chan)
     else:
-        stat_map = {
-            "time": AdminStats.TIME,
-            "win": AdminStats.WIN,
-            "tot": AdminStats.TOT,
-            "score": AdminStats.SCORE,
-        }
-        bot.say(db_manager.show_stats_admin(stat=stat_map[trigger.group(3)]))
+        stat_map = {"time": AdminStats.TIME, "win": AdminStats.WIN, "tot": AdminStats.TOT, "score": AdminStats.SCORE, }
+        bot.say(db_manager.show_stats_admin(stat = stat_map[trigger.group(3)]))
         bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha richiesto " + trigger.group(3), log_chan)
 
 
@@ -1424,7 +1212,7 @@ def brisdbad(bot, trigger):
 @module.example(".rank")
 def rank(bot, trigger):
     try:
-        bot.notice(db_manager.show_stats(username=trigger.nick), trigger.nick)
+        bot.notice(db_manager.show_stats(username = trigger.nick), trigger.nick)
         bot.say("[" + bris + "] : " + trigger.nick + " ha ottenuto il suo RANK. ", log_chan)
     except:
         bot.say("You are not in the db. Contact an admin if you feel this is an error.")
@@ -1464,7 +1252,6 @@ def brisstop(bot, trigger):
         brisbot.stop(bot, trigger)
 
 
-
 @module.commands('jo', "join")
 @module.priority('high')
 @module.require_chanmsg
@@ -1481,10 +1268,10 @@ def brisquit(bot, trigger):
         brisbot.quit(bot, trigger)
 
 
-#@module.commands("rules", "ru")
-#@module.example(".ru italiano")
-#@module.priority("low")
-#def sendrules(bot, trigger):
+# @module.commands("rules", "ru")
+# @module.example(".ru italiano")
+# @module.priority("low")
+# def sendrules(bot, trigger):
 #    if trigger.sender in game_chan:
 #        if trigger.group(3) == "italiano":
 ##            bot.notice("REGOLE DEL GIOCO: " + rules_ita, trigger.nick)
@@ -1532,7 +1319,8 @@ def unocards(bot, trigger):
     if trigger.sender in game_chan:
         brisbot.send_cards(bot, trigger)
 
-@module.commands("help bris" , "help briscola")
+
+@module.commands("help bris", "help briscola")
 @module.example(".help bris italiano", ".help briscola IT")
 def brishelp(bot, trigger):
     if trigger.sender in game_chan:
@@ -1565,9 +1353,8 @@ def brisgames(bot, trigger):
     g_active = "channel" if active == 1 else "channels"
     g_pending = "channel" if pending == 1 else "channels"
     chanlist = ", ".join(chans[:-2] + [" and ".join(chans[-2:])])
-    bot.reply(
-        bris + " is pending deal in %d %s and in progress in %d %s: %s. "
-        % (pending, g_pending, active, g_active, chanlist))
+    bot.reply(bris + " is pending deal in %d %s and in progress in %d %s: %s. " % (
+    pending, g_pending, active, g_active, chanlist))
 
 
 @module.interval(1)
@@ -1581,7 +1368,6 @@ def brispart(bot, trigger):
     if trigger.sender in game_chan:
         brisbot.quit(bot, trigger)
         brisbot.quit(bot, trigger)
-
 
 
 @module.event("QUIT")
