@@ -13,6 +13,18 @@ def money_getter(bot , nick):
     else:
         return money
 
+def bank_add(bot , nick ,  value_to_add ,reason = "No reason given."):
+    money = money_getter(bot , nick)
+    money += value_to_add
+    bot.db.set_nick_value(nick , "coins" , money)
+    bot.say(format_add(value_to_add , reason) , nick)
+
+def bank_rem(bot , nick ,  value_to_rem ,reason = "No reason given."):
+    money = money_getter(bot , nick)
+    money -= value_to_rem
+    bot.db.set_nick_value(nick , "coins" , money)
+    bot.say(format_rem(value_to_rem , reason) , nick)
+
 def coins():
     coins_format = CONTROL_BOLD + CONTROL_COLOR +colors.ORANGE + " TriCoins (₸) " + CONTROL_NORMAL
     return coins_format

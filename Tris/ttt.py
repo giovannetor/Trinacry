@@ -3,8 +3,8 @@
 import sopel.plugin as plugin
 import threading
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
-
-game_chan = ["#games" , "#tictactoe"]
+from bank.bank import format_add , money_getter
+game_chan = ["#games", "#tictactoe"]
 log_chan = "#trinacry-logs"
 
 # Format for the X, O and the word "TicTacToe" in-game
@@ -29,11 +29,15 @@ strings_eng = {"cant_join": "I'm sorry %s , the max number of players is 2. Wait
                "cant_play": "You are not inside the match, please do not disturb the other players :)",
                "start": "Players Reached! Let's play " + TRIS + "!!",
                "already_in": " %s you are already inside the match of " + TRIS + ".",
-               "turn": "%s 's turn, please wait.", "noletter": "You typed '%s', must type A, B or C instead.",
+               "turn": "%s 's turn, please wait.",
+               "noletter": "You typed '%s', must type A, B or C instead.",
                "nonumber": "You typed '%s', musts be 1, 2 or 3 instead.",
-               "nogrid": "'%s' isn't a proper slot in the grid.", "yours": "This slot is already yours!",
-               "other": "This slot belongs to the other player.", "ok": "%s in %s by %s!",
-               "win": "%s made " + TRIS + "!!", "next_turn": "It's %s's turn now!",
+               "nogrid": "'%s' isn't a proper slot in the grid.",
+               "yours": "This slot is already yours!",
+               "other": "This slot belongs to the other player.",
+               "ok": "%s in %s by %s!",
+               "win": "%s made " + TRIS + "!!",
+               "next_turn": "It's %s's turn now!",
                "final_win": "%s scored 3 wins and won the " + TRIS + " game!!",
                "endgame": CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER" + CONTROL_NORMAL + ". Start a new match if you wanna play again.",
                "game_started": "A new game of " + TRIS + " is started!",
@@ -41,7 +45,8 @@ strings_eng = {"cant_join": "I'm sorry %s , the max number of players is 2. Wait
                "not_started": "The match hasn't started yet. Find another player to start.",
                "no_square": "Please put a slot after the command. e.g. 'A2'",
                "quit_stop": CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER" + CONTROL_NORMAL + ": a player left the match.",
-               "draw_": "The match is a DRAW!", "missing": "A parameter is missing...try to write all together? :) ",
+               "draw_": "The match is a DRAW!",
+               "missing": "A parameter is missing...try to write all together? :) ",
                "wrong_format": "You typed %s, which is wrong. Slot Example: 'A2' , 'C3' , 'B1' ."}
 
 
@@ -117,6 +122,11 @@ class tttgame:  # this class thinks about the "RULES" side of the game
         # print(self.counter)
         if self.checkwin(player):  # Checks if the player won with the move. Check the function
             bot.say(self.strings["win"] % player)
+
+            money = money_getter(bot , player)
+            money += 10
+            bot.db.set_nick_value(player , "coins" , money)
+            bot.say(format_add("10" , "TicTacToe turn win.") , player)
 
             self.players[player]["score"] += 1
             self.reset(bot, trigger, place = trigger.sender)
