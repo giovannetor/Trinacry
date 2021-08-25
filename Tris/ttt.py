@@ -133,8 +133,8 @@ class tttgame:  # this class thinks about the "RULES" side of the game
             if "/" not in self.griglia.values():  # If the match gets to 9 moves without a win, it's a draw.
                 bot.say(self.strings["draw_"])
 
-                for player in self.players:
-                    bank_add(bot , player , 5 , "TicTacToe turn draw.")
+                for player_d in self.players:
+                    bank_add(bot , player_d , 5 , "TicTacToe turn draw.")
 
                 self.currentPlayer = 0 if self.currentPlayer == 1 else 1
 
@@ -145,7 +145,11 @@ class tttgame:  # this class thinks about the "RULES" side of the game
     def reset(self, bot, trigger, place):  # after each game, reboots the game.
         for player in self.players:
             if self.players[player]["score"] == win_games:
+
                 bot.say(self.strings["final_win"] % player)
+
+                bank_add(bot , player , 30 , "TicTacToe game win.")
+
                 self.endgame(bot, trigger, player_win = player, place = place)
                 return
             self.players[player]["squares"].clear()
