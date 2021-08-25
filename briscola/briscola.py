@@ -20,7 +20,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import desc
 
-from sopel.modules.bank import bank_add
+from sopel.plugins.bank import bank_add
 
 Base = declarative_base()
 bris = CONTROL_BOLD + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + " B" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "R" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "I" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "S" + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + "C" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "O" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "L" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "A " + CONTROL_NORMAL

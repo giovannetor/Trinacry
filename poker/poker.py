@@ -8,7 +8,7 @@ import threading
 import time
 from datetime import datetime
 
-from sopel.modules.bank import bank_add , bank_rem
+from sopel.plugins.bank import bank_add , bank_rem
 import sopel.plugin as module
 import sopel.tools as tools
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL, CONTROL_HEX_COLOR
