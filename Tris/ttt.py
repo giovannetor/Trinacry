@@ -1,9 +1,9 @@
-
+import threading
 
 import sopel.plugin as plugin
-import threading
+from sopel.modules.bank import bank_add
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
-from bank.bank import bank_add
+
 game_chan = ["#games", "#tictactoe"]
 log_chan = "#trinacry-logs"
 
@@ -15,7 +15,6 @@ TRIS = CONTROL_BOLD + CONTROL_COLOR + colors.RED + "," + colors.WHITE + " Tic" +
 gridlist = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
 lock = threading.RLock()
 win_games = 3
-
 
 """
 The following strings are provided in english. 
@@ -29,15 +28,11 @@ strings_eng = {"cant_join": "I'm sorry %s , the max number of players is 2. Wait
                "cant_play": "You are not inside the match, please do not disturb the other players :)",
                "start": "Players Reached! Let's play " + TRIS + "!!",
                "already_in": " %s you are already inside the match of " + TRIS + ".",
-               "turn": "%s 's turn, please wait.",
-               "noletter": "You typed '%s', must type A, B or C instead.",
+               "turn": "%s 's turn, please wait.", "noletter": "You typed '%s', must type A, B or C instead.",
                "nonumber": "You typed '%s', musts be 1, 2 or 3 instead.",
-               "nogrid": "'%s' isn't a proper slot in the grid.",
-               "yours": "This slot is already yours!",
-               "other": "This slot belongs to the other player.",
-               "ok": "%s in %s by %s!",
-               "win": "%s made " + TRIS + "!!",
-               "next_turn": "It's %s's turn now!",
+               "nogrid": "'%s' isn't a proper slot in the grid.", "yours": "This slot is already yours!",
+               "other": "This slot belongs to the other player.", "ok": "%s in %s by %s!",
+               "win": "%s made " + TRIS + "!!", "next_turn": "It's %s's turn now!",
                "final_win": "%s scored 3 wins and won the " + TRIS + " game!!",
                "endgame": CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER" + CONTROL_NORMAL + ". Start a new match if you wanna play again.",
                "game_started": "A new game of " + TRIS + " is started!",
@@ -45,8 +40,7 @@ strings_eng = {"cant_join": "I'm sorry %s , the max number of players is 2. Wait
                "not_started": "The match hasn't started yet. Find another player to start.",
                "no_square": "Please put a slot after the command. e.g. 'A2'",
                "quit_stop": CONTROL_BOLD + CONTROL_COLOR + colors.RED + "GAME OVER" + CONTROL_NORMAL + ": a player left the match.",
-               "draw_": "The match is a DRAW!",
-               "missing": "A parameter is missing...try to write all together? :) ",
+               "draw_": "The match is a DRAW!", "missing": "A parameter is missing...try to write all together? :) ",
                "wrong_format": "You typed %s, which is wrong. Slot Example: 'A2' , 'C3' , 'B1' ."}
 
 
@@ -102,7 +96,7 @@ class tttgame:  # this class thinks about the "RULES" side of the game
         cmd = trigger.group(3).upper()
 
         if any([len(cmd) != 2, cmd[0] not in "ABC",
-               cmd[1] not in "123"]):  # if at least one of these it's true, the it's wrong
+                cmd[1] not in "123"]):  # if at least one of these it's true, the it's wrong
             bot.say(self.strings["wrong_format"] % cmd)
             return
 
@@ -123,7 +117,7 @@ class tttgame:  # this class thinks about the "RULES" side of the game
         if self.checkwin(player):  # Checks if the player won with the move. Check the function
             bot.say(self.strings["win"] % player)
 
-            bank_add(bot , player , 10 , "TicTacToe turn win.")
+            bank_add(bot, player, 10, "TicTacToe turn win.")
 
             self.players[player]["score"] += 1
             self.reset(bot, trigger, place = trigger.sender)
@@ -134,21 +128,20 @@ class tttgame:  # this class thinks about the "RULES" side of the game
                 bot.say(self.strings["draw_"])
 
                 for player_d in self.players:
-                    bank_add(bot , player_d , 5 , "TicTacToe turn draw.")
+                    bank_add(bot, player_d, 5, "TicTacToe turn draw.")
 
                 self.currentPlayer = 0 if self.currentPlayer == 1 else 1
-
-                self.reset(bot, trigger, place = trigger.sender)
+                place = trigger.sender
+                self.reset(bot, trigger, place)
                 return
             bot.say(self.strings["next_turn"] % self.playerOrder[self.currentPlayer])
 
     def reset(self, bot, trigger, place):  # after each game, reboots the game.
         for player in self.players:
             if self.players[player]["score"] == win_games:
-
                 bot.say(self.strings["final_win"] % player)
 
-                bank_add(bot , player , 30 , "TicTacToe game win.")
+                bank_add(bot, player, 30, "TicTacToe game win.")
 
                 self.endgame(bot, trigger, player_win = player, place = place)
                 return
@@ -181,7 +174,7 @@ class tttgame:  # this class thinks about the "RULES" side of the game
             check_dic[str(combination[1])] += 1
 
         if any([max(check_dic.values()) == 3, all(["A1" in squ, "B2" in squ, "C3" in squ]),
-               all(["A3" in squ, "B2" in squ, "C1" in squ])]):  # if the player has 3 letters or 3 numbers, it's a Win
+                all(["A3" in squ, "B2" in squ, "C1" in squ])]):  # if the player has 3 letters or 3 numbers, it's a Win
             return True
         return False
 
@@ -219,9 +212,9 @@ class tttbot:  # This class thinks about the "LOGISCIT" part of the game
             self.join(bot, trigger)
 
     def endgame(self, bot, trigger, player_win, place, forced = False, partquit = False):
-        if trigger.sender not in self.games:
-            return
         if forced:
+            if trigger.sender not in self.games:
+                return
             # This log says where and by what admin the match is stopped
             bot.say(
                 "[" + TRIS + "] : match" + CONTROL_COLOR + colors.RED + " STOPPED" + CONTROL_NORMAL + " in " + trigger.sender + " by: " + CONTROL_COLOR + colors.LIGHT_CYAN + trigger.nick,
