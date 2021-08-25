@@ -3,7 +3,7 @@
 import sopel.plugin as plugin
 import threading
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
-from bank.bank import format_add , money_getter
+from bank.bank import bank_add
 game_chan = ["#games", "#tictactoe"]
 log_chan = "#trinacry-logs"
 
@@ -123,10 +123,7 @@ class tttgame:  # this class thinks about the "RULES" side of the game
         if self.checkwin(player):  # Checks if the player won with the move. Check the function
             bot.say(self.strings["win"] % player)
 
-            money = money_getter(bot , player)
-            money += 10
-            bot.db.set_nick_value(player , "coins" , money)
-            bot.say(format_add("10" , "TicTacToe turn win.") , player)
+            bank_add(bot , player , 10 , "TicTacToe turn win.")
 
             self.players[player]["score"] += 1
             self.reset(bot, trigger, place = trigger.sender)
@@ -135,6 +132,9 @@ class tttgame:  # this class thinks about the "RULES" side of the game
 
             if "/" not in self.griglia.values():  # If the match gets to 9 moves without a win, it's a draw.
                 bot.say(self.strings["draw_"])
+
+                for player in self.players:
+                    bank_add(bot , player , 5 , "TicTacToe turn draw.")
 
                 self.currentPlayer = 0 if self.currentPlayer == 1 else 1
 

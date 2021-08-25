@@ -13,13 +13,13 @@ def money_getter(bot , nick):
     else:
         return money
 
-def bank_add(bot , nick ,  value_to_add ,reason = "No reason given."):
+def bank_add(bot , nick : str,  value_to_add : int ,reason :str = "No reason given."):
     money = money_getter(bot , nick)
     money += value_to_add
     bot.db.set_nick_value(nick , "coins" , money)
     bot.say(format_add(value_to_add , reason) , nick)
 
-def bank_rem(bot , nick ,  value_to_rem ,reason = "No reason given."):
+def bank_rem(bot , nick :str,  value_to_rem : int ,reason : str = "No reason given."):
     money = money_getter(bot , nick)
     money -= value_to_rem
     bot.db.set_nick_value(nick , "coins" , money)
