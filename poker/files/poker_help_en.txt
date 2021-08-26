@@ -1,6 +1,19 @@
-POKER HELP!!!
+(((( POKER HELP )))))
 ================================================
-Commands:
+HOW TO WIN: Earn as many Fiches as you can.
+            You can leave any time you want
+            to. You'll be given 100 Fiches at
+            the beginning of the match.
+================================================
+REWARDS: You're given 100 Fiches at the beginning
+         of the match. Your reward is equal to
+                  <tot fiches> - 100
+         e.g.: You start with 100 Fiches. Manage
+         to get to 170 Fiches by playing. You
+         decide to leave. You earn:
+                    170 - 100 = 70₸
+================================================
+COMMANDS:
 
 1)  .poker = starts the match. If started, joins you to the match.
 2)  .join  = join you to the match.

@@ -132,8 +132,8 @@ strings_eng = {"nuovo_player": " %s has joined the match of " + poker + " as pla
                "left": "%s you left, wait until next turn."
 
                }  # STRINGS IN ENGLISH
-string_help_ita = "https://webchat.duckie.chat/uploads/d7a1a9f67b032751/paste.txt"
-string_help_eng = "https://webchat.duckie.chat/uploads/3150af865aeda59d/paste.txt"
+string_help_ita = "https://webchat.duckie.chat/uploads/8d841b41f8426c97/paste.txt "
+string_help_eng = "https://webchat.duckie.chat/uploads/3688d80de4644bc1/paste.txt "
 
 """
 Here i defined all the value given to cards and combinations. Also added a value for seeds, i think it'll be 

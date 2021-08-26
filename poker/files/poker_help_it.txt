@@ -1,6 +1,19 @@
-POKER HELP!!!
+(((( POKER HELP )))))
 ================================================
-Comandi:
+COME VINCERE: Guadagna il maggior numero di Fiches
+              possibili. Puoi lasciare quando vuoi.
+              Ti saranno date 100 Fiches all'inizio
+              del Match.
+================================================
+RICOMPENSE: All'inizio del Match avrai 100 Fiches.
+            La tua ricompensa sarà uguale a:
+                     <tot fiches> - 100
+            ex.: Inizi con 100 Fiches. Riesci ad
+            arrivare a 170 Fiches giocando.
+            Decidi di lasciare. Guadagni:
+                       170 - 100 = 70₸
+================================================
+COMANDI:
 
 1)  .poker = inizia la partita. Se iniziata, entra nella partita.
 2)  .join  = entra nella partita.
