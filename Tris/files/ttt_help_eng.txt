@@ -1,31 +1,35 @@
-POKER HELP!!
+### TicTacToe Help ###
 ================================================
-How to win:
-  Win 3 games, or make the enemy leave.
-
-Commands:
+How to win: Win 3 games, or make the enemy leave.
+================================================
+REWARDS:  Win Turn   =  10₸
+          Draw Turn  =   5₸
+          Win Match  =  30₸
+          Lose Turn  =   0₸
+          Lose Match =   0₸
+===============================================
+COMMANDS:
 
 1)  .ttt = starts the match. If started, joins you to the match.
 2)  .join  = join you to the match.
 3)  .grid = shows the grid.
 4)  .quit = leave the match
 5)  .play = plays in a box. Syntax is better explained below.
-
 ================================================
-### Syntax Hints ###
+### SYNTAX HINTS ###
 
 The grid works this way:
 
         A1 | A2 | A3
-       ___________
+       _____________
         B1 | B2 | B3
-       ___________
+       _____________
         C1 | C2 | C3
 
 Using .play B3 will result in this:
 
         A1 | A2 | A3
-       ___________
+       _____________
         B1 | B2 |  X
-       ___________
+       _____________
         C1 | C2 | C3
