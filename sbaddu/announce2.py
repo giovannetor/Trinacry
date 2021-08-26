@@ -20,13 +20,16 @@ def ann(bot , trigger):
 def ann_pm(bot , trigger):
 	testo = trigger.group(2)
 	lista = ""
-	lista_nono = ["ChanServ" , "DuckieBot" , "TestUserZNC" , "MatrixBridge" , "Trinacry" , "T-Dev"]
+	lista_nono = ["ChanServ" , "DuckieBot" , "TestUserZNC" , "MatrixBridge" , "Trinacry" , "T-Dev" , "gio"]
+	
 	for user in bot.users:
 		if user[0] in "-+&~@%":
 			user = user[1:]
 		if user not in lista.split(", ") and user not in lista_nono:
 			lista += user + ", "
-		bot.notice(CONTROL_BOLD + CONTROL_COLOR + colors.RED + "[ANNOUNCE]:" + CONTROL_NORMAL + " %s "
+			
+	for user in lista.split(", "):
+	    bot.notice(CONTROL_BOLD + CONTROL_COLOR + colors.RED + "[ANNOUNCE]:" + CONTROL_NORMAL + " %s "
 				% testo , user)
 	bot.say(CONTROL_BOLD + CONTROL_COLOR + colors.RED + "[ANNOUNCE]:" + CONTROL_NORMAL +
 			  " trasmesso a: " + lista.rstrip(", ") , logs)
