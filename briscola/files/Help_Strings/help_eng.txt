@@ -1,18 +1,25 @@
-" ||||| HELP PAGE OF BRISCOLA |||||" ,
-"═════════════════════════════════════════════════════════════════════════════════════════════════════════ ",
-"COMMAND | COMPRESSED COMMAND | WHAT DOES IT DO?" ,
-"═════════════════════════════════════════════════════════════════════════════════════════════════════════ ",
-".briscola | .bris .br | Opens the lobby. Don't start the game.",
-".join     | .jo | Joins you in the game.",
-".quit     | .qu | Leave the game. ATTENTION! if the game has started, the opposing team will win",
-".deal     | .de | The game starts. There's no turning back.",
-".play     | .pl | Play a card.",
-".cards    | .ca | Show the cards in your hand, and the BRISCOLA.",
-".brishelp | .brhelp | How did you get here without knowing it? O.o",
-".rules    | .ru | Show the GAME RULES",
-".pointlist|.poli| Show just the Table of the Value of Cards.",
-"═════════════════════════════════════════════════════════════════════════════════════════════════════════ ",
-"  ",
-"HOW TO PLAY A CARD: .play C S or .play S C (S = Card suit, V = Card value)",
-"Possible suits: S (spade), M (mazze), O (oro), C (coppe)",
-"Possible values: any number from 1 to 10"
+ ||||| HELP PAGE OF BRISCOLA |||||
+════════════════════════════════════════════════════════════════════════════════════════════════════════
+REWARDS
+Victory : SCORE + 20₸
+Defeat  : SCORE - 10₸
+
+Example: Win with 70 points.  Earn 70 + 20 = 90₸
+         Lose with 30 points. Earn 30 - 10 = 20₸
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+COMMAND   | COMPRESSED COMMAND | WHAT DOES IT DO?
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+.briscola | .bris .br | Opens the lobby. Don't start the game.
+.join     | .jo | Joins you in the game.
+.quit     | .qu | Leave the game. ATTENTION! if the game has started, the opposing team will win",
+.deal     | .de | The game starts. There's no turning back.
+.play     | .pl | Play a card.
+.cards    | .ca | Show the cards in your hand, and the BRISCOLA.
+.brishelp | .brhelp | How did you get here without knowing it? O.o
+.rules    | .ru | Show the GAME RULES
+.pointlist|.poli| Show just the Table of the Value of Cards.
+═════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+HOW TO PLAY A CARD: .play C S or .play S C (S = Card suit, V = Card value)
+Possible suits: S (spade), M (mazze), O (oro), C (coppe)
+Possible values: any number from 1 to 10

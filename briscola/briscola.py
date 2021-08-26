@@ -310,10 +310,10 @@ listpoint = ["NUMBER | ONTABLE | POINTS                         ",
              "5________5________0                          ", "6________6________0     ", "7________7________0",
              "8________8________2", "9________9________3", "10________10________4", ]
 
-string_help_ita = "https://webchat.duckie.chat/uploads/bfe6a7d7e4dfd403/paste.txt"
-string_help_eng = "https://webchat.duckie.chat/uploads/4411d905aa804c03/paste.txt "
-rules_ita = "https://webchat.duckie.chat/uploads/a08b870c8146cc85/paste.txt "
-rules_eng = "https://webchat.duckie.chat/uploads/0ef1689d1c6ca140/paste.txt "
+string_help_ita = "https://webchat.duckie.chat/uploads/8f8eac3141ecbc31/paste.txt "
+string_help_eng = "https://webchat.duckie.chat/uploads/6b1cf9b47a3e916e/paste.txt  "
+rules_ita = "https://webchat.duckie.chat/uploads/8a4ec3476a825e7e/paste.txt  "
+rules_eng = "https://webchat.duckie.chat/uploads/e5cd7dd306f26d64/paste.txt  "
 
 strings_eng = {"nuovo_player": " %s joins the match as player: %s .",
                "impos_unirsi": "I'm sorry %s , the max number of players is 4. Wait until next match :)",
@@ -1098,7 +1098,7 @@ class BrisBot:
                     db_manager.update_players([playerwin], win = True, punteggio = int(punteggiowin), minutes = minutes,
                                               seconds = seconds)
                 for playerlose in loser.split():
-                    bank_add(bot, playerlose, int(punteggiowin), "Briscola lose.")
+                    bank_add(bot, playerlose, int(punteggiolose), "Briscola lose.")
                     db_manager.update_players([playerlose], win = False, punteggio = int(punteggiolose),
                                               minutes = minutes, seconds = seconds)
                 bot.say("[" + bris + "] : partita finita in WIN per " + winner + " in TEST " + place, log_chan)

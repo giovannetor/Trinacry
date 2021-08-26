@@ -1,40 +1,45 @@
-"                                     ════════════════════",
-    "                                      REGOLE DI BRISCOLA",
-    "                                     ════════════════════",
-    " ",
-    "--QUAL E' L'OBIETTIVO?--",
-    "Due squadre (composte da 2 o 4 giocatori) si sfidano con un unico obiettivo: a fine partita,",
-    "avere più punti dell'altra squadra. I punti massimi ottenibili sono 120.",
-    "Il primo giocatore a iniziare il primo turno è scelto casualmente. Dal secondo in poi, il giocatore",
-    "a iniziare il turno sarà il vincitore della mano precedente."
-    " "
-    "--COME SI VINCE UNA MANO--?",
-    "Il giocatore a iniziare il turno gioca una carta. Questa carta deciderà il SEME DEL TURNO.",
-    "Il giocatore successivo, per vincere il turno, deve giocare una carta dello STESSO SEME ma VALORE SUPERIORE",
-    "es.  G1 gioca '4 di Mazze'.  G2 gioca '8 di Coppe'. vincitore -> G1 (anche se la carta di G2 ha VALORE SUPERIORE, ha un seme diverso.)",
-    "es.  G1 gioca '6 di Oro'  .  G2 gioca '10 di Oro' . vincitore -> G2 (la carta del G2 ha lo STESSO SEME, e VALORE SUPERIORE)",
-    "QUESTO ^ fa capire come il primo giocatore a giocare una carta abbia un vantaggio rispetto ai giocatori successivi. ",
-    "Il vincitore del punto si prente TUTTE le carte sul tavolo, che andranno a costituire i suoi PUNTI",
-    "ATTENZIONE: nel gioco sono presenti carte 'jolly' chiamate BRISCOLA. Queste carte, quando giocate, hanno la precedenza su tutte le altre.",
-    "In caso di presenza di più BRISCOLE, vince la maggiore. Il seme della BRISCOLA è sorteggiato a inizio partita",
-    "TUTTE le carte con lo stesso SEME della briscola, sono anch'esse BRISCOLE.",
-    "es. BRISCOLA = MAZZE    G1 gioca '7 di Oro' . G2 gioca '2 di Mazze'. vincitore -> G2 (perchè il G2 ha giocato una BRISCOLA. Non importa il",
-    "seme nè il valore della carta del G1, le briscole hanno SEMPRE la precedenza.",
-    "es. BRISCOLA = COPPE    G1 gioca '8 di Coppe' . G2 gioca '9 di Coppe'. vincitore -> G2 (entrambi i giocatori hanno giocato BRISCOLE, quindi vince quella maggiore)",
-    " ",
-    "IMPORTANTE! Le carte hanno un valore diverso, a seconda che siano giocate sul tavolo o contate come punti alla fine del turno (vedi tabella)",
-    " ",
-    "NUMERO | TAVOLO | PUNTI                                      @@@ ESEMPI @@@  ",
-    " 1         11       11                  |BRISCOLA = ORO per tutti gli esempi               |",
-    " 2          2        0                  |G1 = 3 di Coppe    G2 = 5 di Coppe  vincitore = G1|",
-    " 3         10       10                  |G1 = 3 di Coppe    G2 = 1 di Mazze  vincitore = G1|",
-    " 4          4        0                  |G1 = 3 di Coppe    G2 = 2 di Oro    vincitore = G2|",
-    " 5          5        0                  |G1 = 7 di Mazze    G2 = 9 di Mazze  vincitore = G2|",
-    " 6          6        0                  |G1 = 10 di Mazze   G2 = 3 di Mazze  vincitore = G2|",
-    " 7          7        0                  |G1 = 5 di Oro      G2 = 3 di Mazze  vincitore = G1|",
-    " 8          8        2",
-    " 9          9        3",
-    "10         10        4",
-    " ",
-    "(p.s. : sia 3 che 10 valgono 10 sul tavolo. In caso di scontro, 3 > 10)",
-    "Finite le carte del mazzo, si contano i punti secondo la colonna PUNTI. Chi ne ha di più vince la partita."
+                                         ════════════════════
+                                          REGOLE DI BRISCOLA
+                                         ════════════════════
+
+    --QUAL E' L'OBIETTIVO?--
+    Due squadre (composte da 2 o 4 giocatori) si sfidano con un unico obiettivo: a fine partita,
+    avere più punti dell'altra squadra. I punti massimi ottenibili sono 120.
+    Il primo giocatore a iniziare il primo turno è scelto casualmente. Dal secondo in poi, il giocatore
+    a iniziare il turno sarà il vincitore della mano precedente.
+
+    --COME SI VINCE UNA MANO--
+    Il giocatore a iniziare il turno gioca una carta. Questa carta deciderà il SEME DEL TURNO.
+    Il giocatore successivo, per vincere il turno, deve giocare una carta dello STESSO SEME ma VALORE SUPERIORE
+    es.  G1 gioca '4 di Mazze'.  G2 gioca '8 di Coppe'. vincitore -> G1 (anche se la carta di G2 ha VALORE SUPERIORE,
+    ha un seme diverso.)  es.  G1 gioca '6 di Oro'  .  G2 gioca '10 di Oro' . vincitore -> G2 (la carta del G2 ha lo
+    STESSO SEME, e VALORE SUPERIORE) QUESTO fa capire come il primo giocatore a giocare una carta abbia un vantaggio
+    rispetto ai giocatori successivi.
+    Il vincitore del punto si prente TUTTE le carte sul tavolo, che andranno a costituire i suoi PUNTI
+    ATTENZIONE: nel gioco sono presenti carte 'jolly' chiamate BRISCOLA. Queste carte, quando giocate, hanno la
+    precedenza su tutte le altre.
+    In caso di presenza di più BRISCOLE, vince la maggiore. Il seme della BRISCOLA è sorteggiato a inizio partita
+    TUTTE le carte con lo stesso SEME della briscola, sono anch'esse BRISCOLE.
+    es. BRISCOLA = MAZZE    G1 gioca '7 di Oro' . G2 gioca '2 di Mazze'. vincitore -> G2 (perchè il G2 ha giocato una
+    BRISCOLA. Non importa il
+    seme nè il valore della carta del G1, le briscole hanno SEMPRE la precedenza.
+    es. BRISCOLA = COPPE    G1 gioca '8 di Coppe' . G2 gioca '9 di Coppe'. vincitore -> G2 (entrambi i giocatori hanno
+    giocato BRISCOLE, quindi vince quella maggiore)
+
+    IMPORTANTE! Le carte hanno un valore diverso, a seconda che siano giocate sul tavolo o contate come punti alla
+    fine del turno (vedi tabella)
+
+    NUMERO | TAVOLO | PUNTI                                    @@@ ESEMPI @@@
+     1         11       11                  |        BRISCOLA = ORO per tutti gli esempi       |
+     2          2        0                  |G1 = 3 di Coppe    G2 = 5 di Coppe  vincitore = G1|
+     3         10       10                  |G1 = 3 di Coppe    G2 = 1 di Mazze  vincitore = G1|
+     4          4        0                  |G1 = 3 di Coppe    G2 = 2 di Oro    vincitore = G2|
+     5          5        0                  |G1 = 7 di Mazze    G2 = 9 di Mazze  vincitore = G2|
+     6          6        0                  |G1 = 10 di Mazze   G2 = 3 di Mazze  vincitore = G2|
+     7          7        0                  |G1 = 5 di Oro      G2 = 3 di Mazze  vincitore = G1|
+     8          8        2
+     9          9        3
+    10         10        4
+
+    (p.s. : sia 3 che 10 valgono 10 sul tavolo. In caso di scontro, 3 > 10)
+    Finite le carte del mazzo, si contano i punti secondo la colonna PUNTI. Chi ne ha di più vince la partita.
