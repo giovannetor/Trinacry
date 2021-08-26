@@ -18,12 +18,14 @@ def bank_add(bot , nick : str,  value_to_add : int ,reason :str = "No reason giv
     money += value_to_add
     bot.db.set_nick_value(nick , "coins" , money)
     bot.say(format_add(value_to_add , reason) , nick)
+    bot.say(BANK + nick + " obtained " + str(value_to_add) + coins() + ". Reason: " + reason , log)
 
 def bank_rem(bot , nick :str,  value_to_rem : int ,reason : str = "No reason given."):
     money = money_getter(bot , nick)
     money -= value_to_rem
     bot.db.set_nick_value(nick , "coins" , money)
     bot.say(format_rem(value_to_rem , reason) , nick)
+    bot.say(BANK + nick + " lost " + str(value_to_rem) + coins() + ". Reason: " + reason , log)
 
 def coins():
     coins_format = CONTROL_BOLD + CONTROL_COLOR +colors.ORANGE + " TriCoins (₸) " + CONTROL_NORMAL
@@ -101,9 +103,9 @@ def give(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "coins" , money)
 
-    bot.say(BANK + trigger.nick + ": correctly added " + str(trigger.group(4)) + coins() + "to "  +
-              trigger.group(3) + "'s Bank Account.")
-    bot.say(BANK + trigger.nick + " gave " + str(money) + coins() + "to " + trigger.group(3) + " succesfully." , log)
+    bot.notice(BANK + trigger.nick + ": correctly added " + str(trigger.group(4)) + coins() + "to "  +
+              trigger.group(3) + "'s Bank Account." , trigger.nick)
+    bot.say(BANK + trigger.nick + " gave " + str(trigger.group(4)) + coins() + "to " + trigger.group(3) + " succesfully." , log)
     bot.say(format_add(trigger.group(4) , "TriCoins given by an Admin.") ,trigger.group(3))
 
 @commands("take")
@@ -121,9 +123,9 @@ def take(bot , trigger):
 
     bot.db.set_nick_value(trigger.group(3) , "coins" , money)
 
-    bot.say(BANK + trigger.nick + ": correctly removed " + str(trigger.group(4)) + coins() +
-              "from "  + trigger.group(3) + "'s Bank Account.")
-    bot.say(BANK + trigger.nick + " took " + str(money) + coins() + "from " + trigger.group(3) + " succesfully." , log)
+    bot.notice(BANK + trigger.nick + ": correctly removed " + str(trigger.group(4)) + coins() +
+              "from "  + trigger.group(3) + "'s Bank Account." , trigger.nick)
+    bot.say(BANK + trigger.nick + " took " + str(trigger.group(4)) + coins() + "from " + trigger.group(3) + " succesfully." , log)
     bot.say(format_rem(trigger.group(4) , "TriCoins taken by an Admin.") ,trigger.group(3))
 
 @commands("transfer")
