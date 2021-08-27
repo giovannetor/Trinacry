@@ -449,6 +449,6 @@ def buy(bot, trigger):
 @plugin.commands("help shop")
 def help_shop(bot , trigger):
     if not trigger.admin:
-        bot.notice(USER_SHOP + "Help: https://webchat.duckie.chat/uploads/d4e305006cdcd4fb/paste.txt  ")
+        bot.notice(USER_SHOP + "Help: https://webchat.duckie.chat/uploads/f6dc42892177bfa9/paste.txt   ")
     else:
-        bot.notice(SHOP + "Admin Help: https://webchat.duckie.chat/uploads/975c877cada1496b/paste.txt  ")
+        bot.notice(SHOP + "Admin Help: https://webchat.duckie.chat/uploads/ea39a05373c30f58/paste.txt   ")
