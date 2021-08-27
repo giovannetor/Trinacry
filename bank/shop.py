@@ -81,7 +81,7 @@ def add_item(bot,
         catalogue[item_name] = {"cost": cost, "quantity": quantity, "effect": effect, "description": description}
         bot.db.set_plugin_value("shop" , cat_sec , catalogue)
         bot.say(SHOP + "Item " + f_item(item_name , "cyan") + " successfully " + f_item("ADDED" , "lime") + " the catalogue " +
-                cyan +cat_sec + CONTROL_NORMAL + " with the following data: " + CONTROL_ITALIC + str(catalogue[item_name]))
+                f_item(cat_sec , "cyan")  + " with the following data: " + CONTROL_ITALIC + str(catalogue[item_name]))
     else:
         bot.say(SHOP + "Item " + f_item(item_name , "cyan") + " is already in the catalogue " +
                 f_item(cat_sec , "cyan") + " with the following data: " + CONTROL_ITALIC + str(catalogue[item_name]))
@@ -205,7 +205,7 @@ def item_usertake(bot , trigger):
     if amount == "*":
         inventory.pop(item_name)
         bot.say(SHOP + "Item " + f_item(item_name , "cyan") + " successfully " + f_item("DELETED" , "red") +
-            " from the Inventory " + f_item(cat_sec , "cyan") + ".")
+            " from the Inventory .")
     else:
         inventory[item_name]["quantity"] -= int(amount)
         bot.say(SHOP + f_item("REMOVED " , "red") + str(amount) +" "+ f_item(item_name , "cyan") +
