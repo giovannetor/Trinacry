@@ -96,7 +96,7 @@ def pay(bot, trigger):
 
     bot.db.set_nick_value(trigger.nick, "coins", money_1)
     bot.db.set_nick_value(trigger.group(3), "coins", money_2)
-    bot.say(BANK + "Succesfully paid " + str(money_2) + coins() + "to " + trigger.group(3))
+    bot.say(BANK + "Succesfully paid " + str(to_give) + coins() + "to " + trigger.group(3))
 
     bot.say(format_rem(to_give, "Payment to " + trigger.group(3)), trigger.nick)
     bot.say(format_add(to_give, "Payment from " + trigger.nick), trigger.group(3))
