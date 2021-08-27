@@ -1,7 +1,7 @@
 import sopel.plugin as plugin
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL, CONTROL_ITALIC
 #from sopel.modules.bank import bank_add, bank_rem
-from bank import bank_add , bank_rem   # Use for Trinacry
+from bank import bank_add , bank_rem , coins  # Use for Trinacry
 
 
 SHOP = CONTROL_BOLD + CONTROL_COLOR + colors.RED + "," + colors.BLACK + " ₸ SHOP ₸ " + CONTROL_NORMAL + " | "
@@ -28,7 +28,7 @@ def f_catalogue(bot, catalogue: dict, colour = "cyan"):
     except: bot.say(CONTROL_BOLD + CONTROL_ITALIC + "Here's the Catalogue you're looking for." )
     for item in catalogue:
         if item.split("_")[0] != "set":
-            bot.say(f_item("ITEM: ", colour) + item + f_item(" COST: ", colour) + str(catalogue[item]["cost"]) + f_item(
+            bot.say(f_item("ITEM: ", colour) + item + f_item(" COST: ", colour) + str(catalogue[item]["cost"])  + coins() + f_item(
             " STOCK: ", colour) + str(catalogue[item]["quantity"]) + f_item(" DESCRIPTION: ", colour) + str(
             catalogue[item]["description"] + f_item(" EFFECT: ", colour) + str(catalogue[item]["effect"])))
     bot.say(
@@ -38,7 +38,7 @@ def f_catalogue(bot, catalogue: dict, colour = "cyan"):
 def f_inventory(bot, catalogue: dict, colour = "white"):
     bot.notice(CONTROL_BOLD + CONTROL_ITALIC + "Here's your Inventory!")
     for item in catalogue:
-        bot.notice(f_item("ITEM: ", colour) + item + f_item(" COST: ", colour) + str(catalogue[item]["cost"]) + f_item(
+        bot.notice(f_item("ITEM: ", colour) + item + f_item(" COST: ", colour) + coins() + str(catalogue[item]["cost"]) + f_item(
             " STOCK: ", colour) + str(catalogue[item]["quantity"]) + f_item(" DESCRIPTION: ", colour) + str(
             catalogue[item]["description"] + f_item(" EFFECT: ", colour) + str(catalogue[item]["effect"])))
     bot.notice(CONTROL_BOLD + CONTROL_ITALIC + "If you want to buy something, visit #shop ")
@@ -105,8 +105,7 @@ def info_item(bot, cat_sec: str, item_name: str):
         return
 
     bot.say(SHOP + "Item INFO: " + f_item(item_name, catalogue["set_col"]["effect"]) + " in catalogue " + f_item(cat_sec,
-                                                                                        catalogue["set_col"]["effect"]) + CONTROL_ITALIC + ":   " + str(
-        catalogue[item_name]))
+                                     catalogue["set_col"]["effect"]) + CONTROL_ITALIC + ":   " + str(catalogue[item_name]))
 
 
 def del_item(bot, cat_sec: str, item_name: str):
@@ -380,7 +379,7 @@ def sell(bot , trigger):
     bank_add(bot, trigger.nick, to_earn, "Selling: " + item_name + ". Amount: " + str(amount))
     bot.say(format_rem(item_name , amount), trigger.nick)
     bot.db.set_nick_value(trigger.nick, "inventory", user_inventory)
-    bot.say(USER_SHOP + "Successfully sold the item.")
+    bot.say(USER_SHOP + "Successfully sold the item for " + str(to_earn) + coins())
 
 
 @plugin.commands("buy")
