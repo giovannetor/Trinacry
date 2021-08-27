@@ -14,3 +14,8 @@ Sopel module to manage an internal Money Bank on IRC!
 1. (**cmd**) `.transfer <nickfrom> <nickto> (<amount>)` : transfer all the ₸ from a nick to another (or just an amount. Optional.)
 
 
+# SHOP
+Sopel module to manage an internal Shop System on IRC!
+
+
+
