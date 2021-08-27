@@ -6,7 +6,7 @@ Currency Used: TriCoins (₸)
 COMMAND | WHAT DOES IT DO?
 ═════════════════════════════════════════════════════════════════════════════════════════════════════════
 --USER COMMANDS--
-.bank (<nick>)            | shows your (or another's) current amount of ₸.
+.bank (<nick>)       | shows your (or another's) current amount of ₸.
 .pay <nick> <value>  | pays a user with a certain amount of ₸. Be sure to have that amount before using it.
 
 --ADMIN COMMANDS--
