@@ -76,7 +76,9 @@ def pay(bot, trigger):
     if not trigger.group(3) or not trigger.group(4):
         bot.reply(BANK + CONTROL_BOLD + CONTROL_COLOR + colors.RED + "FORMAT:" + CONTROL_NORMAL + " .pay <nick> < ₸ >")
         return
-
+    if trigger.group(3) < 0:
+        bot.say(BANK + "You can't pay negative numbers...")
+        return
     money_1 = money_getter(bot, trigger.nick)
     money_2 = money_getter(bot, trigger.group(3))
     try:
