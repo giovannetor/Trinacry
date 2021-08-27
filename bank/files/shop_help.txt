@@ -7,11 +7,11 @@ COMMAND | WHAT DOES IT DO?
 ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 --USER COMMANDS--   (NOTE: Most of this commands will only work in #shop)
 
-.shop (<catalogue>)                                                                   | Enter the shop and see the catalogues available. (You can directly jump to the catalogue)
+.shop (<catalogue>)                                   | Enter the shop and see the catalogues available. (You can directly jump to the catalogue)
 .buy <catalogue> <item_name> (<amount> default = 1)   | Buy an item from a certain catalogue.
-.inventory                                                                                    | Shows the items in your inventory.
-.sell <item_name> (<amount> default = 1)                          | Sell an item in your inventory. IMPORTANT: Items will be sold for half of their shop value.
-.help shop                                                                                   | Well...you're here, aren't you? :P
+.inventory                                            | Shows the items in your inventory.
+.sell <item_name> (<amount> default = 1)              | Sell an item in your inventory. IMPORTANT: Items will be sold for half of their shop value.
+.help shop                                            | Well...you're here, aren't you? :P
 ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 
 NOTE: TriCoins (₸) and Items are Nick-based. If you want to change your nick for long, ask to the admins 

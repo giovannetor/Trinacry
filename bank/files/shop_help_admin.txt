@@ -7,21 +7,22 @@ COMMAND | WHAT DOES IT DO?
 ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 --USER COMMANDS--   (NOTE: Most of this commands will only work in #shop)
 
-.shop (<catalogue>)                                                                   | Enter the shop and see the catalogues available. (You can directly jump to the catalogue)
+.shop (<catalogue>)                                   | Enter the shop and see the catalogues available. (You can directly jump to the catalogue)
 .buy <catalogue> <item_name> (<amount> default = 1)   | Buy an item from a certain catalogue.
-.inventory                                                                                    | Shows the items in your inventory.
-.sell <item_name> (<amount> default = 1)                          | Sell an item in your inventory. IMPORTANT: Items will be sold for half of their shop value.
-.help shop                                                                                   | Well...you're here, aren't you? :P
+.inventory                                            | Shows the items in your inventory.
+.sell <item_name> (<amount> default = 1)              | Sell an item in your inventory. IMPORTANT: Items will be sold for half of their shop value.
+.help shop                                            | Well...you're here, aren't you? :P
 
 --ADMIN COMMANDS-- 
-.inventory <user>                         | Admins can see other people's inventories.
+.inventory <user>                                                  | Admins can see other people's inventories.
 
 -ITEM COMMANDS-
-.item info catalogue,item                                                                                   | Gives infos about a catalogue or a precise item. If you want only catalogue info, replace "item" with "/" 
-.item add catalogue,item_name,cost,quantity,(effect),(description)        | Adds an item to a catalogue. You can omit effect and description with "/"
-.item rem catalogue,item                                                                                   | Removes an item from the catalogue
-.item usertake <user> <item_name> (<amount> def = 1)                            | Take an (amount of) item from a user's inventory.
-.item usertake <user> <catalogue>  <item_name> (<amount> def = 1)    | Give to a user an (amount of) item taken from a catalogue
+.item info catalogue,item                                          | Gives infos about a catalogue or a precise item. If you want only catalogue info, replace "item" with "/"
+.item add catalogue,item_name,cost,quantity,(effect),(description) | Adds an item to a catalogue. You can omit effect and description with "/"
+.item rem catalogue,item                                           | Removes an item from the catalogue
+.item usertake <user> <item_name> (<amount> def = 1)               | Take an (amount of) item from a user's inventory.
+.item usertake <user> <catalogue>  <item_name> (<amount> def = 1)  | Give to a user an (amount of) item taken from a catalogue
+.graphic                                                           | Test the logos, yuppi!
 ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 
 NOTE: TriCoins (₸) and Items are Nick-based. If you want to change your nick for long, ask to the admins 
