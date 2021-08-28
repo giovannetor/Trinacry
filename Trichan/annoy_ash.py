@@ -2,7 +2,7 @@ from sopel import plugin , tools
 from random import  randint
 
 
-@plugin.interval(300)
+@plugin.interval(900)
 def annoy_ash(bot):
     sentences = ["Hi kiddo","Hello dude, this is an annoying module just for you! :D", "Pssssst, you're short.", "MUAHAHAH",
                  "How're you kiddo?", "Want to /ignore me? You sure? I manage half of the network :P" ,
