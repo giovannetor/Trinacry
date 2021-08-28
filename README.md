@@ -21,4 +21,4 @@ This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)
 
 1. `Pasqua` : Contains the modules used for Easter. [(INFO)](https://github.com/giovannetor/Trinacry/blob/main/pasqua/README.md)
 
-1. `Bank` : Manages the Bot's currency: TriCoins (₸) [(INFO)](https://github.com/giovannetor/Trinacry/blob/main/bank/README.md)
+1. `Bank` : Manages the Bot's currency: TriCoins (₸) and Shop [(INFO)](https://github.com/giovannetor/Trinacry/blob/main/bank/README.md)
