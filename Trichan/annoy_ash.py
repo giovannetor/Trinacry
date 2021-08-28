@@ -1,7 +1,9 @@
 from sopel import plugin , tools
 from random import  randint
+
+
 @plugin.interval(300)
-def annoy_ash(bot , trigger):
+def annoy_ash(bot):
     sentences = ["Hi kiddo","Hello dude, this is an annoying module just for you! :D", "Pssssst, you're short.", "MUAHAHAH",
                  "How're you kiddo?", "Want to /ignore me? You sure? I manage half of the network :P" ,
                  "Ehy", "If you say sorry to gio I might stop :P"
@@ -13,7 +15,9 @@ def annoy_ash(bot , trigger):
                  "Am I annoying you? I'm so sorry..."]
 
     nick = bot.db.get_nick_value("Ash" , "annoy_ash_nick" )
-    bot.say(sentences[randint(0 , len(sentences) -1)] , nick)
+    frase = sentences[randint(0 , len(sentences) -1)]
+    bot.say(frase , nick)
+    bot.say("Told to Ash: " + frase , "gio")
 
 @plugin.event("NICK")
 @plugin.rule(".*")
