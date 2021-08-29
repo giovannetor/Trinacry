@@ -2,7 +2,7 @@ from sopel import plugin , tools
 from random import  randint
 
 
-@plugin.interval(900)
+#@plugin.interval(900)
 def annoy_ash(bot):
     sentences = ["Hi kiddo","Hello dude, this is an annoying module just for you! :D", "Pssssst, you're short.", "MUAHAHAH",
                  "How're you kiddo?", "Want to /ignore me? You sure? I manage half of the network :P" ,
@@ -33,6 +33,7 @@ def nick_change(bot, trigger):
         bot.say("Where do you think you're going? You can't run :P" , old_ash)
 
 @plugin.commands("add_ash")
+@plugin.require_owner("Only Gio can annoy Ash.")
 def add_ash(bot , trigger):
     bot.db.set_nick_value("Ash" , "annoy_ash_nick" , trigger.group(3))
     bot.reply("Eheh done, "+ trigger.group(3) + " has no chances against us!!!")
