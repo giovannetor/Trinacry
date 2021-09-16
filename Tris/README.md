@@ -1,7 +1,6 @@
 <img src="https://github.com/giovannetor/Trinacry/blob/main/perlogo_small.png" alt="perlogo" width="110" height="100"> <img src="https://github.com/giovannetor/Trinacry/blob/main/T_LOGO_WHITE.png" alt="TTT_logo_white" width="100" height="100">
 
-
-
+---
 # TicTacToe
 
 Hi. This is a lil module to play TicTacToe on IRC with Trinacry. 
