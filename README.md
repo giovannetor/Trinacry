@@ -24,4 +24,4 @@ This repos is a folder of all my work about Trinacry, all in one place! ＼(^o^)
 
 7. `Bank` : Manages the Bot's currency: TriCoins (₸) and Shop [(INFO)](https://github.com/giovannetor/Trinacry/blob/main/bank/README.md)
 
-8. `Hot Potato` : The game Hot Potato on IRC!
+8. `Hot Potato` : The game Hot Potato on IRC! [(INFO)](https://github.com/giovannetor/Trinacry/blob/main/Hot%20Potato/README.md)
