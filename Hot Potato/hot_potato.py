@@ -54,7 +54,7 @@ from sopel.plugin import commands, priority, thread, event
 
 log_chan = "#trinacry-logs"
 game_chan = ["#games" , "#test"]
-POTATO = " " + CONTROL_BOLD + CONTROL_COLOR + colors.ORANGE + "," + colors.BLACK + " PATATA BOLLENTE " + CONTROL_NORMAL + " "
+POTATO = " " + CONTROL_BOLD + CONTROL_COLOR + colors.ORANGE + "," + colors.BLACK + " HOT POTATO " + CONTROL_NORMAL + " "
 
 min_players = 3  # DO NOT set to less than 3
 
@@ -114,7 +114,30 @@ strings_ita = {"already_in": "%s sei già all'interno della partita di" + POTATO
                                     "Il tempo corre veloce..."]
 
                }
-
+strings_eng = {"quit": "% s has decided to leave the game.",
+               "emergency_give": "Oh no, %s had the" + POTATO + "! Emergency launch to %s!",
+               "congrats_win": "Congratulations %s and %s, you are the two survivors! You have won the game"
+                               "di" + POTATO + "surviving well %d turns !!!!",
+               "new_turn": "Start next turnnnn",
+               "potato_given": " %s starts with" + POTATO + ". hurry pass it to someone!",
+               "game_started": "A game of" + POTATO + "has started. Use .join to join!",
+               "not_started": "The game of" + POTATO + "has not started yet.",
+               "admin_stop": "An ADMIN has stopped the game of" + POTATO,
+               "quit_ok": "A player has left the game." + POTATO + "must be started again.",
+               "receiver_missing": "You didn't write to whom you want to pass the" + POTATO,
+               "joined": "% s joins the game !!",
+               "deal": "Game started!% s has la" + POTATO,
+               "not_in_game": "% s is not part of the game. Pass the" + POTATO + "to Voiced players (+ in front of name).",
+               "time_interaction": ["TIC TAC time goes by.",
+                                    "Who will be next to be eliminated ?!",
+                                    "TIME EXPIRED ... haha joking",
+                                    "TIC TAC",
+                                    "We are almost there...",
+                                    "Who knows when the time will run out",
+                                    "Uh oh, someone is about to be eliminated",
+                                    "Faster, time goes by!",
+                                    "Just missing! Faster!",
+                                    "Time runs fast ..."]}
 
 class PotatoGame:
     def __init__(self, trigger):
