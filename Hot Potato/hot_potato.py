@@ -23,6 +23,11 @@ from sopel.config.types import StaticSection, ListAttribute, ValidatedAttribute
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
 from sopel.plugin import commands, priority, thread, event
 
+def setup(bot):
+    global log_chan
+    global game_chan
+    game_chan = bot.db.get_plugin_value("chan_management" , "game_chans")["hot_potato"]
+    log_chan = bot.db.get_plugin_value("chan_management" , "log_chan" , "hot_potato")
 
 # Called when the module gets loaded
 #def setup(bot):
@@ -52,8 +57,8 @@ from sopel.plugin import commands, priority, thread, event
 #    logchannels = ValidatedAttribute("logchannels")
 #    hotpot_admins = ListAttribute("hotpot_admins")
 
-log_chan = "#trinacry-logs"
-game_chan = ["#games" , "#test"]
+#log_chan = "#trinacry-logs"
+#game_chan = ["#games" , "#test"]
 POTATO = " " + CONTROL_BOLD + CONTROL_COLOR + colors.ORANGE + "," + colors.BLACK + " HOT POTATO " + CONTROL_NORMAL + " "
 
 min_players = 3  # DO NOT set to less than 3
