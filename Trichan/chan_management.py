@@ -77,3 +77,7 @@ def show_game_chan(bot , trigger):
     for plugin , value in game_chans:
         ret += str(plugin) + ": " + str(value) + " || "
     bot.say(f"{CHAN_MAN}The Game Chans are {ret}")
+
+@commands("logtest")
+def logtest(bot , trigger):
+    bot.say(f"{CHAN_MAN} LOG TEST" , log_channel)
