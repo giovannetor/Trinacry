@@ -6,7 +6,7 @@ CHAN_MAN = CONTROL_BOLD + CONTROL_COLOR + colors.WHITE + "," + colors.LIGHT_PURP
 
 def setup(bot):
     global log_channel
-    log_channel = bot.db.get_plugin_value("chan_management", "log_chan", default="#trinacry_logs")
+    log_channel = bot.db.get_plugin_value("chan_management", "log_chan", default="#trinacry-logs")
 
 
 @commands("gamechan add")
