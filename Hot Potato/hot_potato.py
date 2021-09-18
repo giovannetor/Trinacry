@@ -25,35 +25,35 @@ from sopel.plugin import commands, priority, thread, event
 
 
 # Called when the module gets loaded
-def setup(bot):
-    bot.config.define_section("HotPotato", HotPotatoConfigSection)
-
+#def setup(bot):
+#    bot.config.define_section("HotPotato", HotPotatoConfigSection)
     # Set the allowed game channels
-    global game_chan
-    global log_chan
-    global hotpot_admins
-    game_chan = bot.config.HotPotato.gamechannels
-    log_chan = bot.config.HotPotato.logchannels
-    hotpot_admins = bot.config.HotPotato.hotpot_admins
+#    global game_chan
+#    global log_chan
+#    global hotpot_admins
+#    game_chan = bot.config.HotPotato.gamechannels
+#    log_chan = bot.config.HotPotato.logchannels
+#    hotpot_admins = bot.config.HotPotato.hotpot_admins
 
 
 # Called when the module gets configured
-def configure(config):
-    config.define_section("HotPotato", HotPotatoConfigSection)
-    config.HotPotato.configure_setting("gamechannels",
-                                       "In what channels is Hot Potato allowed to be played? (One per line)")
-    config.HotPotato.configure_setting("logchannels",
-                                       "In what channel will Hot Potato send logs? (Choose one)")
-    config.HotPotato.configure_setting("hotpot_admins", "What accounts can operate on Hot Potato? (One per line)")
+#def configure(config):
+#    config.define_section("HotPotato", HotPotatoConfigSection)
+#    config.HotPotato.configure_setting("gamechannels",
+#                                       "In what channels is Hot Potato allowed to be played? (One per line)")
+#    config.HotPotato.configure_setting("logchannels",
+#                                       "In what channel will Hot Potato send logs? (Choose one)")
+#    config.HotPotato.configure_setting("hotpot_admins", "What accounts can operate on Hot Potato? (One per line)")
 
 
 # Class with the settings for Elemental Adventure
-class HotPotatoConfigSection(StaticSection):
-    gamechannels = ListAttribute("gamechannels")
-    logchannels = ValidatedAttribute("logchannels")
-    hotpot_admins = ListAttribute("hotpot_admins")
+#class HotPotatoConfigSection(StaticSection):
+#    gamechannels = ListAttribute("gamechannels")
+#    logchannels = ValidatedAttribute("logchannels")
+#    hotpot_admins = ListAttribute("hotpot_admins")
 
-
+log_chan = "#trinacry-logs"
+game_chan = ["#games" , "#test"]
 POTATO = " " + CONTROL_BOLD + CONTROL_COLOR + colors.ORANGE + "," + colors.BLACK + " PATATA BOLLENTE " + CONTROL_NORMAL + " "
 
 min_players = 3  # DO NOT set to less than 3
@@ -342,7 +342,7 @@ def start(bot, trigger):
 @commands("adstop potato")
 @priority("high")
 def stop(bot, trigger):
-    if trigger.sender in game_chan and trigger.account in hotpot_admins:
+    if trigger.sender in game_chan and trigger.admin:
         potato.stop(bot, trigger.sender, forced=True)
 
 
@@ -379,7 +379,7 @@ def help(bot, trigger):
 
 @commands("potgames")
 def potgames(bot, trigger):
-    if trigger.account in hotpot_admins and trigger.sender == log_chan:
+    if trigger.admin and trigger.sender == log_chan:
         chans = []
         active = 0
         pending = 0
@@ -409,7 +409,7 @@ def stats(bot, trigger):
 
 @commands("adpotatostats", "adps")
 def admin_stats(bot, trigger):
-    if trigger.account in hotpot_admins:
+    if trigger.admin:
         try:
             stats = bot.db.get_nick_value("hot_potato", trigger.group(3), default=0)
         except:
