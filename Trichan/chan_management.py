@@ -64,12 +64,12 @@ def chan_add(bot, trigger):
     bot.db.set_plugin_value("chan_management", "log_chan", log_chan)
     bot.say(f"{CHAN_MAN}Chan {log_chan} correctly set as Log Chan by {trigger.nick}.", log_channel)
 
-@commands("logchan")
+@commands("logchan view")
 @require_admin("Admin Only.")
 def show_log_chan(bot , trigger):
     bot.say(f"{CHAN_MAN}The Log Chan is {log_channel}")
 
-@commands("gamechans")
+@commands("gamechans view")
 @require_admin("Admin Only.")
 def show_game_chan(bot , trigger):
     game_chans = bot.db.get_plugin_value("chan_management", "game_chans", default={"None" : "None"})
