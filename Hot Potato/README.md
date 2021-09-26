@@ -22,4 +22,9 @@ the Potato in hand loses and is eliminated.
 2) `.adstop potato` = Forcibly stop the game in progress in the channel in which it is written.
 3) `.adpotatostats` = Get another user's STATS.
 --- 
-**NOTES**: While you are in the Game Channel, you will NOT be able to change NICKs.
+
+**NOTES**: While you are in the Game Channel, you will NOT be able to change NICKs. 
+
+**NOTES**: To allow a friendlier game environment, you cannot pass back the Potato to the one who passed you in the first place.
+
+**NOTES**: After a TOT number of turns (N° players + 3) the game will start asking to pass the Potato to inactive players.
