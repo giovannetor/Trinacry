@@ -19,20 +19,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import time
 from random import randint
 
-from sopel.config.types import StaticSection, ListAttribute, ValidatedAttribute
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
 from sopel.plugin import commands, priority, thread, event
 
-#def setup(bot):
+# def setup(bot):
 #    global log_chan
 #    global game_chan
 #    game_chan = bot.db.get_plugin_value("chan_management" , "game_chans")["hot_potato"]
 #    log_chan = bot.db.get_plugin_value("chan_management" , "log_chan" , "hot_potato")
 
 # Called when the module gets loaded
-#def setup(bot):
+# def setup(bot):
 #    bot.config.define_section("HotPotato", HotPotatoConfigSection)
-    # Set the allowed game channels
+# Set the allowed game channels
 #    global game_chan
 #    global log_chan
 #    global hotpot_admins
@@ -42,7 +41,7 @@ from sopel.plugin import commands, priority, thread, event
 
 
 # Called when the module gets configured
-#def configure(config):
+# def configure(config):
 #    config.define_section("HotPotato", HotPotatoConfigSection)
 #    config.HotPotato.configure_setting("gamechannels",
 #                                       "In what channels is Hot Potato allowed to be played? (One per line)")
@@ -52,13 +51,13 @@ from sopel.plugin import commands, priority, thread, event
 
 
 # Class with the settings for Elemental Adventure
-#class HotPotatoConfigSection(StaticSection):
+# class HotPotatoConfigSection(StaticSection):
 #    gamechannels = ListAttribute("gamechannels")
 #    logchannels = ValidatedAttribute("logchannels")
 #    hotpot_admins = ListAttribute("hotpot_admins")
 
 log_chan = "#trinacry-logs"
-game_chan = ["#games" , "#test"]
+game_chan = ["#games", "#test"]
 POTATO = " " + CONTROL_BOLD + CONTROL_COLOR + colors.ORANGE + "," + colors.BLACK + " HOT POTATO " + CONTROL_NORMAL + " "
 
 min_players = 3  # DO NOT set to less than 3
@@ -143,6 +142,7 @@ strings_eng = {"quit": "% s has decided to leave the game.",
                                     "Faster, time goes by!",
                                     "Just missing! Faster!",
                                     "Time runs fast ..."]}
+
 
 class PotatoGame:
     def __init__(self, trigger):
