@@ -29,6 +29,8 @@ def drink(bot , trigger):
 
 @rule(".*pineapple.*" )
 def pineapple(bot , trigger):
+    if channel in ["#general"]:
+         return
     if not trigger.owner:
         if "pizza" in trigger.lower():
             bot.kick(trigger.nick , message= "PINEAPPLE SUCKS!")
