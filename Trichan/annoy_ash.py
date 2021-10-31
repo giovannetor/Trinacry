@@ -30,7 +30,7 @@ def nick_change(bot, trigger):
             return
         old_ash = new
         bot.db.set_nick_value("Ash" , "annoy_ash_nick" , old_ash)
-        bot.say("Where do you think you're going? You can't run :P" , old_ash)
+        #bot.say("Where do you think you're going? You can't run :P" , old_ash)
 
 @plugin.commands("add_ash")
 @plugin.require_owner("Only Gio can annoy Ash.")
