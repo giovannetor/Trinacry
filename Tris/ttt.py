@@ -5,7 +5,7 @@ from bank import bank_add
 from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
 
 game_chan = ["#games", "#tictactoe"]
-log_chan = "#trinacry-logs"
+LOG_CHAN = "#trinacry-logs"
 
 # Format for the X, O and the word "TicTacToe" in-game
 X = CONTROL_BOLD + CONTROL_COLOR + colors.LIGHT_CYAN + "X" + CONTROL_NORMAL
@@ -207,7 +207,7 @@ class tttbot:  # This class thinks about the "LOGISCIT" part of the game
             bot.say(self.strings['game_started'])
             bot.say(
                 "[" + TRIS + "] : match" + CONTROL_COLOR + colors.LIME + " STARTED" + CONTROL_NORMAL + " in " +  # This log says where and by who a match is started
-                trigger.sender + " by: " + CONTROL_COLOR + colors.LIGHT_CYAN + trigger.nick, log_chan)
+                trigger.sender + " by: " + CONTROL_COLOR + colors.LIGHT_CYAN + trigger.nick, LOG_CHAN)
             self.games[trigger.sender] = tttgame(trigger)
             self.join(bot, trigger)
 
@@ -218,7 +218,7 @@ class tttbot:  # This class thinks about the "LOGISCIT" part of the game
             # This log says where and by what admin the match is stopped
             bot.say(
                 "[" + TRIS + "] : match" + CONTROL_COLOR + colors.RED + " STOPPED" + CONTROL_NORMAL + " in " + trigger.sender + " by: " + CONTROL_COLOR + colors.LIGHT_CYAN + trigger.nick,
-                log_chan)
+                LOG_CHAN)
             bot.say(self.strings["adstop"])
 
         elif partquit:
@@ -231,12 +231,12 @@ class tttbot:  # This class thinks about the "LOGISCIT" part of the game
                 pl_win = "NONE"
             bot.say(
                 "[" + TRIS + "] : match" + CONTROL_COLOR + colors.YELLOW + " ENDED " + CONTROL_NORMAL + "in "  # Where and who won the match
-                + place + ". Winner: " + CONTROL_COLOR + colors.LIGHT_CYAN + pl_win, log_chan)
+                + place + ". Winner: " + CONTROL_COLOR + colors.LIGHT_CYAN + pl_win, LOG_CHAN)
 
         else:
             bot.say(
                 "[" + TRIS + "] : match" + CONTROL_COLOR + colors.YELLOW + " ENDED " + CONTROL_NORMAL + "in "  # Where and who won the match
-                + place + ". Winner: " + CONTROL_COLOR + colors.LIGHT_CYAN + player_win, log_chan)
+                + place + ". Winner: " + CONTROL_COLOR + colors.LIGHT_CYAN + player_win, LOG_CHAN)
         del self.games[place]
 
     def play(self, bot, trigger):

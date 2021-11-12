@@ -7,7 +7,7 @@ from bank import bank_add , bank_rem , coins  # Use for Trinacry
 SHOP = CONTROL_BOLD + CONTROL_COLOR + colors.RED + "," + colors.BLACK + " ₸ SHOP ₸ " + CONTROL_NORMAL + " | "
 USER_SHOP = CONTROL_BOLD + CONTROL_COLOR + colors.BLACK + "," + colors.RED + " ₸ SHOP ₸ " + CONTROL_NORMAL + " | "
 
-log_chan = "#trinacry-logs"
+LOG_CHAN = "#trinacry-logs"
 shop_chan = "#shop"
 
 
@@ -136,12 +136,12 @@ def testshop(bot, trigger):
 @plugin.commands("item info")
 @plugin.require_admin("Only admins can use this command.")
 def item_info(bot, trigger):
-    #if trigger.sender != log_chan:
+    #if trigger.sender != LOG_CHAN:
     #    bot.say("Please use this command in the admin channel.")
     #    return
     if not trigger.group(2):
-        bot.notice("Syntax: .item info <catalogue>,(<item_name>).   E.g.: .item del food,pizza", log_chan)
-        bot.notice("IMPORTANT: by omitting the item_name with '/', you'll receive infos on the Catalogue.", log_chan)
+        bot.notice("Syntax: .item info <catalogue>,(<item_name>).   E.g.: .item del food,pizza", LOG_CHAN)
+        bot.notice("IMPORTANT: by omitting the item_name with '/', you'll receive infos on the Catalogue.", LOG_CHAN)
         return
 
     string = trigger.group(3)
@@ -156,15 +156,15 @@ def item_info(bot, trigger):
 @plugin.commands("item add")
 @plugin.require_admin("Only admins can add items to the Catalogue. Please, contact one if you need one.")
 def item_add(bot, trigger):
-    #if trigger.sender != log_chan:
+    #if trigger.sender != LOG_CHAN:
     #    bot.say("Please use this command in the admin channel.")
     #    return
     if not trigger.group(2):
-        bot.notice("Syntax: .item add CATALOGUE_SECTION,ITEM_NAME,COST,QUANTITY,(EFFECT),'(DESCRIPTION)'", log_chan)
+        bot.notice("Syntax: .item add CATALOGUE_SECTION,ITEM_NAME,COST,QUANTITY,(EFFECT),'(DESCRIPTION)'", LOG_CHAN)
         bot.notice(
             "You can omit EFFECT and DESCRIPTION by writing '/' instead. E.g.: .item add food,pizza,5,10,/,typical_italian_food",
-            log_chan)
-        bot.notice("IMPORTANT: spaces must be '_' or only the 1st word will be taken.", log_chan)
+            LOG_CHAN)
+        bot.notice("IMPORTANT: spaces must be '_' or only the 1st word will be taken.", LOG_CHAN)
         return
 
     string = trigger.group(3)
@@ -183,11 +183,11 @@ def item_add(bot, trigger):
 @plugin.commands("item usergive")
 @plugin.require_admin("Only admins can put items in Inventories.")
 def item_usergive(bot, trigger):
-    #if trigger.sender != log_chan:
+    #if trigger.sender != LOG_CHAN:
     #    bot.say("Please use this command in the admin channel.")
     #    return
     if not trigger.group(2):
-        bot.notice("Syntax: .item usergive USER CATALOGUE ITEM_NAME AMOUNT(def = 1)", log_chan)
+        bot.notice("Syntax: .item usergive USER CATALOGUE ITEM_NAME AMOUNT(def = 1)", LOG_CHAN)
         return
     try:
         item_name = trigger.group(5)
@@ -233,11 +233,11 @@ def item_usergive(bot, trigger):
 @plugin.commands("item usertake")
 @plugin.require_admin("Only admins can remove items from Inventories.")
 def item_usertake(bot, trigger):
-    #if trigger.sender != log_chan:
+    #if trigger.sender != LOG_CHAN:
     #    bot.say("Please use this command in the admin channel.")
     #    return
     if not trigger.group(2):
-        bot.notice("Syntax: .item usertake USER ITEM_NAME AMOUNT(def = 1)", log_chan)
+        bot.notice("Syntax: .item usertake USER ITEM_NAME AMOUNT(def = 1)", LOG_CHAN)
         return
     inventory = bot.db.get_nick_value(trigger.group(3), "inventory", default = {})
     if inventory == {}:
@@ -275,12 +275,12 @@ def item_usertake(bot, trigger):
 @plugin.commands("item del", "item rem")
 @plugin.require_admin("Only admins can remove items from the Catalogue.")
 def item_del(bot, trigger):
-    ##if trigger.sender != log_chan:
+    ##if trigger.sender != LOG_CHAN:
     #    bot.say("Please use this command in the admin channel.")
     #    return
     if not trigger.group(2):
-        bot.notice("Syntax: .item del <catalogue>,<item_name>", log_chan)
-        bot.notice("E.g.: .item del food,pizza", log_chan)
+        bot.notice("Syntax: .item del <catalogue>,<item_name>", LOG_CHAN)
+        bot.notice("E.g.: .item del food,pizza", LOG_CHAN)
         return
 
     string = trigger.group(3)

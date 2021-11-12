@@ -3,7 +3,7 @@ from random import randint , shuffle
 from sopel.formatting import CONTROL_COLOR , colors , CONTROL_BOLD , CONTROL_NORMAL
 
 
-log_chan = "#trinacry-logs"
+LOG_CHAN = "#trinacry-logs"
 @commands("privacy")
 def privacy(bot , trigger):
     bot.notice("Here's the Privacy Policy: https://www.termsfeed.com/live/c0b6de93-39dc-484b-a460-b946ecb9428e " , trigger.nick)
@@ -55,7 +55,7 @@ def destroy(bot , trigger):
 @require_privmsg()
 def echo(bot , trigger):
     if not trigger.owner:
-        bot.say(CONTROL_BOLD + CONTROL_COLOR + colors.LIGHT_BLUE +"[PM] "+ CONTROL_NORMAL + trigger.nick + ": "+ trigger , log_chan)
+        bot.say(CONTROL_BOLD + CONTROL_COLOR + colors.LIGHT_BLUE +"[PM] " + CONTROL_NORMAL + trigger.nick + ": " + trigger, LOG_CHAN)
 
 @commands("resurrect")
 @require_admin()

@@ -25,7 +25,7 @@ from bank import bank_add
 Base = declarative_base()
 bris = CONTROL_BOLD + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + " B" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "R" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "I" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "S" + CONTROL_COLOR + colors.GREEN + "," + colors.WHITE + "C" + CONTROL_COLOR + colors.ORANGE + "," + colors.WHITE + "O" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "L" + CONTROL_COLOR + colors.GRAY + "," + colors.WHITE + "A " + CONTROL_NORMAL
 
-log_chan = "#trinacry-logs"
+LOG_CHAN = "#trinacry-logs"
 game_chan = ["#briscola", "#games"]
 
 
@@ -989,7 +989,7 @@ class BrisBot:
         if trigger.admin or forced:
             if not forced:
                 bot.say(self.strings['game_stopped'])
-                bot.say("[" + bris + "] : Admin ha fermato una partita in  " + trigger.sender, log_chan)
+                bot.say("[" + bris + "] : Admin ha fermato una partita in  " + trigger.sender, LOG_CHAN)
                 if trigger.sender != chan:
                     bot.say(self.strings['admin_stop'], chan)
                 else:
@@ -1101,13 +1101,13 @@ class BrisBot:
                     bank_add(bot, playerlose, int(punteggiolose), "Briscola lose.")
                     db_manager.update_players([playerlose], win = False, punteggio = int(punteggiolose),
                                               minutes = minutes, seconds = seconds)
-                bot.say("[" + bris + "] : partita finita in WIN per " + winner + " in TEST " + place, log_chan)
+                bot.say("[" + bris + "] : partita finita in WIN per " + winner + " in TEST " + place, LOG_CHAN)
             if self.draw:
                 bot.say("NO ONE WINS")
                 for totplayer in game.players:
                     db_manager.update_players([totplayer], win = False, punteggio = 60, minutes = minutes,
                                               seconds = seconds)
-                bot.say("[" + bris + "] : partita finita in DRAW in " + place, log_chan)
+                bot.say("[" + bris + "] : partita finita in DRAW in " + place, LOG_CHAN)
 
             self.game_ended(bot, place)
 
@@ -1154,14 +1154,14 @@ class BrisBot:
             bot.reply(strings['NOT_IN_CHANNEL'] % newchan)
             bot.say(
                 "[" + bris + "] : " + trigger.nick + " ha provato a spostare una partita di BRISCOLA da " + oldchan + " a " + newchan + ", ma Trinacry non sta in " + oldchan + "...",
-                log_chan)
+                LOG_CHAN)
 
             return
         if newchan in self.games:
             bot.reply(strings['CHANNEL_IN_USE'] % newchan)
             bot.say(
                 "[" + bris + "] : " + trigger.nick + " ha provato a spostare una partita di BRISCOLA da " + oldchan + " a " + newchan + ", ma il canale era già occupato.",
-                log_chan)
+                LOG_CHAN)
             return
         game = self.games.pop(oldchan)
         self.games[newchan] = game
@@ -1187,10 +1187,10 @@ def delplayer(bot, trigger):
         db_manager.delete_player(trigger.group(3))
         bot.say("CANCELLAMENTO AVVENUTO CON SUCCESSO")
         bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha cancellato " + trigger.group(3) + " dal database",
-                log_chan)
+                LOG_CHAN)
     except:
         bot.say("OH NO!! ABBIAMO UN PROBLEMA COL DB!!")
-        bot.say("[" + bris + "] : ERRORE DI CANCELLAZIONE DB causato da " + trigger.nick, log_chan)
+        bot.say("[" + bris + "] : ERRORE DI CANCELLAZIONE DB causato da " + trigger.nick, LOG_CHAN)
 
 
 @module.commands("adrank")
@@ -1201,11 +1201,11 @@ def brisdbad(bot, trigger):
     if trigger.group(3) == "player":
         bot.say(db_manager.show_stats_admin(stat = AdminStats.PLAYER, username = trigger.group(4)))
         bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha richiesto le stats di " + trigger.group(4),
-                log_chan)
+                LOG_CHAN)
     else:
         stat_map = {"time": AdminStats.TIME, "win": AdminStats.WIN, "tot": AdminStats.TOT, "score": AdminStats.SCORE, }
         bot.say(db_manager.show_stats_admin(stat = stat_map[trigger.group(3)]))
-        bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha richiesto " + trigger.group(3), log_chan)
+        bot.say("[" + bris + "] : Un admin (" + trigger.nick + ") ha richiesto " + trigger.group(3), LOG_CHAN)
 
 
 @module.commands("rank")
@@ -1213,10 +1213,10 @@ def brisdbad(bot, trigger):
 def rank(bot, trigger):
     try:
         bot.notice(db_manager.show_stats(username = trigger.nick), trigger.nick)
-        bot.say("[" + bris + "] : " + trigger.nick + " ha ottenuto il suo RANK. ", log_chan)
+        bot.say("[" + bris + "] : " + trigger.nick + " ha ottenuto il suo RANK. ", LOG_CHAN)
     except:
         bot.say("You are not in the db. Contact an admin if you feel this is an error.")
-        bot.say("[" + bris + "] : " + trigger.nick + " ha provato a cercare il suo RANK, ma non esiste.", log_chan)
+        bot.say("[" + bris + "] : " + trigger.nick + " ha provato a cercare il suo RANK, ma non esiste.", LOG_CHAN)
 
 
 @module.commands("pointlist", "poli")
@@ -1234,7 +1234,7 @@ def pointlist(bot, trigger):
 def start(bot, trigger):
     if trigger.sender in game_chan:
         brisbot.start(bot, trigger)
-        bot.say("[" + bris + "] : START in " + trigger.sender + " da " + trigger.nick, log_chan)
+        bot.say("[" + bris + "] : START in " + trigger.sender + " da " + trigger.nick, LOG_CHAN)
 
 
 @module.commands("language", "lan")

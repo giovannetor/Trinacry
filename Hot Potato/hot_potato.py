@@ -23,20 +23,20 @@ from sopel.formatting import colors, CONTROL_BOLD, CONTROL_COLOR, CONTROL_NORMAL
 from sopel.plugin import commands, priority, thread, event
 
 # def setup(bot):
-#    global log_chan
+#    global LOG_CHAN
 #    global game_chan
 #    game_chan = bot.db.get_plugin_value("chan_management" , "game_chans")["hot_potato"]
-#    log_chan = bot.db.get_plugin_value("chan_management" , "log_chan" , "hot_potato")
+#    LOG_CHAN = bot.db.get_plugin_value("chan_management" , "LOG_CHAN" , "hot_potato")
 
 # Called when the module gets loaded
 # def setup(bot):
 #    bot.config.define_section("HotPotato", HotPotatoConfigSection)
 # Set the allowed game channels
 #    global game_chan
-#    global log_chan
+#    global LOG_CHAN
 #    global hotpot_admins
 #    game_chan = bot.config.HotPotato.gamechannels
-#    log_chan = bot.config.HotPotato.logchannels
+#    LOG_CHAN = bot.config.HotPotato.logchannels
 #    hotpot_admins = bot.config.HotPotato.hotpot_admins
 
 
@@ -56,7 +56,7 @@ from sopel.plugin import commands, priority, thread, event
 #    logchannels = ValidatedAttribute("logchannels")
 #    hotpot_admins = ListAttribute("hotpot_admins")
 
-log_chan = "#trinacry-logs"
+LOG_CHAN = "#trinacry-logs"
 game_chan = ["#games", "#test"]
 POTATO = " " + CONTROL_BOLD + CONTROL_COLOR + colors.ORANGE + "," + colors.BLACK + " HOT POTATO " + CONTROL_NORMAL + " "
 
@@ -199,7 +199,7 @@ class PotatoGame:
             self.timecounter += 1
             if self.timecounter % 15 == 0:  # every 15 seconds, notices to the log chan and sends a random sentence.
                 bot.say(self.strings["time_interaction"][randint(0, len(self.strings["time_interaction"] - 1))], chan)
-                bot.say(self.strings["time_counter"] % (self.timecounter, def_seconds, chan), log_chan)
+                bot.say(self.strings["time_counter"] % (self.timecounter, def_seconds, chan), LOG_CHAN)
 
         if not self.stop_game:  # same as above.
             self.explode_potato(bot, chan)
@@ -298,7 +298,7 @@ class PotatoBot:
             self.games[trigger.sender] = PotatoGame(trigger)
             bot.say(self.strings["game_started"])
             bot.say(f"{POTATO} : match STARTED in {trigger.sender} by {trigger.nick}",
-                    log_chan)  # happy? f strings \(^^)/
+                    LOG_CHAN)  # happy? f strings \(^^)/
             self.join(bot, trigger)
             bot.write(['MODE', trigger.sender, '+N'])  # While playing, nicks cannot be changed.
 
@@ -314,7 +314,7 @@ class PotatoBot:
         game.stop_game = True
         if forced:
             bot.say(self.strings["admin_stop"])
-            bot.say(f"{POTATO} : match forcefully STOPPED in {channel}", log_chan)
+            bot.say(f"{POTATO} : match forcefully STOPPED in {channel}", LOG_CHAN)
         elif not game.started:
             bot.say(self.strings["quit_ok"])
 
@@ -330,7 +330,7 @@ class PotatoBot:
         stats = bot.db.get_nick_value("hot_potato", player, default=0)
         stats += stat
         bot.db.set_nick_value("hot_potato", player, stat)
-        bot.say(f"{POTATO} : stats of {player} updated succesfully.", log_chan)
+        bot.say(f"{POTATO} : stats of {player} updated succesfully.", LOG_CHAN)
 
     def quit(self, bot, trigger):
         if trigger.sender in self.games:
@@ -407,7 +407,7 @@ def help(bot, trigger):
 
 @commands("potgames")
 def potgames(bot, trigger):
-    if trigger.admin and trigger.sender == log_chan:
+    if trigger.admin and trigger.sender == LOG_CHAN:
         chans = []
         active = 0
         pending = 0
@@ -432,7 +432,7 @@ def potgames(bot, trigger):
 def stats(bot, trigger):
     stats = bot.db.get_nick_value("hot_potato", trigger.nick, default=0)
     bot.notice(POTATO + "STATS: Turns Alive: " + stats, trigger.nick)
-    bot.say(f"{POTATO}: {trigger.nick} requested their STATS.", log_chan)
+    bot.say(f"{POTATO}: {trigger.nick} requested their STATS.", LOG_CHAN)
 
 
 @commands("adpotatostats", "adps")
@@ -444,7 +444,7 @@ def admin_stats(bot, trigger):
             bot.reply("Specify a nick to search.")
             return
         bot.notice(f"{POTATO} STATS of {trigger.group(3)}: Turns Alive: {stats}", trigger.nick)
-        bot.say(f"{POTATO}: {trigger.nick} requested the STATS of {trigger.group(3)}.", log_chan)
+        bot.say(f"{POTATO}: {trigger.nick} requested the STATS of {trigger.group(3)}.", LOG_CHAN)
 
 
 @event("PART")

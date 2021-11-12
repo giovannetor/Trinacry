@@ -17,7 +17,7 @@ lock = threading.RLock()  # initialise lock
 
 max_player = 10
 game_chan = ["#poker", "#games"]
-log_chan = "#trinacry-logs"
+LOG_CHAN = "#trinacry-logs"
 poker = CONTROL_BOLD + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + " P" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "O" + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + "K" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "E" + CONTROL_COLOR + colors.BLACK + "," + colors.WHITE + "R" + CONTROL_COLOR + colors.RED + "," + colors.WHITE + "! " + CONTROL_NORMAL
 """
 Here are defined all the strings used in the game.
@@ -870,7 +870,7 @@ class PokerBot:
         if trigger.sender not in self.games:
             # bot.say(self.strings['not_started'] )
             return
-        bot.say("[" + poker + "] : DEAL in " + trigger.sender, log_chan)
+        bot.say("[" + poker + "] : DEAL in " + trigger.sender, LOG_CHAN)
         self.games[trigger.sender].deal(bot, trigger)
 
     def stop(self, bot, trigger, forced=False):
@@ -882,7 +882,7 @@ class PokerBot:
         if trigger.admin or forced:
             if not forced:
                 bot.say(self.strings['game_stopped'])
-                bot.say("[" + poker + "] : Admin ha fermato una partita in " + trigger.sender, log_chan)
+                bot.say("[" + poker + "] : Admin ha fermato una partita in " + trigger.sender, LOG_CHAN)
                 if trigger.sender != chan:
                     bot.say(self.strings['admin_stop'], chan)
                 else:
@@ -1015,7 +1015,7 @@ def poker1(bot, trigger):
     if trigger.sender in game_chan:
         pokerbot.start(bot, trigger)
         string = "[" + poker + "] : START iniziata in " + trigger.sender
-        bot.say(string, log_chan)
+        bot.say(string, LOG_CHAN)
 
 
 @module.commands("change", "chg")

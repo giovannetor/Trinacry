@@ -6,7 +6,7 @@ CHAN_MAN = CONTROL_BOLD + CONTROL_COLOR + colors.WHITE + "," + colors.LIGHT_PURP
 
 def setup(bot):
     global log_channel
-    log_channel = bot.db.get_plugin_value("chan_management", "log_chan", default="#trinacry-logs")
+    log_channel = bot.db.get_plugin_value("chan_management", "LOG_CHAN", default="#trinacry-logs")
 
 
 @commands("gamechan add")
@@ -61,7 +61,7 @@ def chan_add(bot, trigger):
     if "#" not in log_chan:
         bot.reply("Syntax: .logchan set <#chan>")
         return
-    bot.db.set_plugin_value("chan_management", "log_chan", log_chan)
+    bot.db.set_plugin_value("chan_management", "LOG_CHAN", log_chan)
     bot.say(f"{CHAN_MAN}Chan {log_chan} correctly set as Log Chan by {trigger.nick}.", log_channel)
 
 @commands("logchan view")
